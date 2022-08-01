@@ -7,7 +7,7 @@ from setuptools.command.develop import develop
 from setuptools.command.install import install
 
 def build_js():
-    subprocess.check_call(["npm", "install"], cwd=os.path.join(os.getcwd(), "interactwel"))
+    subprocess.check_call(["npm", "install", "--legacy-peer-deps"], cwd=os.path.join(os.getcwd(), "interactwel"))
     subprocess.check_call(["npm", "run", "build"], cwd=os.path.join(os.getcwd(), "interactwel"))
 
 # Build JS code when this package is installed in virtual env
