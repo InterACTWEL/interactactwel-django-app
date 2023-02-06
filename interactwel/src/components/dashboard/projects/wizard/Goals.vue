@@ -97,7 +97,6 @@
       <div class="help-block">
         <b-collapse
           id="collapse-what_are_goals"
-          visible
         >
           <b-card
             class="mb-2"

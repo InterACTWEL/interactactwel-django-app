@@ -101,7 +101,6 @@
       <div class="help-block-actors">
         <b-collapse
           id="collapse-what_are_actors"
-          visible
         >
           <b-card
             tag="article"

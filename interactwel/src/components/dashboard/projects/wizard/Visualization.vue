@@ -1,7 +1,9 @@
 <template>
   <div>
     <h6 class="mt-3">
-      Adaptation Plan {{ $route.params.planId }}
+      <div class="title">
+        <div>Adaptation Plan {{ $route.params.planId }}</div> <div>Feedback</div> 
+      </div>
     </h6>
     <router-view />
   </div>
@@ -24,5 +26,11 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
+  .title{
+    border: 1px solid black;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
 </style>

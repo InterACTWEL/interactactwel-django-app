@@ -2,19 +2,10 @@
   <b-col lg="12">
     <ol class="progress-bar">
       <li class="col-md-2">
-        <div
-          id="active"
-          class="step-progress-bar"
-        >
-          <div class="step-no">
-            1
-          </div>
-          <h4 class="list-group-item-heading">
-            Goals
-          </h4>
-          <h4r class="list-group-item-heading">
-            &#10003;
-          </h4r>
+        <div id="active" class="step-progress-bar">
+          <div class="step-no">1</div>
+          <h4 class="list-group-item-heading">Goals</h4>
+          <h4r class="list-group-item-heading"> &#10003; </h4r>
           <p class="list-group-item-text">
             {{ adaptationPlan.selectedGoals.length }} Goals Selected
           </p>
@@ -22,15 +13,9 @@
       </li>
       <li class="col-md-2">
         <div class="step-progress-bar">
-          <div class="step-no">
-            2
-          </div>
-          <h4 class="list-group-item-heading">
-            Actors
-          </h4>
-          <h4r class="list-group-item-heading">
-            &#10003;
-          </h4r>
+          <div class="step-no">2</div>
+          <h4 class="list-group-item-heading">Actors</h4>
+          <h4r class="list-group-item-heading"> &#10003; </h4r>
           <p class="list-group-item-text">
             {{ adaptationPlan.selectedActors.length }} Actors Selected
           </p>
@@ -38,15 +23,9 @@
       </li>
       <li class="col-md-2">
         <div class="step-progress-bar">
-          <div class="step-no">
-            3
-          </div>
-          <h4 class="list-group-item-heading">
-            Actions
-          </h4>
-          <h4r class="list-group-item-heading">
-            &#10003;
-          </h4r>
+          <div class="step-no">3</div>
+          <h4 class="list-group-item-heading">Actions</h4>
+          <h4r class="list-group-item-heading"> &#10003; </h4r>
           <p class="list-group-item-text">
             {{ adaptationPlan.selectedActions.length }} Actions Selected
           </p>
@@ -54,56 +33,28 @@
       </li>
       <li class="col-md-2 active">
         <div class="step-progress-bar">
-          <div class="step-no">
-            4
-          </div>
-          <h4 class="list-group-item-heading">
-            Visualize and Evaluate
-          </h4>
-          <h4r class="list-group-item-heading">
-            &#10003;
-          </h4r>
-          <p class="list-group-item-text">
-            Adaptation Plans
-          </p>
+          <div class="step-no">4</div>
+          <h4 class="list-group-item-heading">Visualize and Evaluate</h4>
+          <h4r class="list-group-item-heading"> &#10003; </h4r>
+          <p class="list-group-item-text">Adaptation Plans</p>
         </div>
       </li>
       <li class="col-md-2">
         <div class="step-progress-bar">
-          <div class="step-no">
-            5
-          </div>
-          <h4 class="list-group-item-heading">
-            Wrap Up
-          </h4>
-          <h4r class="list-group-item-heading">
-            &#10003;
-          </h4r>
-          <p class="list-group-item-text">
-            Save and Print Plans
-          </p>
+          <div class="step-no">5</div>
+          <h4 class="list-group-item-heading">Wrap Up</h4>
+          <h4r class="list-group-item-heading"> &#10003; </h4r>
+          <p class="list-group-item-text">Save and Print Plans</p>
         </div>
       </li>
     </ol>
-    <div
-      id="step4"
-      title="Step 4"
-    >
+    <div id="step4" title="Step 4">
       <div class="help-block-viz">
-        <b-collapse
-          id="collapse-what_are_plans"
-          visible
-        >
-          <b-card
-            tag="article"
-            style="max-width: 33rem;"
-            class="mb-2"
-          >
+        <b-collapse id="collapse-what_are_plans">
+          <b-card tag="article" style="max-width: 33rem" class="mb-2">
             <div class="row">
               <div class="col">
-                <h4 class="card-title">
-                  "What are Adaptation Plans?"
-                </h4>
+                <h4 class="card-title">"What are Adaptation Plans?"</h4>
               </div>
               <div class="col-1 mr-3">
                 <h5 class="text-right font-weight-light">
@@ -117,10 +68,14 @@
             </div>
             <b-card-text>
               <p align="justify">
-                In this section you will be able to view multiple adaptation plans that incorporate the actors <strong>(Step 2)</strong>
-                and actions <strong>(Step 3)</strong>
-                that you selected.  You can compare how each adaptation plan meets the goals you selected in <strong>Step 1</strong>
-                for the entire basin, sub-basins, and individual streams.  You can also compare the actions and their timeframes included within each plan.
+                In this section you will be able to view multiple adaptation
+                plans that incorporate the actors <strong>(Step 2)</strong> and
+                actions <strong>(Step 3)</strong> that you selected. You can
+                compare how each adaptation plan meets the goals you selected in
+                <strong>Step 1</strong>
+                for the entire basin, sub-basins, and individual streams. You
+                can also compare the actions and their timeframes included
+                within each plan.
               </p>
               <p aling="justify">
                 Remember that you can click the map to visualize the data.
@@ -129,19 +84,13 @@
           </b-card>
         </b-collapse>
       </div>
-      <b-card
-        no-body
-        footer-tag="footer"
-      >
-        <div
-          slot="header"
-          class="step-header"
-        >
+      <b-card no-body footer-tag="footer">
+        <div slot="header" class="step-header">
           Visualization
           <em slot="header">
             <i
               v-b-toggle.collapse-what_are_plans
-              class="far fa-question-circle"
+              class="far fa-question-circle color:green"
               title="Show instructions"
               style="cursor: pointer"
             />
@@ -150,22 +99,17 @@
         <b-card-body class="no-padding">
           <b-container class="">
             <b-row>
-              <div
-                id="sidebar"
-                role="tablist"
-              >
-                <b-nav
-                  header-tag="header"
-                  class="p-1"
-                  role="tab"
-                >
+              <div id="sidebar" role="tablist">
+                <b-nav header-tag="header" class="p-1" role="tab">
                   <b-nav-item
                     v-b-toggle.collapse-0
                     block
                     href="#"
                     variant="info"
                   >
-                    <router-link :to="{ name: 'Overview', params: { planId: 1 }}">
+                    <router-link
+                      :to="{ name: 'Overview', params: { planId: 1 } }"
+                    >
                       Overview
                     </router-link>
                   </b-nav-item>
@@ -175,21 +119,14 @@
                     href="#"
                     variant="info"
                   >
-                    <router-link :to="{ name: 'Stresses'}">
+                    <router-link :to="{ name: 'Stresses' }">
                       Stresses & Shocks
                     </router-link>
                   </b-nav-item>
                 </b-nav>
 
-                <div
-                  v-for="plan in plans"
-                  :key="plan.id"
-                >
-                  <b-nav
-                    header-tag="header"
-                    class="p-1"
-                    role="tab"
-                  >
+                <div v-for="plan in plans" :key="plan.id">
+                  <b-nav header-tag="header" class="p-1" role="tab">
                     <b-nav-item
                       v-b-toggle="'collapse-' + plan.id"
                       block
@@ -206,31 +143,52 @@
                     accordion="my-accordion"
                     role="tabpanel"
                   >
-
                     <b-nav-item
                       class="collapse-item"
-                      @click="$router.push({ name: 'ChartActions', params: { planId: plan.id }})"
+                      @click="
+                        $router.push({
+                          name: 'ChartActions',
+                          params: { planId: plan.id },
+                        })
+                      "
                     >
                       Actions
                     </b-nav-item>
 
                     <b-nav-item class="collapse-item">
-                      <router-link :to="{ name: 'ChartRegion', params: { planId: plan.id }}">
+                      <router-link
+                        :to="{
+                          name: 'ChartRegion',
+                          params: { planId: plan.id },
+                        }"
+                      >
                         Region
                       </router-link>
                     </b-nav-item>
                     <b-nav-item class="collapse-item">
-                      <router-link :to="{ name: 'ChartSubBasins', params: { planId: plan.id }}">
+                      <router-link
+                        :to="{
+                          name: 'ChartSubBasins',
+                          params: { planId: plan.id },
+                        }"
+                      >
                         Sub Basins
                       </router-link>
                     </b-nav-item>
                     <b-nav-item class="collapse-item">
-                      <router-link :to="{ name: 'ChartStreams', params: { planId: plan.id }}">
+                      <router-link
+                        :to="{
+                          name: 'ChartStreams',
+                          params: { planId: plan.id },
+                        }"
+                      >
                         Streams
                       </router-link>
                     </b-nav-item>
                     <b-nav-item class="collapse-item">
-                      <router-link :to="{ name: 'Feedback', params: { planId: plan.id }}">
+                      <router-link
+                        :to="{ name: 'Feedback', params: { planId: plan.id } }"
+                      >
                         Feedback
                       </router-link>
                     </b-nav-item>
@@ -244,18 +202,12 @@
           </b-container>
         </b-card-body>
         <em slot="footer">
-          <b-button
-            id="step2-next-btn"
-            variant="next"
-            size="sm"
-            @click="next"
-          >Next</b-button>
-          <b-button
-            id="step2-back-btn"
-            variant="back"
-            size="sm"
-            @click="back"
-          >Back</b-button>
+          <b-button id="step2-next-btn" variant="next" size="sm" @click="next"
+            >Next</b-button
+          >
+          <b-button id="step2-back-btn" variant="back" size="sm" @click="back"
+            >Back</b-button
+          >
         </em>
       </b-card>
     </div>
@@ -263,42 +215,49 @@
 </template>
 
 <script>
-
 export default {
-  name: 'Actors',
+  name: "Actors",
   props: {},
   data() {
     return {
       factors: [
-        {text: 'Infrastructure costs', value: 'Infrastructure costs'},
-        {text: 'Permits or other regulatory approval processes and cost', value: 'Permits or other regulatory approval processes and cost'},
-        {text: 'Reliance on other stakeholders to take action', value: 'Reliance on other stakeholders to take action'},
-        {text: 'Long time period before seeing positive results', value: 'Long time period before seeing positive results'},
-        {text: 'Public disapproval of the actions listed in the plan', value: 'Public disapproval of the actions listed in the plan'},
+        { text: "Infrastructure costs", value: "Infrastructure costs" },
+        {
+          text: "Permits or other regulatory approval processes and cost",
+          value: "Permits or other regulatory approval processes and cost",
+        },
+        {
+          text: "Reliance on other stakeholders to take action",
+          value: "Reliance on other stakeholders to take action",
+        },
+        {
+          text: "Long time period before seeing positive results",
+          value: "Long time period before seeing positive results",
+        },
+        {
+          text: "Public disapproval of the actions listed in the plan",
+          value: "Public disapproval of the actions listed in the plan",
+        },
       ],
 
       plans: [],
 
-      currentRouteName: '',
+      currentRouteName: "",
 
       adaptationPlan: [],
     };
   },
-  computed: {
-
-  },
-  watch: {
-
-  },
+  computed: {},
+  watch: {},
   mounted() {
     this.adaptationPlan = this.$store.state.currentAdaptationPlan;
     this.projectId = this.$route.params.projectId;
-    this.getProjectPlans(this.projectId).then(result => {
+    this.getProjectPlans(this.projectId).then((result) => {
       this.$store.commit("setPlanList", result);
       if (result == null) {
         return;
       }
-      result.forEach(plan => {
+      result.forEach((plan) => {
         this.plans.push({
           id: plan.plan_id,
           name: "Plan " + plan.plan_id,
@@ -307,13 +266,16 @@ export default {
     });
   },
   methods: {
-    next(){
-      localStorage.setItem('step4', true);
-      this.$router.push('/adaptation-plans/' + this.projectId + '/share/?wizard=true');
-
+    next() {
+      localStorage.setItem("step4", true);
+      this.$router.push(
+        "/adaptation-plans/" + this.projectId + "/share/?wizard=true"
+      );
     },
-    back(){
-      this.$router.push('/adaptation-plans/' + this.projectId + '/actions/?wizard=true');
+    back() {
+      this.$router.push(
+        "/adaptation-plans/" + this.projectId + "/actions/?wizard=true"
+      );
     },
     onSubmit(evt) {
       evt.preventDefault();
@@ -337,126 +299,126 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
-    .no-padding {
-        padding: 0;
-    }
+.no-padding {
+  padding: 0;
+}
 
-    #graph{
-        width:700px;
-        height: 500px;
-        overflow: auto;
-    }
+#graph {
+  width: 700px;
+  height: 500px;
+  overflow: auto;
+}
 
-    #feedback{
-        position: absolute;
-        z-index: 1000;
-        right: 30px;
-        top: 125px;
-        min-width: 350px;
-        background-color: #ffffff;
-    }
+#feedback {
+  position: absolute;
+  z-index: 1000;
+  right: 30px;
+  top: 125px;
+  min-width: 350px;
+  background-color: #ffffff;
+}
 
-    #sidebar .active {
-        color: #FFF !important;
-        background-color: #4cae4c;
-        margin: 5px !important;
-        border-radius: 5px;
-    }
+#sidebar .active {
+  color: #fff !important;
+  background-color: #4cae4c;
+  margin: 5px !important;
+  border-radius: 5px;
+}
 
-    #sidebar > div > ul > li > a {
-        color: rgba(255, 255, 255, 0.8) !important;
-    }
+#sidebar > div > ul > li > a {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
 
-    #sidebar > div > ul > li > a:hover {
-        color: #fff !important;
-    }
+#sidebar > div > ul > li > a:hover {
+  color: #fff !important;
+}
 
-    .filter-options input {
-        margin-left: 10px !important;
-    }
+.filter-options input {
+  margin-left: 10px !important;
+}
 
-    #sidebar {
-        background-color: #263238;
-        width: 200px;
-    }
+#sidebar {
+  background-color: #263238;
+  width: 200px;
+}
 
-    #sidebar .nav-item {
-        list-style: none;
-    }
+#sidebar .nav-item {
+  list-style: none;
+}
 
-    #sidebar .collapse .nav-item {
-        border-bottom: 1px solid #37474f !important;
-        list-style: none;
-    }
+#sidebar .collapse .nav-item {
+  border-bottom: 1px solid #37474f !important;
+  list-style: none;
+}
 
-    #sidebar .collapse .nav-item a {
-        color: rgba(255, 255, 255, 0.7);
-    }
+#sidebar .collapse .nav-item a {
+  color: rgba(255, 255, 255, 0.7);
+}
 
-    #sidebar .p-1 {
-        border-bottom: 1px solid #37474f !important;
-        font-size: 14px;
-        font-weight: bold;
-    }
+#sidebar .p-1 {
+  border-bottom: 1px solid #37474f !important;
+  font-size: 14px;
+  font-weight: bold;
+}
 
-    #sidebar .p-1:hover {
-        background-color: #000;
-        border-right: 5px solid #4cae4c;
-    }
+#sidebar .p-1:hover {
+  background-color: #000;
+  border-right: 5px solid #4cae4c;
+}
 
-    #sidebar .list-header a {
-        color: #fff;
-    }
+#sidebar .list-header a {
+  color: #fff;
+}
 
-    #sidebar .collapse-item a {
-        font-size: 12px;
-        text-indent: 15px;
-    }
+#sidebar .collapse-item a {
+  font-size: 12px;
+  text-indent: 15px;
+}
 
-    #sidebar .collapsing-section {
-        background-color: #000;
-    }
+#sidebar .collapsing-section {
+  background-color: #000;
+}
 
-    #sidebar .nav-link:hover {
-        background-color: #000;
-    }
+#sidebar .nav-link:hover {
+  background-color: #000;
+}
 
-    .feedback-container {
-        background-color: #ffffff;
-        padding: 1rem;
-        position: absolute;
-        right: 0px;
-        width: 400px;
-        z-index: 10000;
-    }
+.feedback-container {
+  background-color: #ffffff;
+  padding: 1rem;
+  position: absolute;
+  right: 0px;
+  width: 400px;
+  z-index: 10000;
+}
 
-    #feedback-block {
-        background-color: #f5f8fa;
-        padding: 20px;
-        border-radius: 10px;
-        margin-top: 20px;
-        font-size: 12px;
-        width: 100%;
-        height: 81vh;
-        overflow: auto;
-    }
+#feedback-block {
+  background-color: #f5f8fa;
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 20px;
+  font-size: 12px;
+  width: 100%;
+  height: 81vh;
+  overflow: auto;
+}
 
-    #thankyou-block {
-        background-color: #f5f8fa;
-        padding: 20px;
-        border-radius: 10px;
-        margin-top: 20px;
-        font-size: 12px;
-        width: 100%;
-    }
+#thankyou-block {
+  background-color: #f5f8fa;
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 20px;
+  font-size: 12px;
+  width: 100%;
+}
 
-    #feedback-block legend {
-        font-weight: bold;
-        font-size: 14px;
-    }
-    .nav_item_disabled{
-        pointer-events:none;
-        opacity:0.6;
-    }
+#feedback-block legend {
+  font-weight: bold;
+  font-size: 14px;
+}
+.nav_item_disabled {
+  pointer-events: none;
+  opacity: 0.6;
+}
 </style>
 

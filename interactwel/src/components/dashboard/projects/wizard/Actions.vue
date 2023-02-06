@@ -101,7 +101,6 @@
       <div class="help-block-actions">
         <b-collapse
           id="collapse-what_are_actions"
-          visible
         >
           <b-card
             tag="article"
