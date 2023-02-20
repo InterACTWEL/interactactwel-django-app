@@ -204,7 +204,7 @@
                   pill
                   variant="secondary"
                 >
-                  i
+                  <i class="fas fa-angle-double-down" />
                 </b-badge>
               </li>
             </div>

@@ -2,7 +2,15 @@
   <div>
     <h6 class="mt-3">
       <div class="title">
-        <div>Adaptation Plan {{ $route.params.planId }}</div> <div>Feedback</div> 
+        <div>
+          Adaptation Plan {{ $route.params.planId }}
+          <b-button
+            v-b-modal.modal-tall
+            variant="success"
+          >
+            Feedback
+          </b-button>
+        </div> 
       </div>
     </h6>
     <router-view />
