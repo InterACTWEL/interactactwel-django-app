@@ -90,14 +90,14 @@
           <em slot="header">
             <i
               v-b-toggle.collapse-what_are_plans
-              class="far fa-question-circle color:green"
+              class="far fa-question-circle"
               title="Show instructions"
               style="cursor: pointer"
             />
           </em>
         </div>
         <b-card-body class="no-padding">
-          <b-container class="">
+          <b-container class=""> 
             <b-row>
               <div id="sidebar" role="tablist">
                 <b-nav header-tag="header" class="p-1" role="tab">
@@ -183,7 +183,7 @@
                         }"
                       >
                         Streams
-                      </router-link>
+                      </router-link> 
                     </b-nav-item>
                     <b-nav-item class="collapse-item">
                       <router-link
@@ -215,6 +215,7 @@
 </template>
 
 <script>
+
 export default {
   name: "Actors",
   props: {},
@@ -245,6 +246,7 @@ export default {
       currentRouteName: "",
 
       adaptationPlan: [],
+
     };
   },
   computed: {},
@@ -299,6 +301,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
+.container-fluid {
+  padding: 0;
+}
 .no-padding {
   padding: 0;
 }
