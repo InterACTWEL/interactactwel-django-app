@@ -87,9 +87,10 @@
     </ol>
     <div
       id="step4"
+      class="mt-4"
       title="Step 4"
     >
-      <div class="help-block-viz">
+      <div v-if="!showFeedbackBlock" class="help-block-viz">
         <b-collapse
           id="collapse-what_are_plans"
           visible
@@ -229,11 +230,6 @@
                         Streams
                       </router-link>
                     </b-nav-item>
-                    <b-nav-item class="collapse-item">
-                      <router-link :to="{ name: 'Feedback', params: { planId: plan.id }}">
-                        Feedback
-                      </router-link>
-                    </b-nav-item>
                   </b-collapse>
                 </div>
               </div>
@@ -259,13 +255,22 @@
         </em>
       </b-card>
     </div>
+    <div
+      v-if="showFeedbackBlock"
+      class="feedback-wrapper mt-4"
+    >
+      <feedback />
+    </div>
   </b-col>
 </template>
 
 <script>
 
+import Feedback from "@/components/dashboard/projects/charts/Feedback";
+import EventBus from '../../../../event-bus';
 export default {
-  name: 'Actors',
+  name: 'Plans',
+  components: {Feedback},
   props: {},
   data() {
     return {
@@ -281,7 +286,12 @@ export default {
 
       currentRouteName: '',
 
-      adaptationPlan: [],
+      adaptationPlan: {
+        selectedGoals: [],
+        selectedActors: [],
+        selectedActions: [],
+      },
+      showFeedbackBlock: false,
     };
   },
   computed: {
@@ -289,6 +299,9 @@ export default {
   },
   watch: {
 
+  },
+  updated() {
+    console.log('Component updated!');
   },
   mounted() {
     this.adaptationPlan = this.$store.state.currentAdaptationPlan;
@@ -304,6 +317,11 @@ export default {
           name: "Plan " + plan.plan_id,
         });
       });
+    });
+  },
+  created() {
+    EventBus.$on('SHOW_FEEDBACK_BLOCK', (value) => {
+      this.showFeedbackBlock = value;
     });
   },
   methods: {
@@ -426,7 +444,7 @@ export default {
         padding: 1rem;
         position: absolute;
         right: 0px;
-        width: 400px;
+        width: 375px;
         z-index: 10000;
     }
 
@@ -457,6 +475,13 @@ export default {
     .nav_item_disabled{
         pointer-events:none;
         opacity:0.6;
+    }
+
+    .feedback-wrapper {
+      position: absolute;
+      right: 80px;
+      border: none;
+      z-index: 1000;
     }
 </style>
 

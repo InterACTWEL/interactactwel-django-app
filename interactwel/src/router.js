@@ -30,7 +30,6 @@ const Plans = () => import('@/components/dashboard/projects/wizard/Plans');
 const Share = () => import('@/components/dashboard/projects/wizard/Share');
 const Visualization = () => import('@/components/dashboard/projects/wizard/Visualization');
 const Overview = () => import('@/components/dashboard/projects/charts/Overview');
-const Feedback = () => import('@/components/dashboard/projects/charts/Feedback');
 const ChartActions = () => import('@/components/dashboard/projects/charts/Actions');
 const ChartStreams = () => import('@/components/dashboard/projects/charts/Streams');
 const ChartRegion = () => import('@/components/dashboard/projects/charts/Region');
@@ -226,11 +225,6 @@ export default new Router({
                   path: 'sub-basins',
                   name: 'ChartSubBasins',
                   component: ChartSubBasins,
-                },
-                {
-                  path: 'feedback',
-                  name: 'Feedback',
-                  component: Feedback,
                 },
               ],
             },
