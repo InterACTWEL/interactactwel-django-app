@@ -324,7 +324,7 @@
 import JSONData from "../../../../../public/static/result_action_plans.json";
 import IrrigationGraph from './data/IrrigationGraph.vue';
 import CropYieldGraph from './data/CropYieldGraph.vue';
-import BaseCropYieldGraph from './data/BaseCropYieldGraph.vue';
+import BaseCropYieldGraph from './data/BaseCropYieldGraph.vue'; 
 import NFertilizerGraph from './data/NFertilizerGraph.vue';
 import PFertilizerGraph from './data/PFertilizerGraph.vue';
 import OverviewWaterRightsGraph from './data/OverviewWaterRightsGraph.vue';
@@ -339,6 +339,8 @@ import EtGraph from "@/components/dashboard/projects/charts/data/etGraph";
 import SedimentYieldGraph from "@/components/dashboard/projects/charts/data/sedimentYieldGraph";
 import WaterYieldGraph from "@/components/dashboard/projects/charts/data/waterYieldGraph";
 import no3SurqGraph from "@/components/dashboard/projects/charts/data/no3SurqGraph";
+// import TempBoxplotGraph from "@/components/dashboard/projects/charts/data/TempBoxplotGraph";
+//import TempLineGraph from "@/components/dashboard/projects/charts/data/TempLineGraph";
 
 export default {
   name: 'Region',

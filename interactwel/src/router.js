@@ -242,7 +242,6 @@ export default new Router({
           name: 'Share',
           component: Share,
         },
-
       ],
     },
     {

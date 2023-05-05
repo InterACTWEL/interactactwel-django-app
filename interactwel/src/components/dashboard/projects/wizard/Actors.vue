@@ -101,7 +101,6 @@
       <div class="help-block-actors">
         <b-collapse
           id="collapse-what_are_actors"
-          visible
         >
           <b-card
             tag="article"
@@ -205,7 +204,7 @@
                   pill
                   variant="secondary"
                 >
-                  i
+                  <i class="fas fa-angle-double-down" />
                 </b-badge>
               </li>
             </div>

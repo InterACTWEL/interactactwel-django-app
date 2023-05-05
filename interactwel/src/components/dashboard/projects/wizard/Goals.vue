@@ -97,7 +97,6 @@
       <div class="help-block">
         <b-collapse
           id="collapse-what_are_goals"
-          visible
         >
           <b-card
             class="mb-2"
@@ -215,7 +214,7 @@
                   pill
                   variant="secondary"
                 >
-                  i
+                  <i class="fas fa-angle-double-down" />
                 </b-badge>
               </li>
             </div>
