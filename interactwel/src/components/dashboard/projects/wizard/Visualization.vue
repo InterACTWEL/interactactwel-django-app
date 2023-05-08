@@ -7,43 +7,28 @@
             <b-nav pills>
               <b-nav-item>Adaptation Plan {{ $route.params.planId }}</b-nav-item>
             </b-nav>
-            <div>
-              <!-- Sidebar toggle button -->
-              <b-button variant="success" @click="showSidebar = true">
-                Feedback
-              </b-button>
-            </div>
           </div>
         </h6>
         <router-view :key="$route.fullPath" />
       </b-col>
     </b-row>
-    <div class="sidebar-container">
-      <b-container fluid>
-        <b-sidebar v-model="showSidebar" 
-        position="start" 
-        title="Feedback">
-          <FeedbackPage />
-        </b-sidebar>
-      </b-container>
-    </div>
   </div>
 </template>
 
 <script>
-import FeedbackPage from '@/components/dashboard/projects/charts/Feedback.vue';
+// import FeedbackPage from '@/components/dashboard/projects/charts/Feedback.vue';
 
-export default {
-  name: "Visualization",
-  components: {
-    FeedbackPage,
-  },
-  data() {
-    return {
-      showSidebar: false,
-    };
-  },
-};
+// export default {
+//   name: "Visualization",
+//   components: {
+//     FeedbackPage,
+//   },
+//   data() {
+//     return {
+//       showSidebar: false,
+//     };
+//   },
+// };
 </script>
 
 <style scoped>
