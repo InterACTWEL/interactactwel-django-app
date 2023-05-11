@@ -177,7 +177,6 @@ export default {
   position: absolute;
   z-index: 1000;
   left: 30px;
-  top: 70px;
   width: 1000px;
 }
 
