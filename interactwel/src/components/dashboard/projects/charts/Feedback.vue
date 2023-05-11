@@ -1,10 +1,22 @@
 <template>
   <div
-    id="graph"
-    class="card"
+    class="card feedback-container"
   >
     <div class="card-header">
-      <strong>Evaluate Adaptation Plan {{ $route.params.planId }}</strong>
+      <b-row>
+        <b-col>
+          <strong>Evaluate Adaptation Plan {{ $route.params.planId }}</strong>
+        </b-col>
+        <b-col>
+          <h5 class="text-right font-weight-light mb-0">
+            <i
+              class="fas fa-times"
+              style="cursor: pointer"
+              @click="hideFeedbackBlock"
+            />
+          </h5>
+        </b-col>
+      </b-row>
     </div>
 
     <b-alert :show="feedbackAlreadyProvided && showOldFeedbackView">
@@ -99,6 +111,7 @@
 <script>
 
 import OldFeedbackView from "./OldFeedbackView";
+import EventBus from "@/event-bus";
 export default {
   name: 'Feedback',
   components: {OldFeedbackView},
@@ -310,6 +323,9 @@ export default {
       this.showAddFeedbackForm = true;
       this.showAddFeedbackAgainButton = false;
     },
+    hideFeedbackBlock() {
+      EventBus.$emit('SHOW_FEEDBACK_BLOCK', false);
+    },
   },
 
 };
@@ -317,5 +333,11 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
+.feedback-container{
+  width: 600px;
+  height: 700px;
+  overflow: auto;
+}
 
 </style>

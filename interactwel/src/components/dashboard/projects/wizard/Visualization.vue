@@ -1,14 +1,29 @@
 <template>
   <div>
-    <h6 class="mt-3">
-      Adaptation Plan {{ $route.params.planId }}
-    </h6>
-    <router-view :key="$route.fullPath" />/>
+    <b-row class="my-3">
+      <b-col>
+        <h6>
+          Adaptation Plan {{ $route.params.planId }}
+        </h6>
+      </b-col>
+      <b-col>
+        <b-button
+          id="feedback-btn"
+          variant="next"
+          size="sm"
+          @click="showFeedback"
+        >Provide Feedback
+        </b-button>
+      </b-col>
+    </b-row>
+    <router-view :key="$route.fullPath" />
   </div>
 </template>
 
 
 <script>
+import EventBus from '../../../../event-bus';
+
 export default {
   name: 'Visualization',
   props: {},
@@ -18,10 +33,13 @@ export default {
   watch: {},
   mounted() {
   },
-  methods: {},
+  methods: {
+    showFeedback() {
+      EventBus.$emit('SHOW_FEEDBACK_BLOCK', true);
+    },
+  },
 };
 </script>
-
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
