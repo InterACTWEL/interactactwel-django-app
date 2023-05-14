@@ -32,7 +32,7 @@
             </b-row>
           </div>
         </b-tab>-->
-        <b-tab title="Crop yield">
+        <!-- <b-tab title="Crop yield">
           <div class="card-body no-padding">
             <b-row>
               <b-col
@@ -314,6 +314,32 @@
               </b-row>
             </div>
           </div>
+        </b-tab> -->
+        <b-tab title="Stream Temperature(Line)">
+          <div class="card-body">
+            <div class="card-body">
+              <b-row>
+                <b-col
+                    lg="6"
+                    class="p-3"
+                >
+                  <h6 class="baseline-graph-title text-center">
+                    Action Plan {{ $route.params.planId }}
+                  </h6>
+                  <apex-temp-line-graph v-bind:base-graph="false"/>
+                </b-col>
+                <b-col
+                    lg="6"
+                    class="p-3"
+                >
+                  <h6 class="baseline-graph-title text-center">
+                    Business as Usual
+                  </h6>
+                  <apex-temp-line-graph v-bind:base-graph="true"/>
+                </b-col>
+              </b-row>
+            </div>
+          </div>
         </b-tab>
       </b-tabs>
     </div>
@@ -339,8 +365,10 @@ import EtGraph from "@/components/dashboard/projects/charts/data/etGraph";
 import SedimentYieldGraph from "@/components/dashboard/projects/charts/data/sedimentYieldGraph";
 import WaterYieldGraph from "@/components/dashboard/projects/charts/data/waterYieldGraph";
 import no3SurqGraph from "@/components/dashboard/projects/charts/data/no3SurqGraph";
-// import TempBoxplotGraph from "@/components/dashboard/projects/charts/data/TempBoxplotGraph";
-//import TempLineGraph from "@/components/dashboard/projects/charts/data/TempLineGraph";
+import ApexTempLineGraph from "@/components/dashboard/projects/charts/data/ApexTempLineGraph";
+// import ApexTempLineGraph from './data/ApexTempLineGraph.vue';
+// import ApexTempLineGraph from './data/ApexTempLineGraph.vue';
+// import TempLineGraph from "@/components/dashboard/projects/charts/data/TempLineGraph";
 
 export default {
   name: 'Region',
@@ -358,6 +386,7 @@ export default {
     'pFertilizerGraph': PFertilizerGraph,
     'overviewWaterRightsGraph': OverviewWaterRightsGraph,
     'OverviewBaseWaterRightsGraph': OverviewBaseWaterRightsGraph,
+    ApexTempLineGraph,
   },
 
   data() {
