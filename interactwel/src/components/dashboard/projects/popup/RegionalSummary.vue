@@ -400,6 +400,10 @@ export default {
       let dataIndex = subbasinID;
       //for (let dataIndex in data.Data){
       let dataPoint = data.Data[dataIndex];
+      if (!dataPoint) {
+        alert("No regional summary data found for the selected sub-basin");
+        return;
+      }
 
       let dataset = {};
       //dataset.label = dataPoint.Name;

@@ -152,6 +152,10 @@
         imperial="imperial"
       />
     </l-map>
+    <component
+      :is="component='regional-summary'"
+      v-show="regionalSummaryVisibility"
+    />
   </div>
 </template>
 
@@ -172,6 +176,7 @@ import {
 } from 'vue2-leaflet';
 
 import ReservoirList from "../../../../public/static/reservoirs_list.json";
+import RegionalSummary from '../projects/popup/RegionalSummary.vue';
 import ReservoirDataJson from "../../../../public/static/reservoirs_data.json";
 import GaugingStations from "../../../../public/static/gauging_stations.json";
 import GaugeDataJson from "../../../../public/static/streamflow_station_data.json";
@@ -186,6 +191,7 @@ export default {
   name: "ProjectMap",
 
   components: {
+    RegionalSummary,
     'l-map': LMap,
     'l-tile-layer': LTileLayer,
     'l-marker': LMarker,
@@ -270,6 +276,7 @@ export default {
 
       selectedSubBasin: 1,
       subBasinsVisible: true,
+      regionalSummaryVisibility: false,
 
     };
   },
@@ -345,10 +352,17 @@ export default {
     },
     onEachFeatureFunction() {
       return (feature, layer) => {
+        layer.bindTooltip(
+          "<div><strong>Click and explore!</strong>",
+        );
+
+        layer.on('click', function() {
+          EventBus.$emit('SELECTED_SUB_BASIN_OPTION', feature.properties.Name);
+        });
 
         // this is only required for the initial rendering to set styling for the default sub basin selection.
         // After that changeSubBasinStyles() is used.
-        if (layer.feature.properties.Name == this.selectedSubBasin) { // don't substitute with === as data types different across components
+        if (layer.feature.properties.Name === this.selectedSubBasin) {
           layer.setStyle({
             weight: 1.5,
             color: "#7c7c7c",
@@ -366,10 +380,16 @@ export default {
   mounted() {
     let $this = this;
     EventBus.$on('SELECTED_SUB_BASIN_OPTION', function(subBasin) {
-      $this.selectedSubBasin = subBasin;
+      $this.selectedSubBasin = subBasin.toString();
       $this.changeSubBasinStyles();
+      EventBus.$emit('CREATE_REGION_SUMMARY', subBasin.toString());
+      $this.regionalSummaryVisibility = true;
     });
+    EventBus.$emit('CREATE_REGION_SUMMARY', '1');
 
+    EventBus.$on('CLOSE', function() {
+      $this.regionalSummaryVisibility = false;
+    });
   },
 
   methods: {
@@ -400,6 +420,9 @@ export default {
           );
         }
       });
+    },
+    createRegionSummary(subbasinID) {
+      EventBus.$emit('CREATE_REGION_SUMMARY', subbasinID);
     },
   },
 
