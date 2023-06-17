@@ -29,9 +29,12 @@
         </div>
         <hr>
         <div v-if="feedback.rating != null">
-          How do you rate this plan? <star-rating
-            :rating="feedback.rating"
-            read-only
+          How do you rate this plan?
+          <vue-slider
+            :min="1"
+            :max="5"
+            :value="feedback.rating"
+            @input="onRatingChange"
           />
         </div>
       </div>
@@ -40,6 +43,8 @@
 </template>
 
 <script>
+import VueSlider from 'vue-slider-component';
+
 export default {
   name: "FeedbackView",
   props: {
@@ -68,8 +73,18 @@ export default {
     });
 
   },
+
+  components: {
+    VueSlider,
+  },
+
+  methods: {
+    onRatingChange(value) {
+      this.feedback.rating = value;
+    },
+  },
 };
-</script>
+
 
 <style scoped>
 

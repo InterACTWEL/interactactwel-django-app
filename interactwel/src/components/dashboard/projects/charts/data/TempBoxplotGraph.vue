@@ -1,59 +1,114 @@
 <template>
-    <div class="small">
-      <box-plot-chart :chart-data="datacollection" />
-      <button @click="fillData();">Randomize</button>
-    </div>
+  <box-plot-chart
+    :chart-data="datacollection"
+    :options="options"
+    :width="320"
+    :height="350"
+  />
 </template>
-  
-<script>
-import BoxPlotChart from "../lib/BoxPlotChart.js";
 
-  
+<script>
+import axios from 'axios';
+import { BoxPlot, mixins } from 'vue-chartjs';
+
 export default {
-    components: {
-      BoxPlotChart
+  name: 'TempBoxplotGraph',
+  extends: BoxPlot,
+  mixins: [mixins.reactiveData],
+  props: {
+    selectedBasinID: {
+      type: String,
     },
-    data() {
-      return {
-        datacollection: null
-      };
-    },
-    mounted() {
-      this.fillData();
-    },
-    methods: {
-      fillData() {
-        this.datacollection = {
-          labels: [this.getRandomInt(), this.getRandomInt()],
-          datasets: [
-            {
-              label: "Data One",
-              backgroundColor: "#f87979",
-              data: [this.getRandomValues(100, 200), this.getRandomValues()]
+    baseGraph: Boolean,
+  },
+
+  data() {
+    return {
+      planId: "1",
+      JSONData: null,
+      datacollection: null,
+      graphColors: ["#28a745", "#28a745", "#28a745"],
+      options: {
+        responsive: true,
+        title: {
+          display: false,
+          text: 'Temperature contribution to stream in watershed.',
+        },
+        scales: {
+          x: {
+            display: true,
+            stacked: false,
+            title: {
+              display: true,
+              text: 'Years',
             },
-            {
-              label: "Data One",
-              backgroundColor: "blue",
-              data: [this.getRandomValues(), this.getRandomValues(20, 80)]
-            }
-          ]
-        };
+          },
+          y: {
+            display: true,
+            stacked: false,
+            title: {
+              display: true,
+              text: 'Celsius',
+            },
+          },
+        },
       },
-      getRandomInt() {
-        return Math.floor(Math.random() * (50 - 5 + 1)) + 5;
-      },
-      getRandomValues(min = 0, max = 100) {
-        return Array.from({ length: 100 }).map(
-          () => Math.random() * (max - min) + min
-        );
+    };
+  },
+
+  mounted() {
+    this.planId = this.$route.params.planId;
+    this.getData();
+  },
+
+  methods: {
+    async getData() {
+      try {
+        const response = await axios.get("/static/et.json");
+        this.JSONData = response.data;
+        this.buildDataCollection();
+      } catch (error) {
+        console.error(error);
       }
-    }
-  };
-  </script>
-  
-  <style>
-  .small {
-    max-width: 600px;
-    margin: 150px auto;
-}
-</style>
+    },
+
+    buildDataCollection() {
+      this.datacollection = {
+        labels: this.JSONData.Legend,
+        datasets: [],
+      };
+
+      const dataset = {
+        label: this.JSONData.Description,
+        data: [],
+        backgroundColor: this.graphColors[0],
+      };
+
+      const plan = this.getPlanDataById(this.JSONData, this.planId, this.baseGraph);
+
+      for (const dataIndex in plan.Data) {
+        const dataPoint = plan.Data[dataIndex];
+        dataset.data.push(dataPoint);
+      }
+
+      this.datacollection.datasets.push(dataset);
+    },
+
+    getPlanDataById(data, planId, baseGraph) {
+      for (const plan in data.Adaptation_Plans) {
+        const planObj = data.Adaptation_Plans[plan];
+        if (baseGraph && planObj.planId === null) {
+          return data.Adaptation_Plans[plan];
+        }
+        if (planObj.planId === planId) {
+          return data.Adaptation_Plans[plan];
+        }
+      }
+    },
+
+    getColor(i) {
+      return this.graphColors[i];
+    },
+  },
+};
+</script>

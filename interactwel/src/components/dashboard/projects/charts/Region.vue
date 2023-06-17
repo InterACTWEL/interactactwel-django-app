@@ -341,6 +341,58 @@
             </div>
           </div>
         </b-tab>
+        <b-tab title="Boxplot Stream Temp">
+          <div class="card-body">
+            <div class="card-body">
+              <b-row>
+                <b-col
+                    lg="6"
+                    class="p-3"
+                >
+                  <h6 class="baseline-graph-title text-center">
+                    Action Plan {{ $route.params.planId }}
+                  </h6>
+                  <temp-boxplot-graph v-bind:base-graph="false"/>
+                </b-col>
+                <b-col
+                    lg="6"
+                    class="p-3"
+                >
+                  <h6 class="baseline-graph-title text-center">
+                    Business as Usual
+                  </h6>
+                  <temp-boxplot-graph v-bind:base-graph="true"/>
+                </b-col>
+              </b-row>
+            </div>
+          </div>
+        </b-tab>
+        <!-- <b-tab title="ApexBoxplot Stream Temp">
+          <div class="card-body">
+            <div class="card-body">
+              <b-row>
+                <b-col
+                    lg="6"
+                    class="p-3"
+                >
+                  <h6 class="baseline-graph-title text-center">
+                    Action Plan {{ $route.params.planId }}
+                  </h6>
+                  <apex-temp-box-graph v-bind:base-graph="false"/>
+                </b-col>
+                <b-col
+                    lg="6"
+                    class="p-3"
+                >
+                  <h6 class="baseline-graph-title text-center">
+                    Business as Usual
+                  </h6>
+                  <apex-temp-box-graph v-bind:base-graph="true"/>
+                </b-col>
+              </b-row>
+            </div>
+          </div>
+        </b-tab> -->
       </b-tabs>
     </div>
   </div>
@@ -366,9 +418,8 @@ import SedimentYieldGraph from "@/components/dashboard/projects/charts/data/sedi
 import WaterYieldGraph from "@/components/dashboard/projects/charts/data/waterYieldGraph";
 import no3SurqGraph from "@/components/dashboard/projects/charts/data/no3SurqGraph";
 import ApexTempLineGraph from "@/components/dashboard/projects/charts/data/ApexTempLineGraph";
-// import ApexTempLineGraph from './data/ApexTempLineGraph.vue';
-// import ApexTempLineGraph from './data/ApexTempLineGraph.vue';
-// import TempLineGraph from "@/components/dashboard/projects/charts/data/TempLineGraph";
+import TempBoxplotGraph from "@/components/dashboard/projects/charts/data/TempBoxplotGraph.vue";
+
 
 export default {
   name: 'Region',
@@ -387,6 +438,7 @@ export default {
     'overviewWaterRightsGraph': OverviewWaterRightsGraph,
     'OverviewBaseWaterRightsGraph': OverviewBaseWaterRightsGraph,
     ApexTempLineGraph,
+    TempBoxplotGraph
   },
 
   data() {
@@ -432,6 +484,7 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
+
 <style>
 .baseline-graph-title{
     background-color: #6c757d;
