@@ -405,7 +405,6 @@ export default {
   padding: 1rem;
   position: absolute;
   right: 0px;
-  width: 375px;
   z-index: 10000;
 }
 
