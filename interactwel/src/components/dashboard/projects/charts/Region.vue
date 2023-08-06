@@ -333,6 +333,23 @@
             </div>
           </div>
         </b-tab>
+        <b-tab title="Error Bars Sample">
+          <div class="card-body">
+            <div class="card-body">
+              <b-row>
+                <b-col
+                  lg="12"
+                  class="p-3"
+                >
+                  <h6 class="baseline-graph-title text-center">
+                    Error Bars Example
+                  </h6>
+                  <error-bars-example />
+                </b-col>
+              </b-row>
+            </div>
+          </div>
+        </b-tab>
       </b-tabs>
     </div>
   </div>
@@ -358,6 +375,7 @@ import SedimentYieldGraph from "@/components/dashboard/projects/charts/data/sedi
 import WaterYieldGraph from "@/components/dashboard/projects/charts/data/waterYieldGraph";
 import no3SurqGraph from "@/components/dashboard/projects/charts/data/no3SurqGraph";
 import AppexBoxplotExample from "@/components/dashboard/projects/charts/data/ApexBoxplotExample";
+import ErrorBarsExample from "@/components/dashboard/projects/charts/data/ErrorBarsExample";
 // import TempBoxplotGraph from "@/components/dashboard/projects/charts/data/TempBoxplotGraph";
 //import TempLineGraph from "@/components/dashboard/projects/charts/data/TempLineGraph";
 
@@ -365,6 +383,7 @@ export default {
   name: 'Region',
 
   components: {
+    ErrorBarsExample,
     AppexBoxplotExample,
     No3CropGraph,
     No3PercGraph,

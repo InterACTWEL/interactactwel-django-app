@@ -117,10 +117,10 @@ import EventBus from './../../../../event-bus';
 import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
 import {faTimesCircle} from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
-import PieChart from "./../charts/lib/PieChart";
-import VerticalBarChart from "./../charts/lib/VerticalBarChart";
-import HorizontalBarChart from "./../charts/lib/HorizontalBarChart";
-import LineChart from "./../charts/lib/LineChart";
+import PieChart from "../charts/lib/PieChart";
+import VerticalBarChart from "../charts/lib/VerticalBarChart";
+import HorizontalBarChart from "../charts/lib/HorizontalBarChart";
+import LineChart from "../charts/lib/LineChart";
 
 export default {
   name: 'RegionalSummary',
