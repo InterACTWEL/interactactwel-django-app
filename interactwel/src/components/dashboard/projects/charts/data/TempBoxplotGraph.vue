@@ -6,7 +6,7 @@
 </template>
   
 <script>
-import BoxPlotChart from "../lib/BoxPlotChart.js";
+import BoxPlotChart from "../lib/BoxPlotChart.vue";
 
   
 export default {

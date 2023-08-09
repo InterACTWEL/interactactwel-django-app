@@ -57,7 +57,7 @@
 </template>
 
 <script>
-import VerticalBarChart from "./../charts/lib/VerticalBarChart";
+import VerticalBarChart from "../charts/lib/VerticalBarChart";
 import axios from 'axios';
 
 export default {

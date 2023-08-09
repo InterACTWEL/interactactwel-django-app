@@ -28,8 +28,8 @@
 </template>
 
 <script>
-import HorizontalBarChart from "./../lib/HorizontalBarChart";
-import LineChart from "./../lib/LineChart";
+import HorizontalBarChart from "../lib/HorizontalBarChart";
+import LineChart from "../lib/LineChart";
 //import chartjsPluginAnnotation from "chartjs-plugin-annotation";
 
 export default {

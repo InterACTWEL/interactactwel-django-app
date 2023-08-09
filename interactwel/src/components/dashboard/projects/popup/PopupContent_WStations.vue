@@ -54,7 +54,7 @@
 
 <script>
 import axios from 'axios';
-import VerticalBarChart from "./../charts/lib/VerticalBarChart";
+import VerticalBarChart from "../charts/lib/VerticalBarChart";
 
 export default {
   name: "PopupContentWStations",

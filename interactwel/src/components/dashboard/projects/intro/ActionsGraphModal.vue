@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import LineChart from "../../projects/charts/lib/LineChart";
+import LineChart from "../charts/lib/LineChart";
 
 export default {
   name: 'ActionsGraphModal',
