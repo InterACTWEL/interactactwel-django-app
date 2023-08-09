@@ -3,16 +3,14 @@
 </template>
 
 <script>
-import Chart from "chart.js";
-import 'chartjs-chart-error-bars';
+import { BarWithErrorBarsChart } from 'chartjs-chart-error-bars';
 
 export default {
   name: "ErrorBarsExample",
   mounted() {
-    let chart = new Chart(document.getElementById("canvas").getContext("2d"), {
-      type: "barWithErrorBars",
+    const chart = new BarWithErrorBarsChart(document.getElementById('canvas').getContext('2d'), {
       data: {
-        labels: ["A", "B"],
+        labels: ['A', 'B'],
         datasets: [
           {
             data: [
@@ -29,17 +27,6 @@ export default {
             ],
           },
         ],
-      },
-      options: {
-        scales: {
-          yAxes: [
-            {
-              ticks: {
-                beginAtZero: true,
-              },
-            },
-          ],
-        },
       },
     });
     return chart;

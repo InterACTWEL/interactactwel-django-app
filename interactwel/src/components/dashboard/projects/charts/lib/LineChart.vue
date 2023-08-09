@@ -1,29 +1,27 @@
 <template>
-  <Bar :chart-data="chartData" />
+  <Line
+    v-if="chartData != null"
+    :chart-data="chartData"
+    :chart-options="options"
+  />
 </template>
 
 <script>
-import { Bar } from 'vue-chartjs';
+
+import { Line } from 'vue-chartjs';
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js';
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
 
 export default {
   name: 'LineChart',
-  components: { Bar },
-  data() {
-    return {
-      chartData: {
-        labels: [ 'January', 'February', 'March'],
-        datasets: [
-          {
-            label: 'Data One',
-            backgroundColor: '#f87979',
-            data: [40, 20, 12],
-          },
-        ],
-      },
-    };
+  components: { Line },
+  props: {
+    chartData: {
+      type: Object,
+      required: false,
+    },
+    options: {},
   },
 };
 

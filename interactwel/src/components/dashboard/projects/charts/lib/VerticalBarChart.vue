@@ -1,5 +1,9 @@
 <template>
-  <Bar :chart-data="chartData" />
+  <Bar
+    v-if="chartData != null"
+    :chart-data="chartData"
+    :chart-options="options"
+  />
 </template>
 
 <script>
@@ -12,19 +16,12 @@ ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 export default {
   name: 'VerticalBarChart',
   components: { Bar },
-  data() {
-    return {
-      chartData: {
-        labels: [ 'January', 'February', 'March'],
-        datasets: [
-          {
-            label: 'Data One',
-            backgroundColor: '#f87979',
-            data: [40, 20, 12],
-          },
-        ],
-      },
-    };
+  props: {
+    chartData: {
+      type: Object,
+      required: false,
+    },
+    options: {},
   },
 };
 
