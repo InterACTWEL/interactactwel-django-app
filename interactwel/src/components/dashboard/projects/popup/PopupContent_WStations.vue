@@ -98,22 +98,22 @@ export default {
           intersect: true,
         },
         scales: {
-          xAxes: [{
+          x: {
             display: true,
             stacked: false,
-            scaleLabel: {
+            title: {
               display: true,
-              labelString: 'Months',
+              text: 'Months',
             },
-          }],
-          yAxes: [{
+          },
+          y: {
             display: true,
             stacked: false,
-            scaleLabel: {
+            title: {
               display: true,
-              labelString: 'Precipitation depth (mm)',
+              text: 'Precipitation depth (mm)',
             },
-          }],
+          },
         },
       },
     };

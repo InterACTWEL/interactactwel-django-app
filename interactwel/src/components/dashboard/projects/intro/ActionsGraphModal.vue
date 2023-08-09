@@ -43,7 +43,7 @@ export default {
     return {
       planId: "1",
       JSONData: null,
-      datacollection: null,
+      datacollection: null
       options: {
         hover: {
           mode: 'dataset',
@@ -66,36 +66,36 @@ export default {
         },
         scales: {
           //type: 'category',
-          xAxes: [{
+          x: {
             gridLines: {
               display: false,
             },
-            scaleLabel: {
+            title: {
               display: true,
-              labelString: 'Time',
+              text: 'Time',
             },
             position: 'bottom',
             ticks: {
               beginAtzero: false,
               stepSize: 1,
             },
-          }],
+          },
 
-          yAxes: [{
+          y: {
             gridLines: {
               drawBorder: false,
             },
             //type: 'category',
-            scaleLabel: {
+            title: {
               display: true,
-              labelString: 'Actions',
+              text: 'Actions',
             },
             ticks: {
               beginAtZero: false,
               max: 10,
             },
             //labels: ["Business as usual", "Increase amount of SW", "Decrease amount of SW", "Increase amount of GW", "Decrease amount of GW", "Increase amount of CR", "Decrease amount of CR"],
-          }],
+          },
         },
       },
     };

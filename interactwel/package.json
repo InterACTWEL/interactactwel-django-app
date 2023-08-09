@@ -16,6 +16,7 @@
     "bootstrap-vue": "^2.0.1",
     "chart.js": "^2.8.0",
     "chartjs-chart-box-and-violin-plot": "1.4.0",
+    "chartjs-chart-error-bars": "^4.3.0",
     "chartjs-plugin-annotation": "^0.5.7",
     "d3": "^5.9.2",
     "d3-vs": "^0.8.0",

@@ -94,35 +94,35 @@ export default {
         },
         scales: {
           //type: 'category',
-          xAxes: [{
+          x: {
             gridLines: {
               display: false,
             },
-            scaleLabel: {
+            title: {
               display: true,
-              labelString: 'Time',
+              text: 'Time',
             },
             position: 'bottom',
             ticks: {
               beginAtzero: false,
               stepSize: 1,
             },
-          }],
+          },
 
-          yAxes: [{
+          y: {
             gridLines: {
               drawBorder: false,
             },
             //type: 'category',
-            scaleLabel: {
+            title: {
               display: true,
-              labelString: 'Actions',
+              text: 'Actions',
             },
             ticks: {
               beginAtZero: false,
               max: 10,
             },
-          }],
+          },
         },
       },
     };

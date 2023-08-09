@@ -12,7 +12,6 @@
 <script>
 import axios from 'axios';
 import LineChart from "../lib/LineChart";
-import chartjsPluginAnnotation from "chartjs-plugin-annotation";
 
 export default {
   name: 'ActionsGraphSteppedLines',
@@ -39,30 +38,30 @@ export default {
           text: 'Actions taken by each actor through time',
         },
         scales: {
-          xAxes: [{
+          x: {
             type: 'category',
             position: 'bottom',
-            scaleLabel: {
+            title: {
               display: true,
-              labelString: 'Time',
+              text: 'Time',
             },
             ticks: {
               beginAtzero: false,
               stepSize: 1,
             },
-          }],
-          yAxes: [{
+          },
+          y: {
             type: 'category',
-            scaleLabel: {
+            title: {
               display: true,
-              labelString: 'Actions',
+              text: 'Actions',
             },
             ticks: {
               beginAtZero: false,
               max: 9,
             },
             labels: ["Business as usual", "Increase amount of SW", "Decrease amount of SW", "Increase amount of GW", "Decrease amount of GW", "Increase amount of CR", "Decrease amount of CR"],
-          }],
+          },
         },
       },
     };
@@ -91,7 +90,6 @@ export default {
 
   methods: {
     buildDataCollection(data, labelsArr, selectedActors, adaptationPlan){
-      console.log(data);
       let actions = data.Actions;
       this.datacollection = {
         labels: [],

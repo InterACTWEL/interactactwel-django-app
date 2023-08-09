@@ -221,7 +221,6 @@ export default {
   async mounted() {
 
     this.projects = await this.getProjectsListOfLoggedInUser();
-    setInterval(() => this.emitWindowResizeEvent(), 500);
 
   },
 
