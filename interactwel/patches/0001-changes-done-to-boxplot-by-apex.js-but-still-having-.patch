@@ -1,0 +1,1790 @@
+From 7e81dcbed1435d020ed46feab0e5b2b23a7bab19 Mon Sep 17 00:00:00 2001
+From: uncleboss12 <justineobiazi@gmail.com>
+Date: Fri, 16 Jun 2023 22:23:45 -0700
+Subject: [PATCH] changes done to boxplot by apex.js but still having issues
+ showing visuals
+
+---
+ interactwel/package.json                      |   9 +-
+ .../components/dashboard/plans/Feedback.vue   | 115 ++++----
+ .../dashboard/plans/FeedbackSlider.vue        | 185 ------------
+ .../dashboard/plans/FeedbackView.vue          | 165 ++++++-----
+ .../projects/charts/OldFeedbackView.vue       | 120 ++++----
+ .../dashboard/projects/charts/Region.vue      |  59 +++-
+ .../projects/charts/data/ApexTempBoxGraph.vue |  78 +++++
+ .../charts/data/ApexTempLineGraph.vue         |  81 +++---
+ .../projects/charts/data/TempBoxplotGraph.vue | 155 ++++++----
+ .../projects/charts/data/no3PercGraph.vue     | 270 +++++++++---------
+ interactwel/src/main.js                       |  82 +++---
+ interactwel/static/stream_temp.json           |  53 ++++
+ interactwel/yarn.lock                         |  99 ++++++-
+ 13 files changed, 837 insertions(+), 634 deletions(-)
+ delete mode 100644 interactwel/src/components/dashboard/plans/FeedbackSlider.vue
+ create mode 100644 interactwel/src/components/dashboard/projects/charts/data/ApexTempBoxGraph.vue
+ create mode 100644 interactwel/static/stream_temp.json
+
+diff --git a/interactwel/package.json b/interactwel/package.json
+index 92025af..cf99326 100755
+--- a/interactwel/package.json
++++ b/interactwel/package.json
+@@ -11,14 +11,17 @@
+     "@fortawesome/fontawesome-svg-core": "^1.2.18",
+     "@fortawesome/free-solid-svg-icons": "^5.8.2",
+     "@fortawesome/vue-fontawesome": "^0.1.6",
++    "apexcharts": "^3.40.0",
+     "axios": "^0.19.0",
+     "bootstrap-vue": "^2.0.1",
+     "chart.js": "^2.8.0",
++    "chartjs-chart-box-and-violin-plot": "1.4.0",
+     "chartjs-plugin-annotation": "^0.5.7",
+     "d3": "^5.9.2",
+     "d3-vs": "^0.8.0",
+     "v-chart-plugin": "^1.0.1",
+     "vue": "^2.6.10",
++    "vue-apexcharts": "^1.6.2",
+     "vue-axios": "^2.1.4",
+     "vue-chartjs": "^3.4.2",
+     "vue-choropleth": "^0.2.1",
+@@ -26,12 +29,12 @@
+     "vue-google-charts": "^0.3.2",
+     "vue-router": "^3.0.6",
+     "vue-select": "^3.18.3",
++    "vue-slider-component": "^3.2.24",
+     "vue-star-rating": "^1.6.1",
+     "vue-toastification": "^1.7.7",
+     "vue2-leaflet": "^2.4.1",
+     "vuex": "^3.1.3",
+-    "vuex-persistedstate": "^3.0.1",
+-    "chartjs-chart-box-and-violin-plot": "1.4.0"
++    "vuex-persistedstate": "^3.0.1"
+   },
+   "devDependencies": {
+     "@vue/cli-plugin-babel": "^3.1.1",
+@@ -42,7 +45,7 @@
+     "eslint-plugin-vue": "^5.2.3",
+     "sass": "^1.54.6",
+     "sass-loader": "^10",
+-    "vue-template-compiler": "^2.6.10",
++    "vue-template-compiler": "^2.7.14",
+     "webpack": "~4.36.0",
+     "webpack-bundle-tracker": "^0.4.2-beta"
+   },
+diff --git a/interactwel/src/components/dashboard/plans/Feedback.vue b/interactwel/src/components/dashboard/plans/Feedback.vue
+index 954082f..2d3bf10 100755
+--- a/interactwel/src/components/dashboard/plans/Feedback.vue
++++ b/interactwel/src/components/dashboard/plans/Feedback.vue
+@@ -56,12 +56,12 @@
+           <li class="list-group-item">
+             Rating<br>
+             <small>
+-              <star-rating
+-                v-model="item.rating"
+-                read-only
+-                show-rating
+-                star-size="30"
+-              />
++              <vue-slider
++            :min="1"
++            :max="5"
++            :value="feedback.rating"
++            @input="onRatingChange"
++          />
+             </small>
+           </li>
+         </ol>
+@@ -71,12 +71,12 @@
+ </template>
+ 
+ <script>
+-import StarRating from 'vue-star-rating';
++import VueSlider from 'vue-slider-component';
+ 
+ export default {
+   name: 'Feedback',
+   components: {
+-    StarRating,
++    VueSlider,
+   },
+ 
+   props: {
+@@ -89,8 +89,6 @@ export default {
+   data() {
+     return {
+ 
+-      rating: 2,
+-
+       //adaptationPlanId : route.params.planId,
+ 
+       feedbacks: [
+@@ -113,63 +111,63 @@ export default {
+             a: 'bad',
+           },
+           q5: {
+-            q: 'How likely are you to work with other stakeholder groups to implement this plan?',
+-            a: 'Satisfactory',
+-          },
+-          q6: {
+-            q: 'What factors might prevent you from taking the recommended actions listed in this plan?',
+-            a: {
+-              1: 'Infrastructure costs',
+-              2: 'Permits or other regulatory approval processes and cost',
+-            },
+-          },
+-          rating: '5',
++          q: 'How likely are you to work with other stakeholder groups to implement this plan?',
++          a: 'Satisfactory',
+         },
+-        {
+-          plan: 'Adaptation Plan 3',
+-          q1: {
+-            q: 'How well does this plan (alternative plan 1, 2, etc.) meet the management goals you identified in Step 1?',
+-            a: 'bad',
+-          },
+-          q2: {
+-            q: 'Do you think that the projected results/impacts from this plan will occur if the proposed actions are implemented?',
+-            a: 'Satisfactory',
+-          },
+-          q3: {
+-            q: 'What factors might prevent you from taking the recommended actions listed in this plan? (check all that apply)',
+-            a: 'Satisfactory',
++        q6: {
++          q: 'What factors might prevent you from taking the recommended actions listed in this plan?',
++          a: {
++            1: 'Infrastructure costs',
++            2: 'Permits or other regulatory approval processes and cost',
+           },
+-          q4: {
+-            q: 'How likely are you to implement the actions recommended in this plan?',
+-            a: 'Well',
+-          },
+-          q5: {
+-            q: 'How likely are you to work with other stakeholder groups to implement this plan?',
+-            a: 'Satisfactory',
+-          },
+-          q6: {
+-            q: 'What factors might prevent you from taking the recommended actions listed in this plan?',
+-            a: {
+-              1: 'Infrastructure costs',
+-            },
++        },
++        rating: '5',
++      },
++      {
++        plan: 'Adaptation Plan 3',
++        q1: {
++          q: 'How well does this plan (alternative plan 1, 2, etc.) meet the management goals you identified in Step 1?',
++          a: 'bad',
++        },
++        q2: {
++          q: 'Do you think that the projected results/impacts from this plan will occur if the proposed actions are implemented?',
++          a: 'Satisfactory',
++        },
++        q3: {
++          q: 'What factors might prevent you from taking the recommended actions listed in this plan? (check all that apply)',
++          a: 'Satisfactory',
++        },
++        q4: {
++          q: 'How likely are you to implement the actions recommended in this plan?',
++          a: 'Well',
++        },
++        q5: {
++          q: 'How likely are you to work with other stakeholder groups to implement this plan?',
++          a: 'Satisfactory',
++        },
++        q6: {
++          q: 'What factors might prevent you from taking the recommended actions listed in this plan?',
++          a: {
++            1: 'Infrastructure costs',
+           },
+-          rating: '3',
+         },
+-      ],
+-    };
+-  },
++        rating: '3',
++      },
++    ],
++  };
++},
+ 
+-  computed: {
+-    filteredFeedbacks() {
+-      return this.feedbacks.filter(item => item.plan === 'Adaptation Plan ' + this.$route.params.planId);
+-    },
++computed: {
++  filteredFeedbacks() {
++    return this.feedbacks.filter(item => item.plan === 'Adaptation Plan ' + this.$route.params.planId);
+   },
++},
+ 
+-  mounted() {
++mounted() {
+ 
+-  },
++},
+ 
+-  methods: {},
++methods: {},
+ 
+ };
+ 
+@@ -177,5 +175,6 @@ export default {
+ 
+ <!-- Add "scoped" attribute to limit CSS to this component only -->
+ <style>
++
+ </style>
+ 
+diff --git a/interactwel/src/components/dashboard/plans/FeedbackSlider.vue b/interactwel/src/components/dashboard/plans/FeedbackSlider.vue
+deleted file mode 100644
+index b4ae0d2..0000000
+--- a/interactwel/src/components/dashboard/plans/FeedbackSlider.vue
++++ /dev/null
+@@ -1,185 +0,0 @@
+-<template>
+-    <b-card-group>
+-      <b-card
+-        v-for="item in filteredFeedbacks"
+-        :key="item"
+-        footer-tag="footer"
+-      >
+-        <div
+-          slot="header"
+-          class="step-header"
+-        >
+-          {{ item.plan }}
+-          <em slot="header">
+-            <b-button size="sm">Share</b-button>
+-            <b-button
+-              class="mr-2"
+-              size="sm"
+-            >Edit</b-button>
+-          </em>
+-        </div>
+-        <b-card-text>
+-          <ol class="list-group list-group-flush">
+-            <li class="list-group-item">
+-              {{ item.q1.q }}<br>
+-              <small>{{ item.q1.a }}</small>
+-            </li>
+-            <li class="list-group-item">
+-              {{ item.q2.q }}<br>
+-              <small>{{ item.q2.a }}</small>
+-            </li>
+-            <li class="list-group-item">
+-              {{ item.q3.q }}<br>
+-              <small>{{ item.q3.a }}</small>
+-            </li>
+-            <li class="list-group-item">
+-              {{ item.q4.q }}<br>
+-              <small>{{ item.q4.a }}</small>
+-            </li>
+-            <li class="list-group-item">
+-              {{ item.q5.q }}<br>
+-              <small>{{ item.q5.a }}</small>
+-            </li>
+-            <li class="list-group-item">
+-              {{ item.q6.q }}<br>
+-              <div
+-                v-for="answers in item.q6.a"
+-                :key="answers"
+-              >
+-                <ul>
+-                  <li>
+-                    <small>{{ answers }}</small>
+-                  </li>
+-                </ul>
+-              </div>
+-            </li>
+-            <li class="list-group-item">
+-              Rating<br>
+-              <small>
+-                <b-form-group
+-                  label=""
+-                >
+-                  <b-form-slider
+-                    v-model="item.rating"
+-                    :min="1"
+-                    :max="5"
+-                    :step="1"
+-                    ticks
+-                  />
+-                </b-form-group>
+-              </small>
+-            </li>
+-          </ol>
+-        </b-card-text>
+-      </b-card>
+-    </b-card-group>
+-</template>
+-  
+-<script>
+-import { BFormSlider, BFormGroup } from 'bootstrap-vue';
+-  
+-export default {
+-    name: 'Feedback',
+-    components: {
+-      BFormSlider,
+-      BFormGroup,
+-    },
+-  
+-    props: {
+-      adaptationPlan: {
+-        type: String,
+-        default: "",
+-      },
+-    },
+-  
+-    data() {
+-      return {
+-  
+-        //adaptationPlanId : route.params.planId,
+-  
+-        feedbacks: [
+-          {
+-            plan: 'Adaptation Plan 1',
+-            q1: {
+-              q: 'How well does this plan (alternative plan 1, 2, etc.) meet the management goals you identified in Step 1?',
+-              a: 'Good',
+-            },
+-            q2: {
+-              q: 'Do you think that the projected results/impacts from this plan will occur if the proposed actions are implemented?',
+-              a: 'Satisfactory',
+-            },
+-            q3: {
+-              q: 'What factors might prevent you from taking the recommended actions listed in this plan? (check all that apply)',
+-              a: 'Satisfactory',
+-            },
+-            q4: {
+-              q: 'How likely are you to implement the actions recommended in this plan?',
+-              a: 'bad',
+-            },
+-            q5: {
+-            q: 'How likely are you to work with other stakeholder groups to implement this plan?',
+-            a: 'Satisfactory',
+-          },
+-          q6: {
+-            q: 'What factors might prevent you from taking the recommended actions listed in this plan?',
+-            a: {
+-              1: 'Infrastructure costs',
+-              2: 'Permits or other regulatory approval processes and cost',
+-            },
+-          },
+-          rating: '5',
+-        },
+-        {
+-          plan: 'Adaptation Plan 3',
+-          q1: {
+-            q: 'How well does this plan (alternative plan 1, 2, etc.) meet the management goals you identified in Step 1?',
+-            a: 'bad',
+-          },
+-          q2: {
+-            q: 'Do you think that the projected results/impacts from this plan will occur if the proposed actions are implemented?',
+-            a: 'Satisfactory',
+-          },
+-          q3: {
+-            q: 'What factors might prevent you from taking the recommended actions listed in this plan? (check all that apply)',
+-            a: 'Satisfactory',
+-          },
+-          q4: {
+-            q: 'How likely are you to implement the actions recommended in this plan?',
+-            a: 'Well',
+-          },
+-          q5: {
+-            q: 'How likely are you to work with other stakeholder groups to implement this plan?',
+-            a: 'Satisfactory',
+-          },
+-          q6: {
+-            q: 'What factors might prevent you from taking the recommended actions listed in this plan?',
+-            a: {
+-              1: 'Infrastructure costs',
+-            },
+-          },
+-          rating: '3',
+-        },
+-      ],
+-    };
+-  },
+-
+-  computed: {
+-    filteredFeedbacks() {
+-      return this.feedbacks.filter(item => item.plan === 'Adaptation Plan ' + this.$route.params.planId);
+-    },
+-  },
+-
+-  mounted() {
+-
+-  },
+-
+-  methods: {},
+-
+-};
+-
+-</script>
+-
+-<!-- Add "scoped" attribute to limit CSS to this component only -->
+-<style>
+-</style>
+-
+diff --git a/interactwel/src/components/dashboard/plans/FeedbackView.vue b/interactwel/src/components/dashboard/plans/FeedbackView.vue
+index 722bff5..f51e96c 100644
+--- a/interactwel/src/components/dashboard/plans/FeedbackView.vue
++++ b/interactwel/src/components/dashboard/plans/FeedbackView.vue
+@@ -1,76 +1,91 @@
+-<template>
+-  <b-card title="Feedback">
+-    <b-card-text>
+-      <div v-if="feedback == null">
+-        No feedback is provided for this plan yet.
+-      </div>
+-      <div v-if="feedback != null">
+-        <div>
+-          Feedback Provided DateTime: {{ new Date(feedback.date_modified)| dateFormat('YYYY.MM.DD : HH.mm') }}
+-        </div>
+-        <hr>
+-        <div>
+-          Question: Do you think the actions and timeframes presented in this plan are feasible?
+-          <br>
+-          Answer: {{ feedback.feasibilty==1 ? 'Yes' : 'No' }}
+-        </div>
+-        <hr>
+-        <div
+-          v-for="feedbackItem in feedback.feedback_answers"
+-          :key="feedbackItem.id"
+-        >
+-          Question: {{ feedbackItem.question }}
+-          <br>
+-          Answer: {{ feedbackItem.answer }}
+-          <hr>
+-        </div>
+-        <div v-if="feedback.comments != null">
+-          Comment: {{ feedback.comments }}
+-        </div>
+-        <hr>
+-        <div v-if="feedback.rating != null">
+-          How do you rate this plan? <star-rating
+-            :rating="feedback.rating"
+-            read-only
+-          />
+-        </div>
+-      </div>
+-    </b-card-text>
+-  </b-card>
+-</template>
+-
+-<script>
+-export default {
+-  name: "FeedbackView",
+-  props: {
+-    projectId: String,
+-    planId: Number,
+-  },
+-
+-  data() {
+-    return {
+-      feedback: null,
+-    };
+-  },
+-
+-  async mounted() {
+-    const {utils} = AiravataAPI; // eslint-disable-line
+-    let user = await this.getLoggedInUser();
+-    utils.FetchUtils.get("/interactwel/api/feedbacks/?plan_id=" + this.planId + "&user_id=" + user.id).then(result => {
+-
+-      if (result.length > 0) {
+-        this.feedback = result[0]; //assuming that one user can have one feedback for one plan
+-      }
+-
+-    }
+-    ).catch(error => {
+-      alert("Failed to fetch questions " + error);
+-    });
+-
+-  },
+-};
+-</script>
+-
+-<style scoped>
+-
++<template>
++  <b-card title="Feedback">
++    <b-card-text>
++      <div v-if="feedback == null">
++        No feedback is provided for this plan yet.
++      </div>
++      <div v-if="feedback != null">
++        <div>
++          Feedback Provided DateTime: {{ new Date(feedback.date_modified)| dateFormat('YYYY.MM.DD : HH.mm') }}
++        </div>
++        <hr>
++        <div>
++          Question: Do you think the actions and timeframes presented in this plan are feasible?
++          <br>
++          Answer: {{ feedback.feasibilty==1 ? 'Yes' : 'No' }}
++        </div>
++        <hr>
++        <div
++          v-for="feedbackItem in feedback.feedback_answers"
++          :key="feedbackItem.id"
++        >
++          Question: {{ feedbackItem.question }}
++          <br>
++          Answer: {{ feedbackItem.answer }}
++          <hr>
++        </div>
++        <div v-if="feedback.comments != null">
++          Comment: {{ feedback.comments }}
++        </div>
++        <hr>
++        <div v-if="feedback.rating != null">
++          How do you rate this plan?
++          <vue-slider
++            :min="1"
++            :max="5"
++            :value="feedback.rating"
++            @input="onRatingChange"
++          />
++        </div>
++      </div>
++    </b-card-text>
++  </b-card>
++</template>
++
++<script>
++import VueSlider from 'vue-slider-component';
++
++export default {
++  name: "FeedbackView",
++  props: {
++    projectId: String,
++    planId: Number,
++  },
++
++  data() {
++    return {
++      feedback: null,
++    };
++  },
++
++  async mounted() {
++    const {utils} = AiravataAPI; // eslint-disable-line
++    let user = await this.getLoggedInUser();
++    utils.FetchUtils.get("/interactwel/api/feedbacks/?plan_id=" + this.planId + "&user_id=" + user.id).then(result => {
++
++      if (result.length > 0) {
++        this.feedback = result[0]; //assuming that one user can have one feedback for one plan
++      }
++
++    }
++    ).catch(error => {
++      alert("Failed to fetch questions " + error);
++    });
++
++  },
++
++  components: {
++    VueSlider,
++  },
++
++  methods: {
++    onRatingChange(value) {
++      this.feedback.rating = value;
++    },
++  },
++};
++
++
++<style scoped>
++
+ </style>
+\ No newline at end of file
+diff --git a/interactwel/src/components/dashboard/projects/charts/OldFeedbackView.vue b/interactwel/src/components/dashboard/projects/charts/OldFeedbackView.vue
+index 84c63a0..8a3ebc7 100644
+--- a/interactwel/src/components/dashboard/projects/charts/OldFeedbackView.vue
++++ b/interactwel/src/components/dashboard/projects/charts/OldFeedbackView.vue
+@@ -1,51 +1,69 @@
+-<template>
+-  <div>
+-    <b-card title="My Feedback">
+-      <b-card-text>
+-        <div>
+-          Feedback Provided DateTime: {{ new Date(feedback.date_modified)| dateFormat('YYYY.MM.DD : HH.mm') }}
+-        </div>
+-        <hr>
+-        <div>
+-          Question: Do you think the actions and timeframes presented in this plan are feasible?
+-          <br>
+-          Answer: {{ feedback.feasibilty==1 ? 'Yes' : 'No' }}
+-        </div>
+-        <hr>
+-        <div
+-          v-for="feedbackItem in feedback.feedback_answers"
+-          :key="feedbackItem.id"
+-        >
+-          Question: {{ feedbackItem.question }}
+-          <br>
+-          Answer: {{ feedbackItem.answer }}
+-          <hr>
+-        </div>
+-        <div v-if="feedback.comments != null">
+-          Comment: {{ feedback.comments }}
+-        </div>
+-        <hr>
+-        <div v-if="feedback.rating != null">
+-          How do you rate this plan?
+-          <star-rating
+-            :rating="feedback.rating"
+-            read-only
+-          />
+-        </div>
+-      </b-card-text>
+-    </b-card>
+-  </div>
+-</template>
+-
+-<script>
+-export default {
+-  name: "OldFeedbackView",
+-  props: {
+-    feedback: null,
+-  },
+-};
+-</script>
+-
+-<style scoped>
+-
+-</style>
+\ No newline at end of file
++<template>
++  <div>
++    <b-card title="My Feedback">
++      <b-card-text>
++        <div>
++          Feedback Provided DateTime: {{ new Date(feedback.date_modified)| dateFormat('YYYY.MM.DD : HH.mm') }}
++        </div>
++        <hr>
++        <div>
++          Question: Do you think the actions and timeframes presented in this plan are feasible?
++          <br>
++          Answer: {{ feedback.feasibilty==1 ? 'Yes' : 'No' }}
++        </div>
++        <hr>
++        <div
++          v-for="feedbackItem in feedback.feedback_answers"
++          :key="feedbackItem.id"
++        >
++          Question: {{ feedbackItem.question }}
++          <br>
++          Answer: {{ feedbackItem.answer }}
++          <hr>
++        </div>
++        <div v-if="feedback.comments != null">
++          Comment: {{ feedback.comments }}
++        </div>
++        <hr>
++        <div v-if="feedback.rating != null">
++          Which plan do you prefer more? 
++          <vue-slider
++            :min="1"
++            :max="5"
++            :value="feedback.rating"
++            @input="onRatingChange"
++            :start-value="2.5"
++            style=":width :200px"
++            :label-position="'under'"
++            :label="'Action Plan {{ $route.params.planId }}' | 'Business As Usual'"
++          />
++          <p><b>Action Plan {{ $route.params.planId }}</b>----------------------------------------------------------<b>Business As Usual</b>
++            </p>
++        </div>
++      </b-card-text>
++    </b-card>
++  </div>
++</template>
++
++<script>
++import VueSlider from 'vue-slider-component';
++
++export default {
++  name: "OldFeedbackView",
++  props: {
++    feedback: null,
++  },
++  components: {
++    VueSlider,
++  },
++  methods: {
++    onRatingChange(value) {
++      this.feedback.rating = value;
++    },
++  },
++};
++</script>
++
++<style scoped>
++
++</style>
+diff --git a/interactwel/src/components/dashboard/projects/charts/Region.vue b/interactwel/src/components/dashboard/projects/charts/Region.vue
+index 90ba308..01d744e 100755
+--- a/interactwel/src/components/dashboard/projects/charts/Region.vue
++++ b/interactwel/src/components/dashboard/projects/charts/Region.vue
+@@ -341,6 +341,58 @@
+             </div>
+           </div>
+         </b-tab>
++        <b-tab title="Boxplot Stream Temp">
++          <div class="card-body">
++            <div class="card-body">
++              <b-row>
++                <b-col
++                    lg="6"
++                    class="p-3"
++                >
++                  <h6 class="baseline-graph-title text-center">
++                    Action Plan {{ $route.params.planId }}
++                  </h6>
++                  <temp-boxplot-graph v-bind:base-graph="false"/>
++                </b-col>
++                <b-col
++                    lg="6"
++                    class="p-3"
++                >
++                  <h6 class="baseline-graph-title text-center">
++                    Business as Usual
++                  </h6>
++                  <temp-boxplot-graph v-bind:base-graph="true"/>
++                </b-col>
++              </b-row>
++            </div>
++          </div>
++        </b-tab>
++        <!-- <b-tab title="ApexBoxplot Stream Temp">
++          <div class="card-body">
++            <div class="card-body">
++              <b-row>
++                <b-col
++                    lg="6"
++                    class="p-3"
++                >
++                  <h6 class="baseline-graph-title text-center">
++                    Action Plan {{ $route.params.planId }}
++                  </h6>
++                  <apex-temp-box-graph v-bind:base-graph="false"/>
++                </b-col>
++                <b-col
++                    lg="6"
++                    class="p-3"
++                >
++                  <h6 class="baseline-graph-title text-center">
++                    Business as Usual
++                  </h6>
++                  <apex-temp-box-graph v-bind:base-graph="true"/>
++                </b-col>
++              </b-row>
++            </div>
++          </div>
++        </b-tab> -->
+       </b-tabs>
+     </div>
+   </div>
+@@ -366,9 +418,8 @@ import SedimentYieldGraph from "@/components/dashboard/projects/charts/data/sedi
+ import WaterYieldGraph from "@/components/dashboard/projects/charts/data/waterYieldGraph";
+ import no3SurqGraph from "@/components/dashboard/projects/charts/data/no3SurqGraph";
+ import ApexTempLineGraph from "@/components/dashboard/projects/charts/data/ApexTempLineGraph";
+-// import ApexTempLineGraph from './data/ApexTempLineGraph.vue';
+-// import ApexTempLineGraph from './data/ApexTempLineGraph.vue';
+-// import TempLineGraph from "@/components/dashboard/projects/charts/data/TempLineGraph";
++import TempBoxplotGraph from "@/components/dashboard/projects/charts/data/TempBoxplotGraph.vue";
++
+ 
+ export default {
+   name: 'Region',
+@@ -387,6 +438,7 @@ export default {
+     'overviewWaterRightsGraph': OverviewWaterRightsGraph,
+     'OverviewBaseWaterRightsGraph': OverviewBaseWaterRightsGraph,
+     ApexTempLineGraph,
++    TempBoxplotGraph
+   },
+ 
+   data() {
+@@ -432,6 +484,7 @@ export default {
+ </script>
+ 
+ <!-- Add "scoped" attribute to limit CSS to this component only -->
++
+ <style>
+ .baseline-graph-title{
+     background-color: #6c757d;
+diff --git a/interactwel/src/components/dashboard/projects/charts/data/ApexTempBoxGraph.vue b/interactwel/src/components/dashboard/projects/charts/data/ApexTempBoxGraph.vue
+new file mode 100644
+index 0000000..1899f75
+--- /dev/null
++++ b/interactwel/src/components/dashboard/projects/charts/data/ApexTempBoxGraph.vue
+@@ -0,0 +1,78 @@
++<template>
++  <div>
++    <apexchart
++      type="boxPlot"
++      :options="chartOptions"
++      :series="chartSeries"
++      :errorbars="errorbars"
++      width="500"
++      height="400"
++    />
++  </div>
++</template>
++
++<script>
++import VueApexCharts from 'vue-apexcharts';
++import ApexCharts from 'apexcharts';
++
++
++export default {
++  name: 'ApexTempBoxplotGraph',
++  components: {
++    VueApexCharts,
++    ApexCharts,
++  },
++  mixins: [reactiveData],
++  props: {
++    selectedBasinID: {
++      type: String,
++    },
++    baseGraph: Boolean,
++  },
++
++  data() {
++    return {
++      chartOptions: {
++        chart: {
++          type: 'boxPlot',
++          toolbar: {
++            show: false,
++          },
++        },
++        series: [],
++        xaxis: {
++          categories: ['Category 1', 'Category 2', 'Category 3'],
++        },
++        errorbars: {
++          enabled: true,
++          type: 'standard',
++          color: '#000',
++          thickness: 1,
++        },
++      },
++      chartSeries: [
++        {
++          name: 'Series 1',
++          data: [
++            {
++              x: 'Category 1',
++              y: [10, 20, 30, 40, 50],
++            },
++            {
++              x: 'Category 2',
++              y: [15, 25, 35, 45, 55],
++            },
++            {
++              x: 'Category 3',
++              y: [18, 28, 38, 48, 58],
++            },
++          ],
++        },
++      ],
++    };
++  },
++};
++</script>
++
++
++  
+\ No newline at end of file
+diff --git a/interactwel/src/components/dashboard/projects/charts/data/ApexTempLineGraph.vue b/interactwel/src/components/dashboard/projects/charts/data/ApexTempLineGraph.vue
+index 52b02f1..94153f2 100644
+--- a/interactwel/src/components/dashboard/projects/charts/data/ApexTempLineGraph.vue
++++ b/interactwel/src/components/dashboard/projects/charts/data/ApexTempLineGraph.vue
+@@ -1,14 +1,14 @@
+ <template>
+- <line-chart
+-      :chart-data="datacollectionHHH"
+-      :options="optionsHHH"
+-      :width="687"
+-      :height="120"
+-    />
++  <line-chart
++    :chart-data="datacollection"
++    :options="options"
++    :width="687"
++    :height="480"
++  />
++  
+ </template>
+ 
+ <script>
+-import axios from 'axios';
+ import LineChart from "../lib/LineChart.js";
+ 
+ export default {
+@@ -26,10 +26,11 @@ export default {
+   data() {
+     return {
+       planId: 1,
+-      JSONData: null,
+       datacollection: null,
+       graphColors: [
+         "#28a745",
++        "#d3d3d3",
++        "#ff0000",
+       ],
+       options: {
+         responsive: true,
+@@ -69,45 +70,55 @@ export default {
+ 
+   mounted() {
+     this.planId = this.$route.params.planId;
+-    this.buildDataCollection(this.JSONData, this.planId);
++    this.buildDataCollection();
+   },
+ 
+   created() {
+-    axios.get("/static/wtmpdegcStreamGraph.json").then(response => {
+-      this.JSONData = response.data;
+-      this.buildDataCollection(this.JSONData, this.planId);
+-    });
++    this.buildDataCollection();
+   },
+ 
+   methods: {
+-    buildDataCollection(data, adaptationPlan) {
++    buildDataCollection() {
+       this.datacollection = {};
+-      this.datacollection.labels = [];
+-      for (let legend in data.Legend) {
+-        this.datacollection.labels.push(data.Legend[legend]);
+-      }
+-
++      this.datacollection.labels = ['2020', '2021', '2022', '2023', '2024', '2025'];
+       this.datacollection.datasets = [];
+ 
+       let dataset = {};
+-      dataset.data = [];
+-      dataset.label = data.Description;
++      dataset.data = [10, 15, 12, 18, 20, 17];
++      dataset.label = 'Stream Temperature';
+       dataset.backgroundColor = this.getColor(0);
++      dataset.fill = '-1';
++      dataset.pointRadius = 0;
++      dataset.borderWidth = 1;
+ 
+-      adaptationPlan = this.baseGraph ? 'BASE' : adaptationPlan;
+-      const regionData = data['Adaptation_Plans']['Adaptation Plan ' + adaptationPlan]['region ' + this.selectedBasinId]['Data'];
++      this.datacollection.datasets.push(dataset);
+ 
+-      for (let dataIndex in regionData) {
+-        let dataPoint = regionData[dataIndex];
+-        dataset.data.push(dataPoint);
+-      }
++      // Add minimum line
++      let minDataset = {};
++      minDataset.data = [10, 12, 10, 14, 16, 14];
++      minDataset.label = 'Minimum';
++      minDataset.borderColor = this.getColor(1);
++      minDataset.borderWidth = 2;
+ 
+-      this.datacollection.datasets.push(dataset);
++      this.datacollection.datasets.push(minDataset);
+ 
+-    },
++      // Add average line
++      let avgDataset = {};
++      avgDataset.data = [12.5, 13.75, 12.5, 16.25, 18.75, 16.25];
++      avgDataset.label = 'Average';
++      avgDataset.borderColor = this.getColor(2);
++      avgDataset.borderWidth = 3;
++
++      this.datacollection.datasets.push(avgDataset);
+ 
+-    showChart: function(selectedPlan) {
+-      this.planName = selectedPlan;
++      // Add maximum line
++      let maxDataset = {};
++      maxDataset.data = [15, 17, 15, 20, 22, 20];
++      maxDataset.label = 'Maximum';
++      maxDataset.borderColor = this.getColor(3);
++      maxDataset.borderWidth = 4;
++
++      this.datacollection.datasets.push(maxDataset);
+     },
+ 
+     getColor(i) {
+@@ -115,11 +126,7 @@ export default {
+       color = this.graphColors[i];
+       return color;
+     },
+-  },
+-  watch: {
+-    selectedBasinId: function() {
+-      this.buildDataCollection(this.JSONData, this.planId);
+-    },
+-  },
++  }, 
+ };
+ </script>
++
+diff --git a/interactwel/src/components/dashboard/projects/charts/data/TempBoxplotGraph.vue b/interactwel/src/components/dashboard/projects/charts/data/TempBoxplotGraph.vue
+index e6f94bf..23d2452 100644
+--- a/interactwel/src/components/dashboard/projects/charts/data/TempBoxplotGraph.vue
++++ b/interactwel/src/components/dashboard/projects/charts/data/TempBoxplotGraph.vue
+@@ -1,59 +1,114 @@
+ <template>
+-    <div class="small">
+-      <box-plot-chart :chart-data="datacollection" />
+-      <button @click="fillData();">Randomize</button>
+-    </div>
++  <box-plot-chart
++    :chart-data="datacollection"
++    :options="options"
++    :width="320"
++    :height="350"
++  />
+ </template>
+-  
++
+ <script>
+-import BoxPlotChart from "../lib/BoxPlotChart.js";
++import axios from 'axios';
++import { BoxPlot, mixins } from 'vue-chartjs';
+ 
+-  
+ export default {
+-    components: {
+-      BoxPlotChart
+-    },
+-    data() {
+-      return {
+-        datacollection: null
+-      };
++  name: 'TempBoxplotGraph',
++  extends: BoxPlot,
++  mixins: [mixins.reactiveData],
++  props: {
++    selectedBasinID: {
++      type: String,
+     },
+-    mounted() {
+-      this.fillData();
+-    },
+-    methods: {
+-      fillData() {
+-        this.datacollection = {
+-          labels: [this.getRandomInt(), this.getRandomInt()],
+-          datasets: [
+-            {
+-              label: "Data One",
+-              backgroundColor: "#f87979",
+-              data: [this.getRandomValues(100, 200), this.getRandomValues()]
++    baseGraph: Boolean,
++  },
++
++  data() {
++    return {
++      planId: "1",
++      JSONData: null,
++      datacollection: null,
++      graphColors: ["#28a745", "#28a745", "#28a745"],
++      options: {
++        responsive: true,
++        title: {
++          display: false,
++          text: 'Temperature contribution to stream in watershed.',
++        },
++        scales: {
++          x: {
++            display: true,
++            stacked: false,
++            title: {
++              display: true,
++              text: 'Years',
+             },
+-            {
+-              label: "Data One",
+-              backgroundColor: "blue",
+-              data: [this.getRandomValues(), this.getRandomValues(20, 80)]
+-            }
+-          ]
+-        };
+-      },
+-      getRandomInt() {
+-        return Math.floor(Math.random() * (50 - 5 + 1)) + 5;
++          },
++          y: {
++            display: true,
++            stacked: false,
++            title: {
++              display: true,
++              text: 'Celsius',
++            },
++          },
++        },
+       },
+-      getRandomValues(min = 0, max = 100) {
+-        return Array.from({ length: 100 }).map(
+-          () => Math.random() * (max - min) + min
+-        );
++    };
++  },
++
++  mounted() {
++    this.planId = this.$route.params.planId;
++    this.getData();
++  },
++
++  methods: {
++    async getData() {
++      try {
++        const response = await axios.get("/static/et.json");
++        this.JSONData = response.data;
++        this.buildDataCollection();
++      } catch (error) {
++        console.error(error);
++      }
++    },
++
++    buildDataCollection() {
++      this.datacollection = {
++        labels: this.JSONData.Legend,
++        datasets: [],
++      };
++
++      const dataset = {
++        label: this.JSONData.Description,
++        data: [],
++        backgroundColor: this.graphColors[0],
++      };
++
++      const plan = this.getPlanDataById(this.JSONData, this.planId, this.baseGraph);
++
++      for (const dataIndex in plan.Data) {
++        const dataPoint = plan.Data[dataIndex];
++        dataset.data.push(dataPoint);
++      }
++
++      this.datacollection.datasets.push(dataset);
++    },
++
++    getPlanDataById(data, planId, baseGraph) {
++      for (const plan in data.Adaptation_Plans) {
++        const planObj = data.Adaptation_Plans[plan];
++        if (baseGraph && planObj.planId === null) {
++          return data.Adaptation_Plans[plan];
++        }
++        if (planObj.planId === planId) {
++          return data.Adaptation_Plans[plan];
++        }
+       }
+-    }
+-  };
+-  </script>
+-  
+-  <style>
+-  .small {
+-    max-width: 600px;
+-    margin: 150px auto;
+-}
+-</style>
+\ No newline at end of file
++    },
++
++    getColor(i) {
++      return this.graphColors[i];
++    },
++  },
++};
++</script>
+diff --git a/interactwel/src/components/dashboard/projects/charts/data/no3PercGraph.vue b/interactwel/src/components/dashboard/projects/charts/data/no3PercGraph.vue
+index 7ddd6f4..d528cd9 100755
+--- a/interactwel/src/components/dashboard/projects/charts/data/no3PercGraph.vue
++++ b/interactwel/src/components/dashboard/projects/charts/data/no3PercGraph.vue
+@@ -1,136 +1,136 @@
+-<template>
+-  <vertical-bar-chart
+-    :chart-data="datacollection"
+-    :options="options"
+-    :width="320"
+-    :height="350"
+-  />
+-</template>
+-
+-<script>
+-import axios from 'axios';
+-import VerticalBarChart from "../lib/VerticalBarChart";
+-
+-export default {
+-  name: 'no3PercGraph',
+-  components: {
+-    VerticalBarChart,
+-  },
+-  props: {
+-    selectedBasinID: {
+-      name: String,
+-    },
+-    baseGraph: Boolean,
+-  },
+-
+-  data() {
+-    return {
+-      planId: "1",
+-      JSONData: null,
+-      datacollection: null,
+-      graphColors: [
+-        "#28a745",
+-        "#28a745",
+-        "#28a745",
+-      ],
+-      options: {
+-        responsive: true,
+-        title: {
+-          display: false,
+-          text: 'Amount of water stored in soil profile for watershed',
+-        },
+-        tooltips: {
+-          mode: 'point',
+-          intersect: false,
+-        },
+-        hover: {
+-          mode: 'nearest',
+-          intersect: true,
+-        },
+-        scales: {
+-          xAxes: [{
+-            display: true,
+-            stacked: false,
+-            scaleLabel: {
+-              display: true,
+-              labelString: 'Years',
+-            },
+-          }],
+-          yAxes: [{
+-            display: true,
+-            stacked: false,
+-            scaleLabel: {
+-              display: true,
+-              labelString: 'Kg',
+-            },
+-          }],
+-        },
+-      },
+-    };
+-  },
+-
+-  mounted() {
+-    this.planId = this.$route.params.planId;
+-    this.buildDataCollection(this.JSONData, this.planId);
+-  },
+-
+-  created() {
+-    axios.get("/static/no3_perc.json").then(response => {
+-      this.JSONData = response.data;
+-      this.buildDataCollection(this.JSONData, this.planId);
+-    });
+-  },
+-
+-  methods: {
+-    buildDataCollection(data, adaptationPlan) {
+-      this.datacollection = {};
+-      this.datacollection.labels = [];
+-      for (let legend in data.Legend) {
+-        this.datacollection.labels.push(data.Legend[legend]);
+-      }
+-
+-      this.datacollection.datasets = [];
+-
+-      let dataset = {};
+-      dataset.data = [];
+-      dataset.label = data.Description;
+-      dataset.backgroundColor = this.getColor(0);
+-
+-      let plan = this.getPlanDataById(data, adaptationPlan, this.baseGraph);
+-
+-      for (let dataIndex in plan["Data"]) {
+-        let dataPoint = plan["Data"][dataIndex];
+-        dataset.data.push(dataPoint);
+-      }
+-
+-      this.datacollection.datasets.push(dataset);
+-
+-    },
+-
+-    getPlanDataById(data, planId, baseGraph) {
+-      for (let plan in data.Adaptation_Plans) {
+-        let planObj = data.Adaptation_Plans[plan];
+-        if (baseGraph) {
+-          if (planObj.planId === null) {
+-            return data.Adaptation_Plans[plan];
+-          }
+-          continue;
+-        }
+-        if (planObj.planId == planId) {
+-          return data.Adaptation_Plans[plan];
+-        }
+-      }
+-    },
+-
+-    showChart: function(selectedPlan) {
+-      this.planName = selectedPlan;
+-    },
+-
+-    getColor(i) {
+-      let color;
+-      color = this.graphColors[i];
+-      return color;
+-    },
+-  },
+-};
++<template>
++  <vertical-bar-chart
++    :chart-data="datacollection"
++    :options="options"
++    :width="320"
++    :height="350"
++  />
++</template>
++
++<script>
++import axios from 'axios';
++import VerticalBarChart from "../lib/VerticalBarChart";
++
++export default {
++  name: 'no3PercGraph',
++  components: {
++    VerticalBarChart,
++  },
++  props: {
++    selectedBasinID: {
++      name: String,
++    },
++    baseGraph: Boolean,
++  },
++
++  data() {
++    return {
++      planId: "1",
++      JSONData: null,
++      datacollection: null,
++      graphColors: [
++        "#28a745",
++        "#28a745",
++        "#28a745",
++      ],
++      options: {
++        responsive: true,
++        title: {
++          display: false,
++          text: 'Amount of water stored in soil profile for watershed',
++        },
++        tooltips: {
++          mode: 'point',
++          intersect: false,
++        },
++        hover: {
++          mode: 'nearest',
++          intersect: true,
++        },
++        scales: {
++          xAxes: [{
++            display: true,
++            stacked: false,
++            scaleLabel: {
++              display: true,
++              labelString: 'Years',
++            },
++          }],
++          yAxes: [{
++            display: true,
++            stacked: false,
++            scaleLabel: {
++              display: true,
++              labelString: 'Kg',
++            },
++          }],
++        },
++      },
++    };
++  },
++
++  mounted() {
++    this.planId = this.$route.params.planId;
++    this.buildDataCollection(this.JSONData, this.planId);
++  },
++
++  created() {
++    axios.get("/static/no3_perc.json").then(response => {
++      this.JSONData = response.data;
++      this.buildDataCollection(this.JSONData, this.planId);
++    });
++  },
++
++  methods: {
++    buildDataCollection(data, adaptationPlan) {
++      this.datacollection = {};
++      this.datacollection.labels = [];
++      for (let legend in data.Legend) {
++        this.datacollection.labels.push(data.Legend[legend]);
++      }
++
++      this.datacollection.datasets = [];
++
++      let dataset = {};
++      dataset.data = [];
++      dataset.label = data.Description;
++      dataset.backgroundColor = this.getColor(0);
++
++      let plan = this.getPlanDataById(data, adaptationPlan, this.baseGraph);
++
++      for (let dataIndex in plan["Data"]) {
++        let dataPoint = plan["Data"][dataIndex];
++        dataset.data.push(dataPoint);
++      }
++
++      this.datacollection.datasets.push(dataset);
++
++    },
++
++    getPlanDataById(data, planId, baseGraph) {
++      for (let plan in data.Adaptation_Plans) {
++        let planObj = data.Adaptation_Plans[plan];
++        if (baseGraph) {
++          if (planObj.planId === null) {
++            return data.Adaptation_Plans[plan];
++          }
++          continue;
++        }
++        if (planObj.planId == planId) {
++          return data.Adaptation_Plans[plan];
++        }
++      }
++    },
++
++    showChart: function(selectedPlan) {
++      this.planName = selectedPlan;
++    },
++
++    getColor(i) {
++      let color;
++      color = this.graphColors[i];
++      return color;
++    },
++  },
++};
+ </script>
+\ No newline at end of file
+diff --git a/interactwel/src/main.js b/interactwel/src/main.js
+index 90ec4b4..f952894 100755
+--- a/interactwel/src/main.js
++++ b/interactwel/src/main.js
+@@ -1,36 +1,46 @@
+-import Vue from 'vue';
+-import BootstrapVue from 'bootstrap-vue';
+-import userPlugin from "./components/common/UserPlugin.js";
+-import StarRating from 'vue-star-rating';
+-
+-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+-import router from './router';
+-import store from "./store";
+-import App from './App.vue';
+-import VueFilterDateFormat from 'vue-filter-date-format';
+-import Toast from "vue-toastification";
+-import "vue-toastification/dist/index.css";
+-import vSelect from "vue-select";
+-import "vue-select/dist/vue-select.css";
+-
+-Vue.component('font-awesome-icon', FontAwesomeIcon);
+-Vue.component('star-rating', StarRating);
+-Vue.component("v-select", vSelect);
+-
+-Vue.config.productionTip = false;
+-Vue.use(BootstrapVue);
+-Vue.use(userPlugin);
+-Vue.use(VueFilterDateFormat);
+-
+-//toast options
+-const toasterOptions = {
+-  // You can set your default options here
+-  timeout: 5000,
+-};
+-Vue.use(Toast, toasterOptions);
+-
+-new Vue({
+-  store,
+-  router,
+-  render: h => h(App),
+-}).$mount('#app');
++import Vue from 'vue';
++import BootstrapVue from 'bootstrap-vue';
++import userPlugin from "./components/common/UserPlugin.js";
++import StarRating from 'vue-star-rating';
++import VueSlider from 'vue-slider-component';
++
++import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
++import router from './router';
++import store from "./store";
++import App from './App.vue';
++import VueFilterDateFormat from 'vue-filter-date-format';
++import Toast from "vue-toastification";
++import "vue-toastification/dist/index.css";
++import vSelect from "vue-select";
++import "vue-select/dist/vue-select.css";
++import 'vue-slider-component/theme/default.css';
++import VueApexCharts from 'vue-apexcharts';
++
++
++
++Vue.component('font-awesome-icon', FontAwesomeIcon);
++Vue.component('star-rating', StarRating);
++Vue.component("v-select", vSelect);
++Vue.component("slider-component", VueSlider);
++Vue.component('apexchart', VueApexCharts);
++
++
++Vue.config.productionTip = false;
++Vue.use(BootstrapVue);
++Vue.use(userPlugin);
++Vue.use(VueFilterDateFormat);
++
++//toast options
++const toasterOptions = {
++  // You can set your default options here
++  timeout: 5000,
++};
++Vue.use(Toast, toasterOptions);
++
++new Vue({
++  store,
++  router,
++  render: h => h(App),
++}).$mount('#app');
++
++
+diff --git a/interactwel/static/stream_temp.json b/interactwel/static/stream_temp.json
+new file mode 100644
+index 0000000..c34798f
+--- /dev/null
++++ b/interactwel/static/stream_temp.json
+@@ -0,0 +1,53 @@
++{
++    "Description": "Stream Temperature",
++    "Legend": ["2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024"],
++    "Adaptation_Plans": {
++      "Adaptation Plan 1": {
++        "region 1": {
++          "Data": [
++            [14, 14, 14, 14, 14, 14, 14, 14, 14, 14],
++            [16, 16, 16, 16, 16, 16, 16, 16, 16, 16],
++            [18, 18, 18, 18, 18, 18, 18, 18, 18, 18]
++          ]
++        },
++        "region 2": {
++          "Data": [
++            [15, 15, 15, 15, 15, 15, 15, 15, 15, 15],
++            [17, 17, 17, 17, 17, 17, 17, 17, 17, 17],
++            [19, 19, 19, 19, 19, 19, 19, 19, 19, 19]
++          ]
++        },
++        "region 3": {
++          "Data": [
++            [13, 13, 13, 13, 13, 13, 13, 13, 13, 13],
++            [15, 15, 15, 15, 15, 15, 15, 15, 15, 15],
++            [17, 17, 17, 17, 17, 17, 17, 17, 17, 17]
++          ]
++        }
++      },
++      "Adaptation Plan 2": {
++        "region 1": {
++          "Data": [
++            [12, 12, 12, 12, 12, 12, 12, 12, 12, 12],
++            [14, 14, 14, 14, 14, 14, 14, 14, 14, 14],
++            [16, 16, 16, 16, 16, 16, 16, 16, 16, 16]
++          ]
++        },
++        "region 2": {
++          "Data": [
++            [13, 13, 13, 13, 13, 13, 13, 13, 13, 13],
++            [15, 15, 15, 15, 15, 15, 15, 15, 15, 15],
++            [17, 17, 17, 17, 17, 17, 17, 17, 17, 17]
++          ]
++        },
++        "region 3": {
++          "Data": [
++            [11, 11, 11, 11, 11, 11, 11, 11, 11, 11],
++            [13, 13, 13, 13, 13, 13, 13, 13, 13, 13],
++            [15, 15, 15, 15, 15, 15, 15, 15, 15, 15]
++          ]
++        }
++      } 
++    }
++}     
++  
+\ No newline at end of file
+diff --git a/interactwel/yarn.lock b/interactwel/yarn.lock
+index a796c7b..5b572c0 100644
+--- a/interactwel/yarn.lock
++++ b/interactwel/yarn.lock
+@@ -1644,6 +1644,18 @@ anymatch@~3.1.2:
+     normalize-path "^3.0.0"
+     picomatch "^2.0.4"
+ 
++apexcharts@^3.40.0:
++  version "3.40.0"
++  resolved "https://registry.yarnpkg.com/apexcharts/-/apexcharts-3.40.0.tgz#9eccb50e38f12ddaeb6803ec781fb26e161853e3"
++  integrity sha512-dSi3BUfCJkFd67uFp+xffrJVd3lDT7AAUUyRp0qPYiglJ76CeZLddVhM3FAk1P9GCzf8VewqGYUPCYQvXm+b9A==
++  dependencies:
++    svg.draggable.js "^2.2.2"
++    svg.easing.js "^2.0.0"
++    svg.filter.js "^2.0.2"
++    svg.pathmorphing.js "^0.1.3"
++    svg.resize.js "^1.4.3"
++    svg.select.js "^3.0.1"
++
+ aproba@^1.1.1:
+   version "1.2.0"
+   resolved "https://registry.yarnpkg.com/aproba/-/aproba-1.2.0.tgz#6802e6264efd18c790a1b0d517f0f2627bf2c94a"
+@@ -2786,6 +2798,11 @@ core-js@^2.6.12, core-js@^2.6.5:
+   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.6.12.tgz#d9333dfa7b065e347cc5682219d6f690859cc2ec"
+   integrity sha512-Kb2wC0fvsWfQrgk8HU5lW6U/Lcs8+9aaYcy4ZFc6DDlo4nZ7n70dEgE5rtR0oG6ufKDUnrwfWL1mXR5ljDatrQ==
+ 
++core-js@^3.6.5:
++  version "3.30.2"
++  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.30.2.tgz#6528abfda65e5ad728143ea23f7a14f0dcf503fc"
++  integrity sha512-uBJiDmwqsbJCWHAwjrx3cvjbMXP7xD72Dmsn5LOJpiRmE3WbBbN5rCqQ2Qh6Ek6/eOrjlWngEynBWo4VxerQhg==
++
+ core-util-is@1.0.2:
+   version "1.0.2"
+   resolved "https://registry.yarnpkg.com/core-util-is/-/core-util-is-1.0.2.tgz#b5fd54220aa2bc5ab57aab7140c940754503c1a7"
+@@ -8868,6 +8885,61 @@ svg-tags@^1.0.0:
+   resolved "https://registry.yarnpkg.com/svg-tags/-/svg-tags-1.0.0.tgz#58f71cee3bd519b59d4b2a843b6c7de64ac04764"
+   integrity sha512-ovssysQTa+luh7A5Weu3Rta6FJlFBBbInjOh722LIt6klpU2/HtdUbszju/G4devcvk8PGt7FCLv5wftu3THUA==
+ 
++svg.draggable.js@^2.2.2:
++  version "2.2.2"
++  resolved "https://registry.yarnpkg.com/svg.draggable.js/-/svg.draggable.js-2.2.2.tgz#c514a2f1405efb6f0263e7958f5b68fce50603ba"
++  integrity sha512-JzNHBc2fLQMzYCZ90KZHN2ohXL0BQJGQimK1kGk6AvSeibuKcIdDX9Kr0dT9+UJ5O8nYA0RB839Lhvk4CY4MZw==
++  dependencies:
++    svg.js "^2.0.1"
++
++svg.easing.js@^2.0.0:
++  version "2.0.0"
++  resolved "https://registry.yarnpkg.com/svg.easing.js/-/svg.easing.js-2.0.0.tgz#8aa9946b0a8e27857a5c40a10eba4091e5691f12"
++  integrity sha512-//ctPdJMGy22YoYGV+3HEfHbm6/69LJUTAqI2/5qBvaNHZ9uUFVC82B0Pl299HzgH13rKrBgi4+XyXXyVWWthA==
++  dependencies:
++    svg.js ">=2.3.x"
++
++svg.filter.js@^2.0.2:
++  version "2.0.2"
++  resolved "https://registry.yarnpkg.com/svg.filter.js/-/svg.filter.js-2.0.2.tgz#91008e151389dd9230779fcbe6e2c9a362d1c203"
++  integrity sha512-xkGBwU+dKBzqg5PtilaTb0EYPqPfJ9Q6saVldX+5vCRy31P6TlRCP3U9NxH3HEufkKkpNgdTLBJnmhDHeTqAkw==
++  dependencies:
++    svg.js "^2.2.5"
++
++svg.js@>=2.3.x, svg.js@^2.0.1, svg.js@^2.2.5, svg.js@^2.4.0, svg.js@^2.6.5:
++  version "2.7.1"
++  resolved "https://registry.yarnpkg.com/svg.js/-/svg.js-2.7.1.tgz#eb977ed4737001eab859949b4a398ee1bb79948d"
++  integrity sha512-ycbxpizEQktk3FYvn/8BH+6/EuWXg7ZpQREJvgacqn46gIddG24tNNe4Son6omdXCnSOaApnpZw6MPCBA1dODA==
++
++svg.pathmorphing.js@^0.1.3:
++  version "0.1.3"
++  resolved "https://registry.yarnpkg.com/svg.pathmorphing.js/-/svg.pathmorphing.js-0.1.3.tgz#c25718a1cc7c36e852ecabc380e758ac09bb2b65"
++  integrity sha512-49HWI9X4XQR/JG1qXkSDV8xViuTLIWm/B/7YuQELV5KMOPtXjiwH4XPJvr/ghEDibmLQ9Oc22dpWpG0vUDDNww==
++  dependencies:
++    svg.js "^2.4.0"
++
++svg.resize.js@^1.4.3:
++  version "1.4.3"
++  resolved "https://registry.yarnpkg.com/svg.resize.js/-/svg.resize.js-1.4.3.tgz#885abd248e0cd205b36b973c4b578b9a36f23332"
++  integrity sha512-9k5sXJuPKp+mVzXNvxz7U0uC9oVMQrrf7cFsETznzUDDm0x8+77dtZkWdMfRlmbkEEYvUn9btKuZ3n41oNA+uw==
++  dependencies:
++    svg.js "^2.6.5"
++    svg.select.js "^2.1.2"
++
++svg.select.js@^2.1.2:
++  version "2.1.2"
++  resolved "https://registry.yarnpkg.com/svg.select.js/-/svg.select.js-2.1.2.tgz#e41ce13b1acff43a7441f9f8be87a2319c87be73"
++  integrity sha512-tH6ABEyJsAOVAhwcCjF8mw4crjXSI1aa7j2VQR8ZuJ37H2MBUbyeqYr5nEO7sSN3cy9AR9DUwNg0t/962HlDbQ==
++  dependencies:
++    svg.js "^2.2.5"
++
++svg.select.js@^3.0.1:
++  version "3.0.1"
++  resolved "https://registry.yarnpkg.com/svg.select.js/-/svg.select.js-3.0.1.tgz#a4198e359f3825739226415f82176a90ea5cc917"
++  integrity sha512-h5IS/hKkuVCbKSieR9uQCj9w+zLHoPh+ce19bBYyqF53g6mnPB8sAtIbe1s9dh2S2fCmYX2xel1Ln3PJBbK4kw==
++  dependencies:
++    svg.js "^2.6.5"
++
+ svgo@^1.0.0:
+   version "1.3.2"
+   resolved "https://registry.yarnpkg.com/svgo/-/svgo-1.3.2.tgz#b6dc511c063346c9e415b81e43401145b96d4167"
+@@ -9390,6 +9462,11 @@ vm-browserify@^1.0.1:
+   resolved "https://registry.yarnpkg.com/vm-browserify/-/vm-browserify-1.1.2.tgz#78641c488b8e6ca91a75f511e7a3b32a86e5dda0"
+   integrity sha512-2ham8XPWTONajOR0ohOKOHXkm3+gaBmGut3SRuu75xLd/RRaY6vqgh8NBYYk7+RW3u5AtzPQZG8F10LHkl0lAQ==
+ 
++vue-apexcharts@^1.6.2:
++  version "1.6.2"
++  resolved "https://registry.yarnpkg.com/vue-apexcharts/-/vue-apexcharts-1.6.2.tgz#0547826067f97e8ea67ca9423e524eb6669746ad"
++  integrity sha512-9HS3scJwWgKjmkcWIf+ndNDR0WytUJD8Ju0V2ZYcjYtlTLwJAf2SKUlBZaQTkDmwje/zMgulvZRi+MXmi+WkKw==
++
+ vue-axios@^2.1.4:
+   version "2.1.5"
+   resolved "https://registry.yarnpkg.com/vue-axios/-/vue-axios-2.1.5.tgz#1af4bf1218ed71309c76afb38d0f683e312c24a7"
+@@ -9411,6 +9488,11 @@ vue-choropleth@^0.2.1:
+     leaflet "^1.1.0"
+     vue2-leaflet "1.0.2"
+ 
++vue-class-component@^7.1.0:
++  version "7.2.6"
++  resolved "https://registry.yarnpkg.com/vue-class-component/-/vue-class-component-7.2.6.tgz#8471e037b8e4762f5a464686e19e5afc708502e4"
++  integrity sha512-+eaQXVrAm/LldalI272PpDe3+i4mPis0ORiMYxF6Ae4hyuCh15W8Idet7wPUEs4N4YptgFHGys4UrgNQOMyO6w==
++
+ vue-eslint-parser@^2.0.3:
+   version "2.0.3"
+   resolved "https://registry.yarnpkg.com/vue-eslint-parser/-/vue-eslint-parser-2.0.3.tgz#c268c96c6d94cfe3d938a5f7593959b0ca3360d1"
+@@ -9468,6 +9550,13 @@ vue-loader@^15.7.0:
+     vue-hot-reload-api "^2.3.0"
+     vue-style-loader "^4.1.0"
+ 
++vue-property-decorator@^8.0.0:
++  version "8.5.1"
++  resolved "https://registry.yarnpkg.com/vue-property-decorator/-/vue-property-decorator-8.5.1.tgz#571a91cf8d2b507f537d79bf8275af3184572fff"
++  integrity sha512-O6OUN2OMsYTGPvgFtXeBU3jPnX5ffQ9V4I1WfxFQ6dqz6cOUbR3Usou7kgFpfiXDvV7dJQSFcJ5yUPgOtPPm1Q==
++  dependencies:
++    vue-class-component "^7.1.0"
++
+ vue-router@^3.0.6:
+   version "3.6.5"
+   resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-3.6.5.tgz#95847d52b9a7e3f1361cb605c8e6441f202afad8"
+@@ -9478,6 +9567,14 @@ vue-select@^3.18.3:
+   resolved "https://registry.yarnpkg.com/vue-select/-/vue-select-3.20.2.tgz#eaa15012b032c154d4fb51ac82ebeda2beeae54b"
+   integrity sha512-ZSzIDzyYsWZULGUxVp1h6u3yi9IZQBWX8r6kSudUI/I5J1HQKpBjRntvkrg6pr87xmm16kdChvHCDN+W84vTKw==
+ 
++vue-slider-component@^3.2.24:
++  version "3.2.24"
++  resolved "https://registry.yarnpkg.com/vue-slider-component/-/vue-slider-component-3.2.24.tgz#9c931da3d10d0efde361138626a76d21c4359fd5"
++  integrity sha512-28hfotAL/CPXPwqHgVFyUwUEV0zweoc2wW0bgraGkoIcRZGlFjk8caYJLE8+Luug5t3b9tJm/NyDXpyIdmcYZg==
++  dependencies:
++    core-js "^3.6.5"
++    vue-property-decorator "^8.0.0"
++
+ vue-star-rating@^1.6.1:
+   version "1.7.0"
+   resolved "https://registry.yarnpkg.com/vue-star-rating/-/vue-star-rating-1.7.0.tgz#07576aa1a83d54d4e9ea80eebccf058ff3c868b6"
+@@ -9493,7 +9590,7 @@ vue-style-loader@^4.1.0:
+     hash-sum "^1.0.2"
+     loader-utils "^1.0.2"
+ 
+-vue-template-compiler@^2.6.10:
++vue-template-compiler@^2.7.14:
+   version "2.7.14"
+   resolved "https://registry.yarnpkg.com/vue-template-compiler/-/vue-template-compiler-2.7.14.tgz#4545b7dfb88090744c1577ae5ac3f964e61634b1"
+   integrity sha512-zyA5Y3ArvVG0NacJDkkzJuPQDF8RFeRlzV2vLeSnhSpieO6LK2OVbdLPi5MPPs09Ii+gMO8nY4S3iKQxBxDmWQ==
+-- 
+2.39.0.windows.2
+

@@ -15,7 +15,10 @@ import vSelect from "vue-select";
 import "vue-select/dist/vue-select.css";
 import 'vue-slider-component/theme/default.css';
 import VueApexCharts from 'vue-apexcharts';
-
+import 'chartjs-chart-error-bars';
+import CanvasJSChart from '@canvasjs/vue-charts';
+import CanvasJSStockChart from '@canvasjs/vue-stockcharts';
+// import Chart from 'chart.js';
 
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
@@ -29,6 +32,8 @@ Vue.config.productionTip = false;
 Vue.use(BootstrapVue);
 Vue.use(userPlugin);
 Vue.use(VueFilterDateFormat);
+Vue.use(CanvasJSChart);
+Vue.use(CanvasJSStockChart); // install the CanvasJS Vuejs StockChart Plugin
 
 //toast options
 const toasterOptions = {

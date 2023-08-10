@@ -1,114 +1,88 @@
 <template>
-  <box-plot-chart
-    :chart-data="datacollection"
-    :options="options"
-    :width="320"
-    :height="350"
-  />
+  <apexchart type="line" :options="chartOptions" :series="chartSeries" />
 </template>
 
 <script>
-import axios from 'axios';
-import { BoxPlot, mixins } from 'vue-chartjs';
+import VueApexCharts from "vue-apexcharts";
 
 export default {
-  name: 'TempBoxplotGraph',
-  extends: BoxPlot,
-  mixins: [mixins.reactiveData],
-  props: {
-    selectedBasinID: {
-      type: String,
-    },
-    baseGraph: Boolean,
+  components: {
+    apexchart: VueApexCharts,
   },
-
   data() {
     return {
-      planId: "1",
-      JSONData: null,
-      datacollection: null,
-      graphColors: ["#28a745", "#28a745", "#28a745"],
-      options: {
-        responsive: true,
-        title: {
-          display: false,
-          text: 'Temperature contribution to stream in watershed.',
+      chartOptions: {
+        chart: {
+          id: "forecast-line-chart",
         },
-        scales: {
-          x: {
-            display: true,
-            stacked: false,
-            title: {
-              display: true,
-              text: 'Years',
-            },
-          },
-          y: {
-            display: true,
-            stacked: false,
-            title: {
-              display: true,
-              text: 'Celsius',
-            },
+        xaxis: {
+          categories: ["2020", "2021", "2022", "2023", "2024", "2025"],
+        },
+        fill: {
+          type: "gradient",
+          opacity: 0.5,
+        },
+        markers: {
+          size: 0,
+        },
+        dataLabels: {
+          enabled: false,
+        },
+        tooltip: {
+          enabled: false,
+        },
+        colors: ["#28a745"],
+        grid: {
+          borderColor: "#f1f1f1",
+        },
+        yaxis: {
+          title: {
+            text: "Stream Temperature (°C)",
           },
         },
       },
+      chartSeries: [
+        {
+          name: "Average",
+          data: [12.5, 13.75, 12.5, 16.25, 18.75, 16.25],
+          fill: {
+            type: "gradient",
+            opacity: 1,
+            colors: ["#28a745"],
+          },
+          stroke: {
+            width: 3,
+            curve: "smooth",
+          },
+        },
+        {
+          name: "Minimum",
+          data: [10, 12, 10, 14, 16, 14],
+          fill: {
+            type: "gradient",
+            opacity: 0.3,
+            colors: ["#28a745", 'transparent'],
+          },
+          stroke: {
+            width: 0,
+          },
+        },
+        {
+          name: "Maximum",
+          data: [15, 17, 15, 20, 22, 20],
+          fill: {
+            type: "gradient",
+            opacity: 0.3,
+            colors: ["#28a745", 'transparent'],
+          },
+          stroke: {
+            width: 0, // Set the line width to 0 to make it invisible
+          },
+        },
+      ],
     };
-  },
-
-  mounted() {
-    this.planId = this.$route.params.planId;
-    this.getData();
-  },
-
-  methods: {
-    async getData() {
-      try {
-        const response = await axios.get("/static/et.json");
-        this.JSONData = response.data;
-        this.buildDataCollection();
-      } catch (error) {
-        console.error(error);
-      }
-    },
-
-    buildDataCollection() {
-      this.datacollection = {
-        labels: this.JSONData.Legend,
-        datasets: [],
-      };
-
-      const dataset = {
-        label: this.JSONData.Description,
-        data: [],
-        backgroundColor: this.graphColors[0],
-      };
-
-      const plan = this.getPlanDataById(this.JSONData, this.planId, this.baseGraph);
-
-      for (const dataIndex in plan.Data) {
-        const dataPoint = plan.Data[dataIndex];
-        dataset.data.push(dataPoint);
-      }
-
-      this.datacollection.datasets.push(dataset);
-    },
-
-    getPlanDataById(data, planId, baseGraph) {
-      for (const plan in data.Adaptation_Plans) {
-        const planObj = data.Adaptation_Plans[plan];
-        if (baseGraph && planObj.planId === null) {
-          return data.Adaptation_Plans[plan];
-        }
-        if (planObj.planId === planId) {
-          return data.Adaptation_Plans[plan];
-        }
-      }
-    },
-
-    getColor(i) {
-      return this.graphColors[i];
-    },
   },
 };
 </script>
+
+
