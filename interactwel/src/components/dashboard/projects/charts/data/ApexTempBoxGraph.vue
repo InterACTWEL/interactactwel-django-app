@@ -1,73 +1,72 @@
-<template>
-  <div>
-    <apexchart
-      type="boxPlot"
-      :options="chartOptions"
-      :series="chartSeries"
-      :errorbars="errorbars"
-      width="300"
-      height="300"
-    />
-  </div>
-</template>
-
 <script>
-import VueApexCharts from 'vue-apexcharts';
-
-export default {
-  name: 'ApexTempBoxplotGraph',
-  components: {
-    VueApexCharts,
-  },
-  props: {
-    selectedBasinID: {
-      type: String,
-    },
-    baseGraph: Boolean,
-  },
-  data() {
-    return {
-      chartOptions: {
-        chart: {
-          type: 'boxPlot',
-          toolbar: {
-            show: false,
-            colors: {
-              upper: '#5C4742',
-              lower: '#5C4742',
-            },
+import CanvasJSChart from '@/components/CanvasJSVueComponent.vue';
+  
+  export default {  
+    components: {
+    CanvasJSChart
+  },  
+    data() {
+      return {
+        options: {
+          colorSet: "colorSet2",
+          exportEnabled: true,
+          title: {
+            text: "Mean Air Temperature vs Mean Relative Humidity",
+            fontSize: 15
           },
+          axisX: {
+            title: "Air Temperature (°C)",
+            suffix: " °C"
+          },
+          axisY: {
+            title: "Relative Humidity",
+            suffix: "%"
+          },
+          toolTip: {
+            shared: true
+          },
+          data: [{
+            type: "line",
+            name: "Relative Humidity",
+            toolTipContent: "<strong>Air Temperature:</strong> {x} °C <br> <span style=\"color:#8CA1BC\">Relative Humidity</span>: {y}%",
+            dataPoints: [
+              { x: 27.1, y: 83.16 },
+              { x: 28.2, y: 79.97 },
+              { x: 29.0, y: 76.52 },
+              { x: 30.0, y: 72.28 },
+              { x: 30.9, y: 69.83 },
+              { x: 31.9, y: 66.40 },
+              { x: 32.9, y: 65.86 },
+              { x: 33.9, y: 62.00 },
+              { x: 34.9, y: 59.99 }
+            ]
+          },
+          {
+            type: "error",
+            name: "Error Range",
+            toolTipContent: "<span style=\"color:#36845C\">{name}</span>: {y[0]}% - {y[1]}%",
+            dataPoints: [
+              { x: 27.1, y: [81.84, 85.42] },
+              { x: 28.2, y: [78.41, 81.12] },
+              { x: 29.0, y: [74.97, 77.85] },
+              { x: 30.0, y: [71.08, 74.12] },
+              { x: 30.9, y: [66.67, 72.04] },
+              { x: 31.9, y: [65.12, 67.46] },
+              { x: 32.9, y: [63.94, 67.27] },
+              { x: 33.9, y: [60.90, 63.24] },
+              { x: 34.9, y: [57.45, 62.08] }
+            ]
+          }]
         },
-        errorbars: {
-          enabled: true,
-          type: 'standard',
-          color: '#000',
-          lineWidth: 1,
-        },
-      },
-      chartSeries: [
-        {
-          name: 'Year',
-          data: [
-            {
-              x: '2001',
-              y: [10, 29.9, 30, 30.1, 70.0],
-              color: '#5C4742',
-            },
-            {
-              x: '2002',
-              y: [15.1, 25.4, 26.1, 27.4, 45.0],
-              color: '#5C4742',
-            },
-            {
-              x: '2003',
-              y: [18, 28.1, 28.7, 29.2, 58],
-              color: '#5C4742',
-            },
-          ],
-        },
-      ],
-    };
-  },
-}
+        styleOptions: {
+          width: "100%",
+          height: "360px"
+        }
+      }
+    }
+  }
 </script>
+  
+<template>
+    <CanvasJSChart :options="options" :style="styleOptions" />
+</template>                              
