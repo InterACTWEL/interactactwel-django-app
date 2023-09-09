@@ -3,11 +3,7 @@
     class="card feedback-container"
   >
     <div class="card-header">
-      <b-row>
-        <b-col>
           <strong>Evaluate Adaptation Plan {{ $route.params.planId }}</strong>
-        </b-col>
-        <b-col>
           <h5 class="text-right font-weight-light mb-0">
             <i
               class="fas fa-times"
@@ -15,8 +11,6 @@
               @click="hideFeedbackBlock"
             />
           </h5>
-        </b-col>
-      </b-row>
     </div>
 
     <b-alert :show="feedbackAlreadyProvided && showOldFeedbackView">
@@ -335,7 +329,6 @@ export default {
 <style scoped>
 
 .feedback-container{
-  width: 600px;
   height: 700px;
   overflow: auto;
 }

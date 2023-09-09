@@ -884,7 +884,6 @@ export default {
 
         layer.on('click', function(e) {
           EventBus.$emit('SELECTED_BASIN', feature.properties.Name);
-
           var layer = e.target;
           if (prevLayerClicked !== null || prevLayerClicked == layer) {
             prevLayerClicked.setStyle({

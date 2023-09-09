@@ -1,4 +1,4 @@
-from django.conf.urls import url, include
+from django.urls import re_path, include
 from django.views.generic import TemplateView
 
 from rest_framework import routers
@@ -46,8 +46,8 @@ router.register(r"projectselectedplans", views.ProjectPlanViewSet, basename = "p
 router.register(r"projectjoinrquests", views.ProjectJoinRequestViewSet, basename = "projectjoinrequest")
 
 urlpatterns = [
-    url(r"^api/", include(router.urls)),
-    url(
+    re_path(r"^api/", include(router.urls)),
+    re_path(
         "",
         TemplateView.as_view(template_name="interactwel/application.html"),
         name="app",

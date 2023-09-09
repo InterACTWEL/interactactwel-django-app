@@ -81,6 +81,9 @@ export default {
 
   methods: {
     buildDataCollection(data, adaptationPlan) {
+      if (!data) {
+        return;
+      }
       this.datacollection = {};
       this.datacollection.labels = [];
       for (let legend in data.Legend) {

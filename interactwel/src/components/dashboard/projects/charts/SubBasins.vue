@@ -363,6 +363,11 @@ export default {
     },
 
   },
+  watch: {
+    selectedSubBasin: function(value) {
+      EventBus.$emit('SELECTED_SUB_BASIN_OPTION', value.code);
+    },
+  },
   //props: ["jsonData"]
 
 };

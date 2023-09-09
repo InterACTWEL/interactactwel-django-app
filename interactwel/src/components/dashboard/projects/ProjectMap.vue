@@ -1,11 +1,10 @@
 <template>
   <div class="lg-map-container">
     <l-map
-      ref="myMap"
+      ref="mapRef"
       :max-zoom="maxZoom"
       :zoom="zoom"
       :center="center"
-      :options="{zoomControl: false}"
     >
       <l-control-zoom position="topright" />
       <l-tile-layer
@@ -30,24 +29,14 @@
 
       <l-layer-group
         layer-type="overlay"
-        name="<font size=2><strong>Sub-basins</strong></font>"
-      >
-        <l-geo-json
-          v-if="show"
-          :geojson="geoJson_subbasin"
-          :options="options"
-          :options-style="styleFunction_subbasin"
-        />
-      </l-layer-group>
-
-      <l-layer-group
-        layer-type="overlay"
         name="<font size=2><strong>Drought</strong></font>"
       >
         <l-geo-json
+          ref="subBasinsRef"
           :geojson="geoJson_subbasin_drought"
-          :options="options"
+          :options="subBasinOptions"
           :options-style="styleFunction_subbasin"
+          :visible="subBasinsVisible"
         />
       </l-layer-group>
 
@@ -142,7 +131,6 @@
         name="<font size=2><strong>Tribal Lands</strong></font>"
       >
         <l-geo-json
-          v-if="show"
           :geojson="geoJson_triballand"
           :options-style="styleFunction_triballand"
         />
@@ -164,6 +152,10 @@
         imperial="imperial"
       />
     </l-map>
+    <component
+      :is="component='regional-summary'"
+      v-show="regionalSummaryVisibility"
+    />
   </div>
 </template>
 
@@ -184,6 +176,7 @@ import {
 } from 'vue2-leaflet';
 
 import ReservoirList from "../../../../public/static/reservoirs_list.json";
+import RegionalSummary from '../projects/popup/RegionalSummary.vue';
 import ReservoirDataJson from "../../../../public/static/reservoirs_data.json";
 import GaugingStations from "../../../../public/static/gauging_stations.json";
 import GaugeDataJson from "../../../../public/static/streamflow_station_data.json";
@@ -192,11 +185,13 @@ import PrecipDataJson from "../../../../public/static/weather_station_data.json"
 import PopupContentWStations from "@/components/dashboard/projects/popup/PopupContent_WStations";
 import PopupContentReservoirs from "@/components/dashboard/projects/popup/PopupContent_Reservoirs";
 import PopupContentGaugeStations from "@/components/dashboard/projects/popup/PopupContent_GaugeStations";
+import EventBus from "@/event-bus";
 
 export default {
   name: "ProjectMap",
 
   components: {
+    RegionalSummary,
     'l-map': LMap,
     'l-tile-layer': LTileLayer,
     'l-marker': LMarker,
@@ -279,6 +274,10 @@ export default {
         shadowAnchor: [0, 0], // the same for the shadow
       }),
 
+      selectedSubBasin: 1,
+      subBasinsVisible: true,
+      regionalSummaryVisibility: false,
+
     };
   },
 
@@ -345,6 +344,85 @@ export default {
           fillOpacity: 1,
         };
       };
+    },
+    subBasinOptions() {
+      return {
+        onEachFeature: this.onEachFeatureFunction,
+      };
+    },
+    onEachFeatureFunction() {
+      return (feature, layer) => {
+        layer.bindTooltip(
+          "<div><strong>Click and explore!</strong>",
+        );
+
+        layer.on('click', function() {
+          EventBus.$emit('SELECTED_SUB_BASIN_OPTION', feature.properties.Name);
+        });
+
+        // this is only required for the initial rendering to set styling for the default sub basin selection.
+        // After that changeSubBasinStyles() is used.
+        if (layer.feature.properties.Name === this.selectedSubBasin) {
+          layer.setStyle({
+            weight: 1.5,
+            color: "#7c7c7c",
+            opacity: 1,
+            fillColor: "#06318c",
+            dashArray: '5, 5',
+            dashOffset: '10',
+            fillOpacity: 0.5,
+          });
+        }
+      };
+    },
+  },
+
+  mounted() {
+    let $this = this;
+    EventBus.$on('SELECTED_SUB_BASIN_OPTION', function(subBasin) {
+      $this.selectedSubBasin = subBasin.toString();
+      $this.changeSubBasinStyles();
+      EventBus.$emit('CREATE_REGION_SUMMARY', subBasin.toString());
+      $this.regionalSummaryVisibility = true;
+    });
+    EventBus.$emit('CREATE_REGION_SUMMARY', '1');
+
+    EventBus.$on('CLOSE', function() {
+      $this.regionalSummaryVisibility = false;
+    });
+  },
+
+  methods: {
+    changeSubBasinStyles() {
+      this.$refs.subBasinsRef.mapObject.eachLayer((layer) => {
+        if (layer.feature.properties.Name == this.selectedSubBasin) { // don't substitute with === as data types different across components
+          layer.setStyle({
+            weight: 1.5,
+            color: "#7c7c7c",
+            opacity: 1,
+            fillColor: "#06318c",
+            dashArray: '5, 5',
+            dashOffset: '10',
+            fillOpacity: 0.5,
+          });
+        }
+        else {
+          layer.setStyle(
+            {
+              weight: 1.5,
+              color: "#7c7c7c",
+              opacity: 1,
+              fillColor: "#e3dddd",
+              dashArray: '5, 5',
+              dashOffset: '10',
+              fillOpacity: 0.5,
+            }
+          );
+        }
+      });
+    },
+    createRegionSummary(subbasinID) {
+      EventBus.$emit('CREATE_REGION_SUMMARY', subbasinID);
     },
   },
 
