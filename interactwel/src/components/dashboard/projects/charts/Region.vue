@@ -350,58 +350,6 @@
             </div>
           </div>
         </b-tab>
-        <b-tab title="ApexBoxplot Stream Temp">
-          <div class="card-body">
-            <div class="card-body">
-              <b-row>
-                <b-col
-                    lg="6"
-                    class="p-3"
-                >
-                  <h6 class="baseline-graph-title text-center">
-                    Action Plan {{ $route.params.planId }}
-                  </h6>
-                  <apex-temp-box-graph v-bind:base-graph="false"/>
-                </b-col>
-                <b-col
-                    lg="6"
-                    class="p-3"
-                >
-                  <h6 class="baseline-graph-title text-center">
-                    Business as Usual
-                  </h6>
-                  <apex-temp-box-graph v-bind:base-graph="true"/>
-                </b-col>
-              </b-row>
-            </div>
-          </div>
-        </b-tab>
-        <b-tab title="Max-Min Stream Temp">
-          <div class="card-body">
-            <div class="card-body">
-              <b-row>
-                <b-col
-                    lg="6"
-                    class="p-3"
-                >
-                  <h6 class="baseline-graph-title text-center">
-                    Action Plan {{ $route.params.planId }}
-                  </h6>
-                  <range-area-and-line-chart v-bind:base-graph="false"/>
-                </b-col>
-                <b-col
-                    lg="6"
-                    class="p-3"
-                >
-                  <h6 class="baseline-graph-title text-center">
-                    Business as Usual
-                  </h6>
-                  <range-area-and-line-chart v-bind:base-graph="true"/>
-                </b-col>
-              </b-row>
-            </div>
-          </div>
-        </b-tab>
       </b-tabs>
     </div>
   </div>
@@ -430,8 +378,6 @@ import AppexBoxplotExample from "@/components/dashboard/projects/charts/data/Ape
 import ErrorBarsExample from "@/components/dashboard/projects/charts/data/ErrorBarsExample";
 // import TempBoxplotGraph from "@/components/dashboard/projects/charts/data/TempBoxplotGraph";
 //import TempLineGraph from "@/components/dashboard/projects/charts/data/TempLineGraph";
-import ApexTempBoxGraph from "@/components/dashboard/projects/charts/data/ApexTempBoxGraph.vue";
-import RangeAreaAndLineChart from './data/RangeAreaAndLineChart.vue';
 
 export default {
   name: 'Region',
@@ -451,9 +397,6 @@ export default {
     'pFertilizerGraph': PFertilizerGraph,
     'overviewWaterRightsGraph': OverviewWaterRightsGraph,
     'OverviewBaseWaterRightsGraph': OverviewBaseWaterRightsGraph,
-    ApexTempBoxGraph,
-    RangeAreaAndLineChart,
-
   },
 
   data() {
