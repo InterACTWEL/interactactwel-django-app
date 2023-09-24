@@ -1,5 +1,5 @@
 <template>
-  <Line
+  <LineChartGenerator
     v-if="chartData != null"
     :chart-data="chartData"
     :chart-options="options"
@@ -8,14 +8,30 @@
 
 <script>
 
-import { Line } from 'vue-chartjs';
-import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js';
+import { Line as LineChartGenerator} from 'vue-chartjs';
+import {
+  Chart as ChartJS,
+  Title,
+  Tooltip,
+  Legend,
+  LineElement,
+  LinearScale,
+  CategoryScale,
+  PointElement,
+} from 'chart.js';
 
-ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
+ChartJS.register(Title,
+  Tooltip,
+  Legend,
+  LineElement,
+  LinearScale,
+  CategoryScale,
+  PointElement
+);
 
 export default {
   name: 'LineChart',
-  components: { Line },
+  components: { LineChartGenerator },
   props: {
     chartData: {
       type: Object,

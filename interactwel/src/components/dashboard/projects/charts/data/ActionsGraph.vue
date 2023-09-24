@@ -59,9 +59,6 @@ export default {
     adaptationPlanId: {
       type: Number,
     },
-    selectedActors: {
-      type: Array,
-    },
   },
 
   data() {
@@ -71,7 +68,7 @@ export default {
       JSONData: null,
       datacollection: null,
       cr_data: null,
-
+      selectedActors: null,
       options: {
         hover: {
           mode: 'dataset',
@@ -176,7 +173,7 @@ export default {
             borderWidth: 2,
             hoverBorderWidth: 4,
             data: dataSeries.Values,
-            steppedLine: true,
+            stepped: true,
             fill: false,
           };
         });

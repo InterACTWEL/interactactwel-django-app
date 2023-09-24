@@ -14,7 +14,7 @@ import axios from 'axios';
 import LineChart from "../lib/LineChart";
 
 export default {
-  name: 'ActionsGraphSteppedLines',
+  name: 'ActionsGraphSteppedLinesOld',
 
   components: {
     LineChart,
