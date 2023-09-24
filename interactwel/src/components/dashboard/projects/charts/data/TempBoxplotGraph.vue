@@ -1,88 +1,59 @@
 <template>
-  <apexchart type="line" :options="chartOptions" :series="chartSeries" />
+    <div class="small">
+      <box-plot-chart :chart-data="datacollection" />
+      <button @click="fillData();">Randomize</button>
+    </div>
 </template>
-
+  
 <script>
-import VueApexCharts from "vue-apexcharts";
+import BoxPlotChart from "../lib/BoxPlotChart.vue";
 
+  
 export default {
-  components: {
-    apexchart: VueApexCharts,
-  },
-  data() {
-    return {
-      chartOptions: {
-        chart: {
-          id: "forecast-line-chart",
-        },
-        xaxis: {
-          categories: ["2020", "2021", "2022", "2023", "2024", "2025"],
-        },
-        fill: {
-          type: "gradient",
-          opacity: 0.5,
-        },
-        markers: {
-          size: 0,
-        },
-        dataLabels: {
-          enabled: false,
-        },
-        tooltip: {
-          enabled: false,
-        },
-        colors: ["#28a745"],
-        grid: {
-          borderColor: "#f1f1f1",
-        },
-        yaxis: {
-          title: {
-            text: "Stream Temperature (°C)",
-          },
-        },
+    components: {
+      BoxPlotChart
+    },
+    data() {
+      return {
+        datacollection: {}
+      };
+    },
+    mounted() {
+      this.fillData();
+    },
+    methods: {
+      fillData() {
+        this.datacollection = {
+          labels: [this.getRandomInt(), this.getRandomInt()],
+          datasets: [
+            {
+              label: "Data One",
+              backgroundColor: "#f87979",
+              data: [this.getRandomValues(100, 200), this.getRandomValues()]
+            },
+            {
+              label: "Data One",
+              backgroundColor: "blue",
+              data: [this.getRandomValues(), this.getRandomValues(20, 80)]
+            }
+          ]
+        };
       },
-      chartSeries: [
-        {
-          name: "Average",
-          data: [12.5, 13.75, 12.5, 16.25, 18.75, 16.25],
-          fill: {
-            type: "gradient",
-            opacity: 1,
-            colors: ["#28a745"],
-          },
-          stroke: {
-            width: 3,
-            curve: "smooth",
-          },
-        },
-        {
-          name: "Minimum",
-          data: [10, 12, 10, 14, 16, 14],
-          fill: {
-            type: "gradient",
-            opacity: 0.3,
-            colors: ["#28a745", 'transparent'],
-          },
-          stroke: {
-            width: 0,
-          },
-        },
-        {
-          name: "Maximum",
-          data: [15, 17, 15, 20, 22, 20],
-          fill: {
-            type: "gradient",
-            opacity: 0.3,
-            colors: ["#28a745", 'transparent'],
-          },
-          stroke: {
-            width: 0, // Set the line width to 0 to make it invisible
-          },
-        },
-      ],
-    };
-  },
-};
-</script>
-
-
+      getRandomInt() {
+        return Math.floor(Math.random() * (50 - 5 + 1)) + 5;
+      },
+      getRandomValues(min = 0, max = 100) {
+        return Array.from({ length: 100 }).map(
+          () => Math.random() * (max - min) + min
+        );
+      }
+    }
+  };
+  </script>
+  
+  <style>
+  .small {
+    max-width: 600px;
+    margin: 150px auto;
+}
+</style>

@@ -41,12 +41,12 @@ export default {
           intersect: true,
         },
         scales: {
-          xAxes: [{
+          x: {
             display: true,
-          }],
-          yAxes: [{
+          },
+          y: {
             display: true,
-          }],
+          },
         },
       },
     };

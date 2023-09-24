@@ -42,9 +42,11 @@ export default {
       ],
       options: {
         responsive: false,
-        title: {
-          display: true,
-          text: 'Total yield (kg) of planted crops in watershed',
+        plugins: {
+          title: {
+            display: true,
+            text: 'Total yield (kg) of planted crops in watershed',
+          },
         },
         legend: {
           position: 'top',
@@ -63,22 +65,22 @@ export default {
           intersect: false,
         },
         scales: {
-          xAxes: [{
+          x: {
             display: true,
             stacked: true,
-            scaleLabel: {
+            title: {
               display: true,
-              labelString: 'Years',
+              text: 'Years',
             },
-          }],
-          yAxes: [{
+          },
+          y: {
             display: true,
             stacked: true,
-            scaleLabel: {
+            title: {
               display: true,
-              labelString: 'kg',
+              text: 'kg',
             },
-          }],
+          },
         },
       },
     };
@@ -88,7 +90,7 @@ export default {
     //EventBus.$on('CLICK_ITEM_SIDEBAR', function (planName) {
     //$this.planName = planName;
     this.planId = this.$route.params.planId;
-    this.buildDataCollection($this.JSONData, this.planId);
+    this.buildDataCollection(this.JSONData, this.planId);
     //});
   },
 

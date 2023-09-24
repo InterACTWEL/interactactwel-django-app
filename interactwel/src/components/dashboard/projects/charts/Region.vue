@@ -32,7 +32,7 @@
             </b-row>
           </div>
         </b-tab>-->
-        <!-- <b-tab title="Crop yield">
+        <b-tab title="Crop yield">
           <div class="card-body no-padding">
             <b-row>
               <b-col
@@ -314,54 +314,37 @@
               </b-row>
             </div>
           </div>
-        </b-tab> -->
-        <b-tab title="Stream Temperature(Line)">
+        </b-tab>
+
+        <b-tab title="Boxplot Sample">
           <div class="card-body">
             <div class="card-body">
               <b-row>
                 <b-col
-                    lg="6"
+                    lg="12"
                     class="p-3"
                 >
                   <h6 class="baseline-graph-title text-center">
-                    Action Plan {{ $route.params.planId }}
+                    Boxplot sample
                   </h6>
-                  <apex-temp-line-graph v-bind:base-graph="false"/>
-                </b-col>
-                <b-col
-                    lg="6"
-                    class="p-3"
-                >
-                  <h6 class="baseline-graph-title text-center">
-                    Business as Usual
-                  </h6>
-                  <apex-temp-line-graph v-bind:base-graph="true"/>
+                  <appex-boxplot-example />
                 </b-col>
               </b-row>
             </div>
           </div>
         </b-tab>
-        <b-tab title="Boxplot Stream Temp">
+        <b-tab title="Error Bars Sample">
           <div class="card-body">
             <div class="card-body">
               <b-row>
                 <b-col
-                    lg="6"
-                    class="p-3"
+                  lg="12"
+                  class="p-3"
                 >
                   <h6 class="baseline-graph-title text-center">
-                    Action Plan {{ $route.params.planId }}
+                    Error Bars Example
                   </h6>
-                  <temp-boxplot-graph v-bind:base-graph="false"/>
-                </b-col>
-                <b-col
-                    lg="6"
-                    class="p-3"
-                >
-                  <h6 class="baseline-graph-title text-center">
-                    Business as Usual
-                  </h6>
-                  <temp-boxplot-graph v-bind:base-graph="true"/>
+                  <error-bars-example />
                 </b-col>
               </b-row>
             </div>
@@ -419,32 +402,6 @@
             </div>
           </div>
         </b-tab>
-        <!-- <b-tab title="Error Bars Temp">
-          <div class="card-body">
-            <div class="card-body">
-              <b-row>
-                <b-col
-                    lg="6"
-                    class="p-3"
-                >
-                  <h6 class="baseline-graph-title text-center">
-                    Action Plan {{ $route.params.planId }}
-                  </h6>
-                  <sgratzl-error-bars v-bind:base-graph="false"/>
-                </b-col>
-                <b-col
-                    lg="6"
-                    class="p-3"
-                >
-                  <h6 class="baseline-graph-title text-center">
-                    Business as Usual
-                  </h6>
-                  <sgratzl-error-bars v-bind:base-graph="true"/>
-                </b-col>
-              </b-row>
-            </div>
-          </div>
-        </b-tab> -->
       </b-tabs>
     </div>
   </div>
@@ -469,17 +426,19 @@ import EtGraph from "@/components/dashboard/projects/charts/data/etGraph";
 import SedimentYieldGraph from "@/components/dashboard/projects/charts/data/sedimentYieldGraph";
 import WaterYieldGraph from "@/components/dashboard/projects/charts/data/waterYieldGraph";
 import no3SurqGraph from "@/components/dashboard/projects/charts/data/no3SurqGraph";
-import ApexTempLineGraph from "@/components/dashboard/projects/charts/data/ApexTempLineGraph";
-import TempBoxplotGraph from "@/components/dashboard/projects/charts/data/TempBoxplotGraph.vue";
+import AppexBoxplotExample from "@/components/dashboard/projects/charts/data/ApexBoxplotExample";
+import ErrorBarsExample from "@/components/dashboard/projects/charts/data/ErrorBarsExample";
+// import TempBoxplotGraph from "@/components/dashboard/projects/charts/data/TempBoxplotGraph";
+//import TempLineGraph from "@/components/dashboard/projects/charts/data/TempLineGraph";
 import ApexTempBoxGraph from "@/components/dashboard/projects/charts/data/ApexTempBoxGraph.vue";
-//import RangeAreaAndLineChart from "@/components/dashboard/projects/charts/data/RangeAreaAndLineChart.vue";
 import RangeAreaAndLineChart from './data/RangeAreaAndLineChart.vue';
-// import SgratzlErrorBars from "@/components/dashboard/projects/charts/data/SgratzlErrorBars.vue";
 
 export default {
   name: 'Region',
 
   components: {
+    ErrorBarsExample,
+    AppexBoxplotExample,
     No3CropGraph,
     No3PercGraph,
     no3SurqGraph,
@@ -492,11 +451,9 @@ export default {
     'pFertilizerGraph': PFertilizerGraph,
     'overviewWaterRightsGraph': OverviewWaterRightsGraph,
     'OverviewBaseWaterRightsGraph': OverviewBaseWaterRightsGraph,
-    ApexTempLineGraph,
     ApexTempBoxGraph,
-    TempBoxplotGraph,
     RangeAreaAndLineChart,
-    
+
   },
 
   data() {
@@ -542,7 +499,6 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-
 <style>
 .baseline-graph-title{
     background-color: #6c757d;

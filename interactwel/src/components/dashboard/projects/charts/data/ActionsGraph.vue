@@ -59,9 +59,6 @@ export default {
     adaptationPlanId: {
       type: Number,
     },
-    selectedActors: {
-      type: Array,
-    },
   },
 
   data() {
@@ -71,7 +68,7 @@ export default {
       JSONData: null,
       datacollection: null,
       cr_data: null,
-
+      selectedActors: null,
       options: {
         hover: {
           mode: 'dataset',
@@ -88,41 +85,43 @@ export default {
         legend: {
           display: true,
         },
-        title: {
-          display: true,
-          text: 'Actions taken by each actor through time',
+        plugins: {
+          title: {
+            display: true,
+            text: 'Actions taken by each actor through time',
+          },
         },
         scales: {
           //type: 'category',
-          xAxes: [{
+          x: {
             gridLines: {
               display: false,
             },
-            scaleLabel: {
+            title: {
               display: true,
-              labelString: 'Time',
+              text: 'Time',
             },
             position: 'bottom',
             ticks: {
               beginAtzero: false,
               stepSize: 1,
             },
-          }],
+          },
 
-          yAxes: [{
+          y: {
             gridLines: {
               drawBorder: false,
             },
             //type: 'category',
-            scaleLabel: {
+            title: {
               display: true,
-              labelString: 'Actions',
+              text: 'Actions',
             },
             ticks: {
               beginAtZero: false,
               max: 10,
             },
-          }],
+          },
         },
       },
     };
@@ -176,7 +175,7 @@ export default {
             borderWidth: 2,
             hoverBorderWidth: 4,
             data: dataSeries.Values,
-            steppedLine: true,
+            stepped: true,
             fill: false,
           };
         });
