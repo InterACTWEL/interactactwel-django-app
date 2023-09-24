@@ -42,9 +42,11 @@ export default {
       ],
       options: {
         responsive: false,
-        title: {
-          display: true,
-          text: 'Total yield (kg) of planted crops in watershed',
+        plugins: {
+          title: {
+            display: true,
+            text: 'Total yield (kg) of planted crops in watershed',
+          },
         },
         legend: {
           position: 'top',

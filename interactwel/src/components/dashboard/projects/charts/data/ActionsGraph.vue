@@ -85,9 +85,11 @@ export default {
         legend: {
           display: true,
         },
-        title: {
-          display: true,
-          text: 'Actions taken by each actor through time',
+        plugins: {
+          title: {
+            display: true,
+            text: 'Actions taken by each actor through time',
+          },
         },
         scales: {
           //type: 'category',

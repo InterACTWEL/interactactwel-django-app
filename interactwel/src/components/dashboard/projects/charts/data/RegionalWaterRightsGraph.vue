@@ -28,9 +28,11 @@ export default {
       subbasinIDu: this.subbasinID,
       options: {
         responsive: false,
-        title: {
-          display: true,
-          text: 'Total water rights volume (ac-ft) by water source',
+        plugins: {
+          title: {
+            display: true,
+            text: 'Total water rights volume (ac-ft) by water source',
+          },
         },
         tooltips: {
           mode: 'point',

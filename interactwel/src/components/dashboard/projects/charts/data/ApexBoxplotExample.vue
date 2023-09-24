@@ -1,6 +1,11 @@
 <template>
   <div>
-    <apexchart type="boxPlot" height="350" :options="chartOptions" :series="series"></apexchart>
+    <apexchart
+      type="boxPlot"
+      height="350"
+      :options="chartOptions"
+      :series="series"
+    />
   </div>
 </template>
 

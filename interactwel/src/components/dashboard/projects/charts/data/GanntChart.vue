@@ -504,9 +504,11 @@ export default {
         animation: {
           duration: 10,
         },
-        title: {
-          display: true,
-          text: 'Actions taken by each actor through time',
+        plugins: {
+          title: {
+            display: true,
+            text: 'Actions taken by each actor through time',
+          },
         },
         tooltips: {
           mode: 'point',

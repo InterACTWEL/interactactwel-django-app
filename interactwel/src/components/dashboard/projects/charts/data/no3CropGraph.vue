@@ -12,7 +12,7 @@ import axios from 'axios';
 import VerticalBarChart from "../lib/VerticalBarChart";
 
 export default {
-  name: 'no3CropGraph',
+  name: 'No3CropGraph',
   components: {
     VerticalBarChart,
   },

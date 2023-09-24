@@ -392,6 +392,34 @@ export default {
     });
   },
 
+  created() {
+    axios.get("/static/subbasins_drought.geojson")
+      .then(response => {
+        this.geoJson_subbasin_drought = response.data;
+        this.loading = true;
+      });
+    axios.get("/static/reaches1.json")
+      .then(response => {
+        this.geoJson_reach = response.data;
+        this.loading = true;
+      });
+    axios.get("/static/GW_Restricted_Areas_Umatilla.geojson")
+      .then(response => {
+        this.geoJson_gwrestricted = response.data;
+        this.loading = true;
+      });
+    axios.get("/static/Tribal_Lands.geojson")
+      .then(response => {
+        this.geoJson_triballand = response.data;
+        this.loading = true;
+      });
+    axios.get("/static/NOWA_Pumping_Limit.geojson")
+      .then(response => {
+        this.geoJson_pumping_limit = response.data;
+        this.loading = true;
+      });
+  },
+
   methods: {
     changeSubBasinStyles() {
       this.$refs.subBasinsRef.mapObject.eachLayer((layer) => {
@@ -424,34 +452,6 @@ export default {
     createRegionSummary(subbasinID) {
       EventBus.$emit('CREATE_REGION_SUMMARY', subbasinID);
     },
-  },
-
-  created() {
-    axios.get("/static/subbasins_drought.geojson")
-      .then(response => {
-        this.geoJson_subbasin_drought = response.data;
-        this.loading = true;
-      });
-    axios.get("/static/reaches1.json")
-      .then(response => {
-        this.geoJson_reach = response.data;
-        this.loading = true;
-      });
-    axios.get("/static/GW_Restricted_Areas_Umatilla.geojson")
-      .then(response => {
-        this.geoJson_gwrestricted = response.data;
-        this.loading = true;
-      });
-    axios.get("/static/Tribal_Lands.geojson")
-      .then(response => {
-        this.geoJson_triballand = response.data;
-        this.loading = true;
-      });
-    axios.get("/static/NOWA_Pumping_Limit.geojson")
-      .then(response => {
-        this.geoJson_pumping_limit = response.data;
-        this.loading = true;
-      });
   },
 };
 </script>

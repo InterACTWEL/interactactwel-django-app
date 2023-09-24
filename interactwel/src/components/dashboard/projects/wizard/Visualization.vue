@@ -12,14 +12,14 @@
           variant="next"
           size="sm"
           @click="showFeedback"
-        >Provide Feedback
+        >
+          Provide Feedback
         </b-button>
       </b-col>
     </b-row>
     <router-view :key="$route.fullPath" />
   </div>
 </template>
-
 
 <script>
 import EventBus from '../../../../event-bus';

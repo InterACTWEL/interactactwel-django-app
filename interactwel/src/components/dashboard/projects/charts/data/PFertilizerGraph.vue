@@ -53,9 +53,11 @@ export default {
       ],
       options: {
         responsive: false,
-        title: {
-          display: true,
-          text: 'Amount of P fertilizer applied automatically in watershed',
+        plugins: {
+          title: {
+            display: true,
+            text: 'Amount of P fertilizer applied automatically in watershed',
+          },
         },
         legend: {
           position: 'top',

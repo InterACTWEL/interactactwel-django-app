@@ -77,9 +77,11 @@ export default {
       datacollection: null,
       options: {
         responsive: true,
-        title: {
-          display: true,
-          text: 'Average monthly storage volume (ac-ft)',
+        plugins: {
+          title: {
+            display: true,
+            text: 'Average monthly storage volume (ac-ft)',
+          },
         },
         legend: {
           display: false,

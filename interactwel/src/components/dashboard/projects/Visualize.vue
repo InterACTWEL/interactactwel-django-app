@@ -210,11 +210,11 @@
               </div>
               <div>
                 <b-form-checkbox
-                    id="checkbox-100"
-                    v-model="stresses_layer_show"
-                    name="checkbox-1"
-                    value="checked"
-                    unchecked-value="unchecked"
+                  id="checkbox-100"
+                  v-model="stresses_layer_show"
+                  name="checkbox-1"
+                  value="checked"
+                  unchecked-value="unchecked"
                 >
                   <span style="color: #FFFFFF">stresses and shocks</span>
                 </b-form-checkbox>
@@ -410,7 +410,7 @@
                 />
               </l-layer-group>
 
-              <climate-scenario-map-layer v-if="stresses_layer_show == 'checked'"/>
+              <climate-scenario-map-layer v-if="stresses_layer_show == 'checked'" />
 
               <l-control-scale
                 position="bottomright"
@@ -495,7 +495,7 @@ import paraguayGeojson from './../../../../public/static/BASIN_Irrigation_basins
 import {pyDepartmentsData} from './../../../../public/static/py-departments-data';
 import ClimateScenarioMapLayer from "@/components/dashboard/projects/visualize-map-sub-components/ClimateScenarioMapLayer";
 import ClimateScenarioSelectionDropDown
-  from "@/components/dashboard/projects/visualize-map-sub-components/ClimateScenarioSelectionDropDown";
+from "@/components/dashboard/projects/visualize-map-sub-components/ClimateScenarioSelectionDropDown";
 
 export default {
   name: 'Visualize',
@@ -594,7 +594,7 @@ export default {
           visible: true,
           attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
           url: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}.png",
-        }
+        },
       ],
 
       customPopup: "<div class=\"region_summary_popup\">" +

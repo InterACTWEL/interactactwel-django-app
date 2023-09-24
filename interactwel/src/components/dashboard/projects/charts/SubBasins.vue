@@ -11,18 +11,19 @@
         <div class="col-4">
           <div class="form-group">
             <v-select
-              :options="options"
               v-model="selectedSubBasin"
-            >
-            </v-select>
+              :options="options"
+            />
           </div>
         </div>
       </div>
     </div>
     <div class="card-body no-padding">
       <b-tabs card>
-        <b-tab title="NO3 - Lateral Flow"
-               active>
+        <b-tab
+          title="NO3 - Lateral Flow"
+          active
+        >
           <div class="card-body">
             <b-row>
               <b-col
@@ -31,7 +32,10 @@
                 <h6 class="baseline-graph-title text-center">
                   Action Plan {{ $route.params.planId }}
                 </h6>
-            <latq-sub-graph :selected-basin-id="selectedSubBasin.code" v-bind:base-graph="false"></latq-sub-graph>
+                <latq-sub-graph
+                  :selected-basin-id="selectedSubBasin.code"
+                  :base-graph="false"
+                />
               </b-col>
               <b-col
                 lg="6"
@@ -39,7 +43,10 @@
                 <h6 class="baseline-graph-title text-center">
                   Business as Usual
                 </h6>
-                <latq-sub-graph :selected-basin-id="selectedSubBasin.code" v-bind:base-graph="true"></latq-sub-graph>
+                <latq-sub-graph
+                  :selected-basin-id="selectedSubBasin.code"
+                  :base-graph="true"
+                />
               </b-col>
             </b-row>
           </div>
@@ -48,20 +55,26 @@
           <div class="card-body">
             <b-row>
               <b-col
-                  lg="6"
+                lg="6"
               >
                 <h6 class="baseline-graph-title text-center">
                   Action Plan {{ $route.params.planId }}
                 </h6>
-                <nsurq-sub-graph :selected-basin-id="selectedSubBasin.code" v-bind:base-graph="false"></nsurq-sub-graph>
+                <nsurq-sub-graph
+                  :selected-basin-id="selectedSubBasin.code"
+                  :base-graph="false"
+                />
               </b-col>
               <b-col
-                  lg="6"
+                lg="6"
               >
                 <h6 class="baseline-graph-title text-center">
                   Business as Usual
                 </h6>
-                <nsurq-sub-graph :selected-basin-id="selectedSubBasin.code" v-bind:base-graph="true"></nsurq-sub-graph>
+                <nsurq-sub-graph
+                  :selected-basin-id="selectedSubBasin.code"
+                  :base-graph="true"
+                />
               </b-col>
             </b-row>
           </div>
@@ -70,20 +83,26 @@
           <div class="card-body">
             <b-row>
               <b-col
-                  lg="6"
+                lg="6"
               >
                 <h6 class="baseline-graph-title text-center">
                   Action Plan {{ $route.params.planId }}
                 </h6>
-                <syld-sub-graph :selected-basin-id="selectedSubBasin.code" v-bind:base-graph="false"></syld-sub-graph>
+                <syld-sub-graph
+                  :selected-basin-id="selectedSubBasin.code"
+                  :base-graph="false"
+                />
               </b-col>
               <b-col
-                  lg="6"
+                lg="6"
               >
                 <h6 class="baseline-graph-title text-center">
                   Business as Usual
                 </h6>
-                <syld-sub-graph :selected-basin-id="selectedSubBasin.code" v-bind:base-graph="true"></syld-sub-graph>
+                <syld-sub-graph
+                  :selected-basin-id="selectedSubBasin.code"
+                  :base-graph="true"
+                />
               </b-col>
             </b-row>
           </div>
@@ -92,20 +111,26 @@
           <div class="card-body">
             <b-row>
               <b-col
-                  lg="6"
+                lg="6"
               >
                 <h6 class="baseline-graph-title text-center">
                   Action Plan {{ $route.params.planId }}
                 </h6>
-                <perc-sub-graph :selected-basin-id="selectedSubBasin.code" v-bind:base-graph="false"></perc-sub-graph>
+                <perc-sub-graph
+                  :selected-basin-id="selectedSubBasin.code"
+                  :base-graph="false"
+                />
               </b-col>
               <b-col
-                  lg="6"
+                lg="6"
               >
                 <h6 class="baseline-graph-title text-center">
                   Business as Usual
                 </h6>
-                <perc-sub-graph :selected-basin-id="selectedSubBasin.code" v-bind:base-graph="true"></perc-sub-graph>
+                <perc-sub-graph
+                  :selected-basin-id="selectedSubBasin.code"
+                  :base-graph="true"
+                />
               </b-col>
             </b-row>
           </div>
@@ -114,20 +139,26 @@
           <div class="card-body">
             <b-row>
               <b-col
-                  lg="6"
+                lg="6"
               >
                 <h6 class="baseline-graph-title text-center">
                   Action Plan {{ $route.params.planId }}
                 </h6>
-                <sw-sub-graph :selected-basin-id="selectedSubBasin.code" v-bind:base-graph="false"></sw-sub-graph>
+                <sw-sub-graph
+                  :selected-basin-id="selectedSubBasin.code"
+                  :base-graph="false"
+                />
               </b-col>
               <b-col
-                  lg="6"
+                lg="6"
               >
                 <h6 class="baseline-graph-title text-center">
                   Business as Usual
                 </h6>
-                <sw-sub-graph :selected-basin-id="selectedSubBasin.code" v-bind:base-graph="true"></sw-sub-graph>
+                <sw-sub-graph
+                  :selected-basin-id="selectedSubBasin.code"
+                  :base-graph="true"
+                />
               </b-col>
             </b-row>
           </div>
@@ -136,20 +167,26 @@
           <div class="card-body">
             <b-row>
               <b-col
-                  lg="6"
+                lg="6"
               >
                 <h6 class="baseline-graph-title text-center">
                   Action Plan {{ $route.params.planId }}
                 </h6>
-                <et-sub-graph :selected-basin-id="selectedSubBasin.code" v-bind:base-graph="false"></et-sub-graph>
+                <et-sub-graph
+                  :selected-basin-id="selectedSubBasin.code"
+                  :base-graph="false"
+                />
               </b-col>
               <b-col
-                  lg="6"
+                lg="6"
               >
                 <h6 class="baseline-graph-title text-center">
                   Business as Usual
                 </h6>
-                <et-sub-graph :selected-basin-id="selectedSubBasin.code" v-bind:base-graph="true"></et-sub-graph>
+                <et-sub-graph
+                  :selected-basin-id="selectedSubBasin.code"
+                  :base-graph="true"
+                />
               </b-col>
             </b-row>
           </div>
@@ -158,20 +195,26 @@
           <div class="card-body">
             <b-row>
               <b-col
-                  lg="6"
+                lg="6"
               >
                 <h6 class="baseline-graph-title text-center">
                   Action Plan {{ $route.params.planId }}
                 </h6>
-                <gwq-sub-graph :selected-basin-id="selectedSubBasin.code" v-bind:base-graph="false"></gwq-sub-graph>
+                <gwq-sub-graph
+                  :selected-basin-id="selectedSubBasin.code"
+                  :base-graph="false"
+                />
               </b-col>
               <b-col
-                  lg="6"
+                lg="6"
               >
                 <h6 class="baseline-graph-title text-center">
                   Business as Usual
                 </h6>
-                <gwq-sub-graph :selected-basin-id="selectedSubBasin.code" v-bind:base-graph="true"></gwq-sub-graph>
+                <gwq-sub-graph
+                  :selected-basin-id="selectedSubBasin.code"
+                  :base-graph="true"
+                />
               </b-col>
             </b-row>
           </div>
@@ -180,47 +223,58 @@
           <div class="card-body">
             <b-row>
               <b-col
-                  lg="6"
+                lg="6"
               >
                 <h6 class="baseline-graph-title text-center">
                   Action Plan {{ $route.params.planId }}
                 </h6>
-                <wyld-sub-graph :selected-basin-id="selectedSubBasin.code" v-bind:base-graph="false"></wyld-sub-graph>
+                <wyld-sub-graph
+                  :selected-basin-id="selectedSubBasin.code"
+                  :base-graph="false"
+                />
               </b-col>
               <b-col
-                  lg="6"
+                lg="6"
               >
                 <h6 class="baseline-graph-title text-center">
                   Business as Usual
                 </h6>
-                <wyld-sub-graph :selected-basin-id="selectedSubBasin.code" v-bind:base-graph="true"></wyld-sub-graph>
+                <wyld-sub-graph
+                  :selected-basin-id="selectedSubBasin.code"
+                  :base-graph="true"
+                />
               </b-col>
             </b-row>
           </div>
         </b-tab>
         <b-tab title="Precipitation ">
-        <div class="card-body">
-          <b-row>
-            <b-col
+          <div class="card-body">
+            <b-row>
+              <b-col
                 lg="6"
-            >
-              <h6 class="baseline-graph-title text-center">
-                Action Plan {{ $route.params.planId }}
-              </h6>
-              <precip-sub-graph :selected-basin-id="selectedSubBasin.code" v-bind:base-graph="false"></precip-sub-graph>
-            </b-col>
-            <b-col
+              >
+                <h6 class="baseline-graph-title text-center">
+                  Action Plan {{ $route.params.planId }}
+                </h6>
+                <precip-sub-graph
+                  :selected-basin-id="selectedSubBasin.code"
+                  :base-graph="false"
+                />
+              </b-col>
+              <b-col
                 lg="6"
-            >
-              <h6 class="baseline-graph-title text-center">
-                Business as Usual
-              </h6>
-              <precip-sub-graph :selected-basin-id="selectedSubBasin.code" v-bind:base-graph="true"></precip-sub-graph>
-            </b-col>
-          </b-row>
-        </div>
-      </b-tab>
-
+              >
+                <h6 class="baseline-graph-title text-center">
+                  Business as Usual
+                </h6>
+                <precip-sub-graph
+                  :selected-basin-id="selectedSubBasin.code"
+                  :base-graph="true"
+                />
+              </b-col>
+            </b-row>
+          </div>
+        </b-tab>
       </b-tabs>
     </div>
   </div>
@@ -244,7 +298,7 @@ export default {
   name: 'SubBasins',
 
   components: {
-    LatqSubGraph, NsurqSubGraph, SyldSubGraph, PercSubGraph, SwSubGraph, EtSubGraph, GwqSubGraph, WyldSubGraph, PrecipSubGraph
+    LatqSubGraph, NsurqSubGraph, SyldSubGraph, PercSubGraph, SwSubGraph, EtSubGraph, GwqSubGraph, WyldSubGraph, PrecipSubGraph,
   },
 
   data() {
@@ -278,9 +332,11 @@ export default {
       ],
       optionsirr: {
         responsive: true,
-        title: {
-          display: true,
-          text: 'Irrigation - Yearly totals per water source',
+        plugins: {
+          title: {
+            display: true,
+            text: 'Irrigation - Yearly totals per water source',
+          },
         },
         tooltips: {
           mode: 'point',
@@ -312,6 +368,11 @@ export default {
     };
   },
   computed: {},
+  watch: {
+    selectedSubBasin: function(value) {
+      EventBus.$emit('SELECTED_SUB_BASIN_OPTION', value.code);
+    },
+  },
 
   mounted() {
     let $this = this;
@@ -362,11 +423,6 @@ export default {
       return color;
     },
 
-  },
-  watch: {
-    selectedSubBasin: function(value) {
-      EventBus.$emit('SELECTED_SUB_BASIN_OPTION', value.code);
-    },
   },
   //props: ["jsonData"]
 

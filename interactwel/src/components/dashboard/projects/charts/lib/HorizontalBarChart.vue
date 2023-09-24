@@ -26,7 +26,6 @@ export default {
 
 </script>
 
-
 <!--
 import { HorizontalBar, mixins } from 'vue-chartjs';
 const { reactiveProp } = mixins;

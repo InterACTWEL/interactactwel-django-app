@@ -30,21 +30,25 @@
           <b-card-body>
             <b-row class="mb-3">
               <b-col lg="8">
-                <p class="h5">{{ project.description }}</p>
+                <p class="h5">
+                  {{ project.description }}
+                </p>
                 <p>{{ project.description }}</p>
               </b-col>
               <b-col lg="4">
-                  <b-button class="ml-2 float-right"
-                    size="sm"
-                    variant="outline-success"
-                    @click="$router.push('/visualize/'+ project.project_id)"
-                  >
-                    View Project Data
-                  </b-button>
-                <b-button class="float-right"
-                          size="sm"
-                          variant="success"
-                          @click="postJoinProjectRequest"
+                <b-button
+                  class="ml-2 float-right"
+                  size="sm"
+                  variant="outline-success"
+                  @click="$router.push('/visualize/'+ project.project_id)"
+                >
+                  View Project Data
+                </b-button>
+                <b-button
+                  class="float-right"
+                  size="sm"
+                  variant="success"
+                  @click="postJoinProjectRequest"
                 >
                   Join this project
                 </b-button>

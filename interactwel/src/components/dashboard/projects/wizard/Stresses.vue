@@ -160,18 +160,18 @@ export default {
 
   },
 
+  watch: {
+    selectedClimateScenario: function(value) {
+      EventBus.$emit('SELECTED_CLIMATE_SCENARIO_OPTION', value);
+    },
+  },
+
   mounted() {
 
   },
 
   methods: {
 
-  },
-
-  watch: {
-    selectedClimateScenario: function(value) {
-      EventBus.$emit('SELECTED_CLIMATE_SCENARIO_OPTION', value);
-    },
   },
 
 };

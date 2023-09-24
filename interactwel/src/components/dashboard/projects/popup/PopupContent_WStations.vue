@@ -82,9 +82,11 @@ export default {
       datacollection: null,
       options: {
         responsive: true,
-        title: {
-          display: true,
-          text: 'Average Monthly Precipitation',
+        plugins: {
+          title: {
+            display: true,
+            text: 'Average Monthly Precipitation',
+          },
         },
         legend: {
           display: false,

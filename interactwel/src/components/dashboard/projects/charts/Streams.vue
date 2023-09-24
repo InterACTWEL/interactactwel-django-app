@@ -11,10 +11,9 @@
         <div class="col-4">
           <div class="form-group">
             <v-select
-              :options="options"
               v-model="selectedSubBasin"
-            >
-            </v-select>
+              :options="options"
+            />
           </div>
         </div>
       </div>
@@ -29,8 +28,10 @@
               <h6 class="baseline-graph-title text-center">
                 Action Plan {{ $route.params.planId }}
               </h6>
-              <flowout-stream-sub-graph :selected-basin-id="selectedSubBasin.code"
-                                        v-bind:base-graph="false"></flowout-stream-sub-graph>
+              <flowout-stream-sub-graph
+                :selected-basin-id="selectedSubBasin.code"
+                :base-graph="false"
+              />
             </b-col>
             <b-col
               lg="6"
@@ -38,8 +39,10 @@
               <h6 class="baseline-graph-title text-center">
                 Business as Usual
               </h6>
-              <flowout-stream-sub-graph :selected-basin-id="selectedSubBasin.code"
-                                        v-bind:base-graph="true"></flowout-stream-sub-graph>
+              <flowout-stream-sub-graph
+                :selected-basin-id="selectedSubBasin.code"
+                :base-graph="true"
+              />
             </b-col>
           </b-row>
         </b-tab>
@@ -51,8 +54,10 @@
               <h6 class="baseline-graph-title text-center">
                 Action Plan {{ $route.params.planId }}
               </h6>
-              <no3-out-stream-sub-graph :selected-basin-id="selectedSubBasin.code"
-                                        v-bind:base-graph="false"></no3-out-stream-sub-graph>
+              <no3-out-stream-sub-graph
+                :selected-basin-id="selectedSubBasin.code"
+                :base-graph="false"
+              />
             </b-col>
             <b-col
               lg="6"
@@ -60,120 +65,142 @@
               <h6 class="baseline-graph-title text-center">
                 Business as Usual
               </h6>
-              <no3-out-stream-sub-graph :selected-basin-id="selectedSubBasin.code"
-                                        v-bind:base-graph="true"></no3-out-stream-sub-graph>
+              <no3-out-stream-sub-graph
+                :selected-basin-id="selectedSubBasin.code"
+                :base-graph="true"
+              />
             </b-col>
           </b-row>
         </b-tab>
         <b-tab title="Dissolved Oxygen">
-              <b-row>
-                <b-col
-                  lg="6"
-                >
-                  <h6 class="baseline-graph-title text-center">
-                    Action Plan {{ $route.params.planId }}
-                  </h6>
-                  <disox-out-stream-sub-graph :selected-basin-id="selectedSubBasin.code"
-                                              v-bind:base-graph="false"></disox-out-stream-sub-graph>
-                </b-col>
-                <b-col
-                  lg="6"
-                >
-                  <h6 class="baseline-graph-title text-center">
-                    Business as Usual
-                  </h6>
-                  <disox-out-stream-sub-graph :selected-basin-id="selectedSubBasin.code"
-                                              v-bind:base-graph="true"></disox-out-stream-sub-graph>
-                </b-col>
-              </b-row>
+          <b-row>
+            <b-col
+              lg="6"
+            >
+              <h6 class="baseline-graph-title text-center">
+                Action Plan {{ $route.params.planId }}
+              </h6>
+              <disox-out-stream-sub-graph
+                :selected-basin-id="selectedSubBasin.code"
+                :base-graph="false"
+              />
+            </b-col>
+            <b-col
+              lg="6"
+            >
+              <h6 class="baseline-graph-title text-center">
+                Business as Usual
+              </h6>
+              <disox-out-stream-sub-graph
+                :selected-basin-id="selectedSubBasin.code"
+                :base-graph="true"
+              />
+            </b-col>
+          </b-row>
         </b-tab>
         <b-tab title="Sediment">
-              <b-row>
-                <b-col
-                  lg="6"
-                >
-                  <h6 class="baseline-graph-title text-center">
-                    Action Plan {{ $route.params.planId }}
-                  </h6>
-                  <sed-out-stream-sub-graph :selected-basin-id="selectedSubBasin.code"
-                                            v-bind:base-graph="false"></sed-out-stream-sub-graph>
-                </b-col>
-                <b-col
-                  lg="6"
-                >
-                  <h6 class="baseline-graph-title text-center">
-                    Business as Usual
-                  </h6>
-                  <sed-out-stream-sub-graph :selected-basin-id="selectedSubBasin.code"
-                                            v-bind:base-graph="true"></sed-out-stream-sub-graph>
-                </b-col>
-              </b-row>
+          <b-row>
+            <b-col
+              lg="6"
+            >
+              <h6 class="baseline-graph-title text-center">
+                Action Plan {{ $route.params.planId }}
+              </h6>
+              <sed-out-stream-sub-graph
+                :selected-basin-id="selectedSubBasin.code"
+                :base-graph="false"
+              />
+            </b-col>
+            <b-col
+              lg="6"
+            >
+              <h6 class="baseline-graph-title text-center">
+                Business as Usual
+              </h6>
+              <sed-out-stream-sub-graph
+                :selected-basin-id="selectedSubBasin.code"
+                :base-graph="true"
+              />
+            </b-col>
+          </b-row>
         </b-tab>
         <b-tab title="Total Nitrogen">
-              <b-row>
-                <b-col
-                  lg="6"
-                >
-                  <h6 class="baseline-graph-title text-center">
-                    Action Plan {{ $route.params.planId }}
-                  </h6>
-                  <totn-stream-sub-graph :selected-basin-id="selectedSubBasin.code"
-                                         v-bind:base-graph="false"></totn-stream-sub-graph>
-                </b-col>
-                <b-col
-                  lg="6"
-                >
-                  <h6 class="baseline-graph-title text-center">
-                    Business as Usual
-                  </h6>
-                  <totn-stream-sub-graph :selected-basin-id="selectedSubBasin.code"
-                                         v-bind:base-graph="true"></totn-stream-sub-graph>
-                </b-col>
-              </b-row>
+          <b-row>
+            <b-col
+              lg="6"
+            >
+              <h6 class="baseline-graph-title text-center">
+                Action Plan {{ $route.params.planId }}
+              </h6>
+              <totn-stream-sub-graph
+                :selected-basin-id="selectedSubBasin.code"
+                :base-graph="false"
+              />
+            </b-col>
+            <b-col
+              lg="6"
+            >
+              <h6 class="baseline-graph-title text-center">
+                Business as Usual
+              </h6>
+              <totn-stream-sub-graph
+                :selected-basin-id="selectedSubBasin.code"
+                :base-graph="true"
+              />
+            </b-col>
+          </b-row>
         </b-tab>
         <b-tab title="Total Phosphorus">
-              <b-row>
-                <b-col
-                  lg="6"
-                >
-                  <h6 class="baseline-graph-title text-center">
-                    Action Plan {{ $route.params.planId }}
-                  </h6>
-                  <totp-stream-sub-graph :selected-basin-id="selectedSubBasin.code"
-                                         v-bind:base-graph="false"></totp-stream-sub-graph>
-                </b-col>
-                <b-col
-                  lg="6"
-                >
-                  <h6 class="baseline-graph-title text-center">
-                    Business as Usual
-                  </h6>
-                  <totp-stream-sub-graph :selected-basin-id="selectedSubBasin.code"
-                                         v-bind:base-graph="true"></totp-stream-sub-graph>
-                </b-col>
-              </b-row>
+          <b-row>
+            <b-col
+              lg="6"
+            >
+              <h6 class="baseline-graph-title text-center">
+                Action Plan {{ $route.params.planId }}
+              </h6>
+              <totp-stream-sub-graph
+                :selected-basin-id="selectedSubBasin.code"
+                :base-graph="false"
+              />
+            </b-col>
+            <b-col
+              lg="6"
+            >
+              <h6 class="baseline-graph-title text-center">
+                Business as Usual
+              </h6>
+              <totp-stream-sub-graph
+                :selected-basin-id="selectedSubBasin.code"
+                :base-graph="true"
+              />
+            </b-col>
+          </b-row>
         </b-tab>
         <b-tab title="Stream Temperature">
-              <b-row>
-                <b-col
-                  lg="6"
-                >
-                  <h6 class="baseline-graph-title text-center">
-                    Action Plan {{ $route.params.planId }}
-                  </h6>
-                  <wtmpdegc-stream-sub-graph :selected-basin-id="selectedSubBasin.code"
-                                             v-bind:base-graph="false"></wtmpdegc-stream-sub-graph>
-                </b-col>
-                <b-col
-                  lg="6"
-                >
-                  <h6 class="baseline-graph-title text-center">
-                    Business as Usual
-                  </h6>
-                  <wtmpdegc-stream-sub-graph :selected-basin-id="selectedSubBasin.code"
-                                             v-bind:base-graph="true"></wtmpdegc-stream-sub-graph>
-                </b-col>
-              </b-row>
+          <b-row>
+            <b-col
+              lg="6"
+            >
+              <h6 class="baseline-graph-title text-center">
+                Action Plan {{ $route.params.planId }}
+              </h6>
+              <wtmpdegc-stream-sub-graph
+                :selected-basin-id="selectedSubBasin.code"
+                :base-graph="false"
+              />
+            </b-col>
+            <b-col
+              lg="6"
+            >
+              <h6 class="baseline-graph-title text-center">
+                Business as Usual
+              </h6>
+              <wtmpdegc-stream-sub-graph
+                :selected-basin-id="selectedSubBasin.code"
+                :base-graph="true"
+              />
+            </b-col>
+          </b-row>
         </b-tab>
       </b-tabs>
     </div>
@@ -203,7 +230,7 @@ export default {
     SedOutStreamSubGraph,
     DisoxOutStreamSubGraph,
     No3OutStreamSubGraph,
-    FlowoutStreamSubGraph, SwGraph, EtGraph, SedimentYieldGraph, WaterYieldGraph, GwqGraph
+    FlowoutStreamSubGraph, SwGraph, EtGraph, SedimentYieldGraph, WaterYieldGraph, GwqGraph,
   },
   props: {},
   data() {

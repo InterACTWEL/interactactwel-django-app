@@ -1,13 +1,17 @@
 <template>
-    <div>
-      <apexchart width="500" type="bar" :options="options" :series="series"></apexchart>
-    </div>
-    </template>
-
+  <div>
+    <apexchart
+      width="500"
+      type="bar"
+      :options="options"
+      :series="series"
+    />
+  </div>
+</template>
 
 <script>
 
-import VueApexCharts from 'vue-apexcharts'
+import VueApexCharts from 'vue-apexcharts';
 
 var app = new Vue({
   el: '#appl',
@@ -15,25 +19,25 @@ var app = new Vue({
     return {
       options: {
         chart: {
-          id: 'vuechart-example'
+          id: 'vuechart-example',
         },
         xaxis: {
-          categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998]
-        }
+          categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998],
+        },
       },
       series: [{
         name: 'series-1',
-        data: [30, 40, 45, 50, 49, 60, 70, 91]
-      }]
-    }
-  }
+        data: [30, 40, 45, 50, 49, 60, 70, 91],
+      }],
+    };
+  },
 });
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api';
 
 export default defineComponent({
-    setup() {
+  setup() {
         
-    },
-})
+  },
+});
 </script>
 
