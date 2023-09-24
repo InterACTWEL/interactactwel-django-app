@@ -2,19 +2,10 @@
   <b-col lg="12">
     <ol class="progress-bar">
       <li class="col-md-2">
-        <div
-          id="active"
-          class="step-progress-bar"
-        >
-          <div class="step-no">
-            1
-          </div>
-          <h4 class="list-group-item-heading">
-            Goals
-          </h4>
-          <h4r class="list-group-item-heading">
-            &#10003;
-          </h4r>
+        <div id="active" class="step-progress-bar">
+          <div class="step-no">1</div>
+          <h4 class="list-group-item-heading">Goals</h4>
+          <h4r class="list-group-item-heading"> &#10003; </h4r>
           <p class="list-group-item-text">
             {{ adaptationPlan.selectedGoals.length }} Goals Selected
           </p>
@@ -22,15 +13,9 @@
       </li>
       <li class="col-md-2">
         <div class="step-progress-bar">
-          <div class="step-no">
-            2
-          </div>
-          <h4 class="list-group-item-heading">
-            Actors
-          </h4>
-          <h4r class="list-group-item-heading">
-            &#10003;
-          </h4r>
+          <div class="step-no">2</div>
+          <h4 class="list-group-item-heading">Actors</h4>
+          <h4r class="list-group-item-heading"> &#10003; </h4r>
           <p class="list-group-item-text">
             {{ adaptationPlan.selectedActors.length }} Actors Selected
           </p>
@@ -38,15 +23,9 @@
       </li>
       <li class="col-md-2">
         <div class="step-progress-bar">
-          <div class="step-no">
-            3
-          </div>
-          <h4 class="list-group-item-heading">
-            Actions
-          </h4>
-          <h4r class="list-group-item-heading">
-            &#10003;
-          </h4r>
+          <div class="step-no">3</div>
+          <h4 class="list-group-item-heading">Actions</h4>
+          <h4r class="list-group-item-heading"> &#10003; </h4r>
           <p class="list-group-item-text">
             {{ adaptationPlan.selectedActions.length }} Actions Selected
           </p>
@@ -54,57 +33,28 @@
       </li>
       <li class="col-md-2 active">
         <div class="step-progress-bar">
-          <div class="step-no">
-            4
-          </div>
-          <h4 class="list-group-item-heading">
-            Visualize and Evaluate
-          </h4>
-          <h4r class="list-group-item-heading">
-            &#10003;
-          </h4r>
-          <p class="list-group-item-text">
-            Adaptation Plans
-          </p>
+          <div class="step-no">4</div>
+          <h4 class="list-group-item-heading">Visualize and Evaluate</h4>
+          <h4r class="list-group-item-heading"> &#10003; </h4r>
+          <p class="list-group-item-text">Adaptation Plans</p>
         </div>
       </li>
       <li class="col-md-2">
         <div class="step-progress-bar">
-          <div class="step-no">
-            5
-          </div>
-          <h4 class="list-group-item-heading">
-            Wrap Up
-          </h4>
-          <h4r class="list-group-item-heading">
-            &#10003;
-          </h4r>
-          <p class="list-group-item-text">
-            Save and Print Plans
-          </p>
+          <div class="step-no">5</div>
+          <h4 class="list-group-item-heading">Wrap Up</h4>
+          <h4r class="list-group-item-heading"> &#10003; </h4r>
+          <p class="list-group-item-text">Save and Print Plans</p>
         </div>
       </li>
     </ol>
-    <div
-      id="step4"
-      class="mt-4"
-      title="Step 4"
-    >
-      <div
-        v-if="!showFeedbackBlock"
-        class="help-block-viz"
-      >
+    <div id="step4" class="mt-4" title="Step 4">
+      <div v-if="!showFeedbackBlock" class="help-block-viz">
         <b-collapse id="collapse-what_are_plans">
-          <b-card
-            tag="article"
-            style="max-width: 33rem"
-            class="mb-2"
-          >
+          <b-card tag="article" style="max-width: 33rem" class="mb-2">
             <div class="row">
               <div class="col">
-                <h4 class="card-title">
-                  "What are Adaptation Plans?"
-                </h4>
+                <h4 class="card-title">"What are Adaptation Plans?"</h4>
               </div>
               <div class="col-1 mr-3">
                 <h5 class="text-right font-weight-light">
@@ -134,14 +84,8 @@
           </b-card>
         </b-collapse>
       </div>
-      <b-card
-        no-body
-        footer-tag="footer"
-      >
-        <div
-          slot="header"
-          class="step-header"
-        >
+      <b-card no-body footer-tag="footer">
+        <div slot="header" class="step-header">
           Visualization
           <em slot="header">
             <i
@@ -155,15 +99,8 @@
         <b-card-body class="no-padding">
           <b-container class=""> 
             <b-row>
-              <div
-                id="sidebar"
-                role="tablist"
-              >
-                <b-nav
-                  header-tag="header"
-                  class="p-1"
-                  role="tab"
-                >
+              <div id="sidebar" role="tablist">
+                <b-nav header-tag="header" class="p-1" role="tab">
                   <b-nav-item
                     v-b-toggle.collapse-0
                     block
@@ -188,15 +125,8 @@
                   </b-nav-item>
                 </b-nav>
 
-                <div
-                  v-for="plan in plans"
-                  :key="plan.id"
-                >
-                  <b-nav
-                    header-tag="header"
-                    class="p-1"
-                    role="tab"
-                  >
+                <div v-for="plan in plans" :key="plan.id">
+                  <b-nav header-tag="header" class="p-1" role="tab">
                     <b-nav-item
                       v-b-toggle="'collapse-' + plan.id"
                       block
@@ -265,18 +195,12 @@
           </b-container>
         </b-card-body>
         <em slot="footer">
-          <b-button
-            id="step2-next-btn"
-            variant="next"
-            size="sm"
-            @click="next"
-          >Next</b-button>
-          <b-button
-            id="step2-back-btn"
-            variant="back"
-            size="sm"
-            @click="back"
-          >Back</b-button>
+          <b-button id="step2-next-btn" variant="next" size="sm" @click="next"
+            >Next</b-button
+          >
+          <b-button id="step2-back-btn" variant="back" size="sm" @click="back"
+            >Back</b-button
+          >
         </em>
       </b-card>
     </div>
@@ -350,11 +274,6 @@ export default {
       });
     });
   },
-  created() {
-    EventBus.$on('SHOW_FEEDBACK_BLOCK', (value) => {
-      this.showFeedbackBlock = value;
-    });
-  },
   methods: {
     next() {
       localStorage.setItem("step4", true);
@@ -383,6 +302,11 @@ export default {
         this.show = true;
       });
     },
+  },
+  created() {
+    EventBus.$on('SHOW_FEEDBACK_BLOCK', (value) => {
+      this.showFeedbackBlock = value;
+    });
   },
 };
 </script>

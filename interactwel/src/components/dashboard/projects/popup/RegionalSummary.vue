@@ -167,11 +167,9 @@ export default {
       optionsprism: {
         responsive: true,
         color: "#073b4c",
-        plugins: {
-          title: {
-            display: true,
-            text: 'Average yearly total precipitation (mm)',
-          },
+        title: {
+          display: true,
+          text: 'Average yearly total precipitation (mm)',
         },
         legend: {
           display: false,
@@ -206,11 +204,9 @@ export default {
 
       optionswr: {
         responsive: true,
-        plugins: {
-          title: {
-            display: true,
-            text: 'Total water rights volume (ac-ft) by water source',
-          },
+        title: {
+          display: true,
+          text: 'Total water rights volume (ac-ft) by water source',
         },
         labels: {
           render: 'percentage',
@@ -237,11 +233,9 @@ export default {
       },
       optionsirr: {
         responsive: true,
-        plugins: {
-          title: {
-            display: true,
-            text: 'Total area of irrigated land (acres) by water source',
-          },
+        title: {
+          display: true,
+          text: 'Total area of irrigated land (acres) by water source',
         },
         labels: {
           render: 'percentage',
@@ -267,11 +261,9 @@ export default {
       },
       optionslnd: {
         responsive: true,
-        plugins: {
-          title: {
-            display: true,
-            text: 'Distribution of land use area (acre)',
-          },
+        title: {
+          display: true,
+          text: 'Distribution of land use area (acre)',
         },
         legend: {
           display: false,
@@ -308,11 +300,9 @@ export default {
       },
       optionscrop: {
         responsive: true,
-        plugins: {
-          title: {
-            display: true,
-            text: 'Planted crop area (acre) USDA CDL 2017',
-          },
+        title: {
+          display: true,
+          text: 'Planted crop area (acre) USDA CDL 2017',
         },
         legend: {
           display: false,

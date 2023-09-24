@@ -12,7 +12,7 @@ import axios from 'axios';
 import VerticalBarChart from "../lib/VerticalBarChart";
 
 export default {
-  name: 'SwSubGraph',
+  name: 'swSubGraph',
   components: {
     VerticalBarChart,
   },
@@ -29,7 +29,7 @@ export default {
       JSONData: null,
       datacollection: null,
       graphColors: [
-        "#28a745",
+        "#28a745"
       ],
       options: {
         responsive: true,
@@ -65,11 +65,6 @@ export default {
         },
       },
     };
-  },
-  watch: {
-    selectedBasinId: function() {
-      this.buildDataCollection(this.JSONData, this.planId);
-    },
   },
 
   mounted() {
@@ -122,6 +117,11 @@ export default {
       let color;
       color = this.graphColors[i];
       return color;
+    },
+  },
+  watch: {
+    selectedBasinId: function() {
+      this.buildDataCollection(this.JSONData, this.planId);
     },
   },
 };

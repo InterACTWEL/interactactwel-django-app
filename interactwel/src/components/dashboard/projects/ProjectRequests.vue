@@ -1,40 +1,30 @@
 <template>
-  <b-card
-    no-body
-    class="p-3"
-  >
+    <b-card no-body class="p-3">
     <table class="table table-responsive">
       <thead>
-        <tr>
-          <th>Project Id</th>
-          <th>Project Name</th>
-          <th>user id</th>
-          <th>name</th>
-          <th>Status</th>
-          <th />
-        </tr>
+      <tr>
+        <th>Project Id</th>
+        <th>Project Name</th>
+        <th>user id</th>
+        <th>name</th>
+        <th>Status</th>
+        <th></th>
+      </tr>
       </thead>
       <tbody>
-        <tr
-          v-for="request in projectRequests"
-          :key="request.id"
-        >
-          <td>{{ request.id }}</td>
-          <td>{{ request.project_id }}</td>
-          <td>{{ request.user_id }}</td>
-          <td>{{ request.status }}</td>
-          <td>
-            <div class="btn btn-outline-success btn-sm">
-              Approve
-            </div>
-            <div class="btn btn-danger btn-sm">
-              <i class="fa fa-trash" />
-            </div>
-          </td>
-        </tr>
+      <tr v-for="request in projectRequests" v-bind:key="request.id">
+        <td>{{ request.id }}</td>
+        <td>{{ request.project_id }}</td>
+        <td>{{ request.user_id }}</td>
+        <td>{{ request.status }}</td>
+        <td>
+          <div class="btn btn-outline-success btn-sm">Approve</div>
+          <div class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></div>
+        </td>
+      </tr>
       </tbody>
     </table>
-  </b-card>
+    </b-card>
 </template>
 
 <script>

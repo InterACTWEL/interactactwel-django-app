@@ -84,11 +84,9 @@ export default {
       datacollection: null,
       options: {
         responsive: true,
-        plugins: {
-          title: {
-            display: true,
-            text: 'Aveage monthly streamflow (cfs)',
-          },
+        title: {
+          display: true,
+          text: 'Aveage monthly streamflow (cfs)',
         },
         legend: {
           display: false,

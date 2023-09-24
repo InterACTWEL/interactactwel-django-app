@@ -12,7 +12,7 @@ import axios from 'axios';
 import VerticalBarChart from "../lib/VerticalBarChart";
 
 export default {
-  name: 'EtGraph',
+  name: 'etGraph',
   components: {
     VerticalBarChart,
   },

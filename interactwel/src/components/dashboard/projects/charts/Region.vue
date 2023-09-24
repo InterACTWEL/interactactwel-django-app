@@ -5,7 +5,7 @@
   >
     <div class="card-body no-padding">
       <b-tabs card>
-        <!--        <b-tab
+<!--        <b-tab
           title="Water Rights"
           active
         >
@@ -126,7 +126,7 @@
                 <h6 class="baseline-graph-title">
                   Action Plan {{ $route.params.planId }}
                 </h6>
-                <no3-perc-graph :base-graph="false" />
+                <no3-perc-graph v-bind:base-graph="false"/>
               </b-col>
               <b-col
                 lg="6"
@@ -135,7 +135,7 @@
                 <h6 class="baseline-graph-title">
                   Business as Usual
                 </h6>
-                <no3-perc-graph :base-graph="true" />
+                <no3-perc-graph v-bind:base-graph="true"/>
               </b-col>
             </b-row>
           </div>
@@ -147,7 +147,7 @@
                 <h6 class="baseline-graph-title">
                   Action Plan {{ $route.params.planId }}
                 </h6>
-                <no3-crop-graph :base-graph="false" />
+                <no3-crop-graph v-bind:base-graph="false"/>
               </b-col>
               <b-col
                 lg="6"
@@ -156,7 +156,7 @@
                 <h6 class="baseline-graph-title">
                   Business as Usual
                 </h6>
-                <no3-crop-graph :base-graph="true" />
+                <no3-crop-graph v-bind:base-graph="true"/>
               </b-col>
             </b-row>
           </div>
@@ -165,22 +165,22 @@
           <div class="card-body">
             <b-row>
               <b-col
-                lg="6"
-                class="p-3"
+                  lg="6"
+                  class="p-3"
               >
                 <h6 class="baseline-graph-title text-center">
                   Action Plan {{ $route.params.planId }}
                 </h6>
-                <gwq-graph :base-graph="false" />
+                <gwq-graph v-bind:base-graph="false"/>
               </b-col>
               <b-col
-                lg="6"
-                class="p-3"
+                  lg="6"
+                  class="p-3"
               >
                 <h6 class="baseline-graph-title text-center">
                   Business as Usual
                 </h6>
-                <gwq-graph :base-graph="true" />
+                <gwq-graph v-bind:base-graph="true"/>
               </b-col>
             </b-row>
           </div>
@@ -190,22 +190,22 @@
             <div class="card-body">
               <b-row>
                 <b-col
-                  lg="6"
-                  class="p-3"
+                    lg="6"
+                    class="p-3"
                 >
                   <h6 class="baseline-graph-title text-center">
                     Action Plan {{ $route.params.planId }}
                   </h6>
-                  <water-yield-graph :base-graph="false" />
+                  <water-yield-graph v-bind:base-graph="false"/>
                 </b-col>
                 <b-col
-                  lg="6"
-                  class="p-3"
+                    lg="6"
+                    class="p-3"
                 >
                   <h6 class="baseline-graph-title text-center">
                     Business as Usual
                   </h6>
-                  <water-yield-graph :base-graph="true" />
+                  <water-yield-graph v-bind:base-graph="true"/>
                 </b-col>
               </b-row>
             </div>
@@ -216,22 +216,22 @@
             <div class="card-body">
               <b-row>
                 <b-col
-                  lg="6"
-                  class="p-3"
+                    lg="6"
+                    class="p-3"
                 >
                   <h6 class="baseline-graph-title text-center">
                     Action Plan {{ $route.params.planId }}
                   </h6>
-                  <sediment-yield-graph :base-graph="false" />
+                  <sediment-yield-graph v-bind:base-graph="false"/>
                 </b-col>
                 <b-col
-                  lg="6"
-                  class="p-3"
+                    lg="6"
+                    class="p-3"
                 >
                   <h6 class="baseline-graph-title text-center">
                     Business as Usual
                   </h6>
-                  <sediment-yield-graph :base-graph="true" />
+                  <sediment-yield-graph v-bind:base-graph="true"/>
                 </b-col>
               </b-row>
             </div>
@@ -242,22 +242,22 @@
             <div class="card-body">
               <b-row>
                 <b-col
-                  lg="6"
-                  class="p-3"
+                    lg="6"
+                    class="p-3"
                 >
                   <h6 class="baseline-graph-title text-center">
                     Action Plan {{ $route.params.planId }}
                   </h6>
-                  <et-graph :base-graph="false" />
+                  <et-graph v-bind:base-graph="false"/>
                 </b-col>
                 <b-col
-                  lg="6"
-                  class="p-3"
+                    lg="6"
+                    class="p-3"
                 >
                   <h6 class="baseline-graph-title text-center">
                     Business as Usual
                   </h6>
-                  <et-graph :base-graph="true" />
+                  <et-graph v-bind:base-graph="true"/>
                 </b-col>
               </b-row>
             </div>
@@ -268,22 +268,22 @@
             <div class="card-body">
               <b-row>
                 <b-col
-                  lg="6"
-                  class="p-3"
+                    lg="6"
+                    class="p-3"
                 >
                   <h6 class="baseline-graph-title text-center">
                     Action Plan {{ $route.params.planId }}
                   </h6>
-                  <sw-graph :base-graph="false" />
+                  <sw-graph v-bind:base-graph="false"/>
                 </b-col>
                 <b-col
-                  lg="6"
-                  class="p-3"
+                    lg="6"
+                    class="p-3"
                 >
                   <h6 class="baseline-graph-title text-center">
                     Business as Usual
                   </h6>
-                  <sw-graph :base-graph="true" />
+                  <sw-graph v-bind:base-graph="true"/>
                 </b-col>
               </b-row>
             </div>
@@ -294,22 +294,22 @@
             <div class="card-body">
               <b-row>
                 <b-col
-                  lg="6"
-                  class="p-3"
+                    lg="6"
+                    class="p-3"
                 >
                   <h6 class="baseline-graph-title text-center">
                     Action Plan {{ $route.params.planId }}
                   </h6>
-                  <no3-surq-graph :base-graph="false" />
+                  <no3-surq-graph v-bind:base-graph="false"/>
                 </b-col>
                 <b-col
-                  lg="6"
-                  class="p-3"
+                    lg="6"
+                    class="p-3"
                 >
                   <h6 class="baseline-graph-title text-center">
                     Business as Usual
                   </h6>
-                  <no3-surq-graph :base-graph="true" />
+                  <no3-surq-graph v-bind:base-graph="true"/>
                 </b-col>
               </b-row>
             </div>
@@ -321,8 +321,8 @@
             <div class="card-body">
               <b-row>
                 <b-col
-                  lg="12"
-                  class="p-3"
+                    lg="12"
+                    class="p-3"
                 >
                   <h6 class="baseline-graph-title text-center">
                     Boxplot sample
@@ -388,7 +388,7 @@ export default {
     No3CropGraph,
     No3PercGraph,
     no3SurqGraph,
-    GwqGraph, SwGraph, EtGraph, SedimentYieldGraph, WaterYieldGraph,
+    GwqGraph,SwGraph, EtGraph, SedimentYieldGraph, WaterYieldGraph,
     IrrigationBaseLineGraph,
     'irrigationGraph': IrrigationGraph,
     'cropYieldGraph': CropYieldGraph,

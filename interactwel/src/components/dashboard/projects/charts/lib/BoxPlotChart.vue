@@ -26,6 +26,7 @@ export default {
 
 </script>
 
+
 <!--
 import "chartjs-chart-box-and-violin-plot";
 import { generateChart, mixins } from "vue-chartjs";

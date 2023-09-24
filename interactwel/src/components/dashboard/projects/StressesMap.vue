@@ -157,6 +157,7 @@
         :max-width="200"
         imperial="imperial"
       />
+
     </l-map>
   </div>
 </template>
@@ -185,7 +186,7 @@ import GaugeDataJson from "../../../../public/static/streamflow_station_data.jso
 import WeatherStations from "../../../../public/static/weather_stations.json";
 import PrecipDataJson from "../../../../public/static/weather_station_data.json";
 import ClimateScenarioMapLayer
-from "@/components/dashboard/projects/visualize-map-sub-components/ClimateScenarioMapLayer";
+  from "@/components/dashboard/projects/visualize-map-sub-components/ClimateScenarioMapLayer";
 
 export default {
   name: "StressesMap",
@@ -272,6 +273,47 @@ export default {
       }),
 
     };
+  },
+  created() {
+    this.loading = true;
+
+    axios.get("/static/subbasins1.geojson")
+      .then(response => {
+        this.geoJson_subbasin = response.data;
+        this.loading = true;
+      });
+    axios.get("/static/reaches1.json")
+      .then(response => {
+        this.geoJson_reach = response.data;
+        this.loading = true;
+      });
+    axios.get("/static/NOWA_Pumping_Limit.geojson")
+      .then(response => {
+        this.geoJson_pumping_limit = response.data;
+        this.loading = true;
+      });
+    axios.get("/static/irrigated_land.geojson")
+      .then(response => {
+        this.geoJson_irrland = response.data;
+        this.loading = true;
+      });
+    axios.get("/static/Tribal_Lands.geojson")
+      .then(response => {
+        this.geoJson_triballand = response.data;
+        this.loading = true;
+      });
+
+    axios.get("/static/GW_Restricted_Areas_Umatilla.geojson")
+      .then(response => {
+        this.geoJson_gwrestricted = response.data;
+        this.loading = true;
+      });
+
+    axios.get("/static/water_rigths.geojson")
+      .then(response => {
+        this.geoJson_WaterRigths = response.data;
+        this.loading = true;
+      });
   },
 
   computed: {
@@ -379,55 +421,14 @@ export default {
       };
     },
   },
-  created() {
-    this.loading = true;
-
-    axios.get("/static/subbasins1.geojson")
-      .then(response => {
-        this.geoJson_subbasin = response.data;
-        this.loading = true;
-      });
-    axios.get("/static/reaches1.json")
-      .then(response => {
-        this.geoJson_reach = response.data;
-        this.loading = true;
-      });
-    axios.get("/static/NOWA_Pumping_Limit.geojson")
-      .then(response => {
-        this.geoJson_pumping_limit = response.data;
-        this.loading = true;
-      });
-    axios.get("/static/irrigated_land.geojson")
-      .then(response => {
-        this.geoJson_irrland = response.data;
-        this.loading = true;
-      });
-    axios.get("/static/Tribal_Lands.geojson")
-      .then(response => {
-        this.geoJson_triballand = response.data;
-        this.loading = true;
-      });
-
-    axios.get("/static/GW_Restricted_Areas_Umatilla.geojson")
-      .then(response => {
-        this.geoJson_gwrestricted = response.data;
-        this.loading = true;
-      });
-
-    axios.get("/static/water_rigths.geojson")
-      .then(response => {
-        this.geoJson_WaterRigths = response.data;
-        this.loading = true;
-      });
-  },
-
-  mounted() {
-    setInterval(() => this.emitWindowResizeEvent(), 500);
-  },
   methods: {
     emitWindowResizeEvent: function() {
       window.dispatchEvent(new Event('resize')); //a hack to get rid of map partially showing issue
     },
+  },
+
+  mounted() {
+    setInterval(() => this.emitWindowResizeEvent(), 500);
   },
 
 };

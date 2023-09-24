@@ -3,14 +3,14 @@
     class="card feedback-container"
   >
     <div class="card-header">
-      <strong>Evaluate Adaptation Plan {{ $route.params.planId }}</strong>
-      <h5 class="text-right font-weight-light mb-0">
-        <i
-          class="fas fa-times"
-          style="cursor: pointer"
-          @click="hideFeedbackBlock"
-        />
-      </h5>
+          <strong>Evaluate Adaptation Plan {{ $route.params.planId }}</strong>
+          <h5 class="text-right font-weight-light mb-0">
+            <i
+              class="fas fa-times"
+              style="cursor: pointer"
+              @click="hideFeedbackBlock"
+            />
+          </h5>
     </div>
 
     <b-alert :show="feedbackAlreadyProvided && showOldFeedbackView">

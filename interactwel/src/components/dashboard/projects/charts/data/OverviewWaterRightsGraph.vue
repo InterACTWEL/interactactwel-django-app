@@ -27,11 +27,9 @@ export default {
       ],
       options: {
         responsive: false,
-        plugins: {
-          title: {
-            display: true,
-            text: 'Total water rights volume (ac-ft)',
-          },
+        title: {
+          display: true,
+          text: 'Total water rights volume (ac-ft)',
         },
         legend: {
           position: 'top',

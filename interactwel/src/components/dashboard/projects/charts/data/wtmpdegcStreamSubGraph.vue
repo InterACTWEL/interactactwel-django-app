@@ -12,7 +12,7 @@ import axios from 'axios';
 import VerticalBarChart from "../lib/VerticalBarChart";
 
 export default {
-  name: 'WtmpdegcStreamSubGraph',
+  name: 'wtmpdegcStreamSubGraph',
   components: {
     VerticalBarChart,
   },
@@ -66,11 +66,6 @@ export default {
       },
     };
   },
-  watch: {
-    selectedBasinId: function() {
-      this.buildDataCollection(this.JSONData, this.planId);
-    },
-  },
 
   mounted() {
     this.planId = this.$route.params.planId;
@@ -122,6 +117,11 @@ export default {
       let color;
       color = this.graphColors[i];
       return color;
+    },
+  },
+  watch: {
+    selectedBasinId: function() {
+      this.buildDataCollection(this.JSONData, this.planId);
     },
   },
 };

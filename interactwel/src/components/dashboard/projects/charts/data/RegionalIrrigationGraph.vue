@@ -31,11 +31,9 @@ export default {
       datacollection: null,
       options: {
         responsive: true,
-        plugins: {
-          title: {
-            display: true,
-            text: 'Irrigation - Yearly totals per water source',
-          },
+        title: {
+          display: true,
+          text: 'Irrigation - Yearly totals per water source',
         },
         tooltips: {
           mode: 'point',
