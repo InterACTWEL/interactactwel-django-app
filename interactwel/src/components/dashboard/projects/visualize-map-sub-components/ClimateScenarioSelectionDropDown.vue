@@ -14,7 +14,7 @@
         <i class="fa fa-caret-down" />
       </a>
       <div
-        :id=climateScenarioOption.fileNamePrefix
+        :id="climateScenarioOption.fileNamePrefix"
         class="collapse"
       >
         <div>

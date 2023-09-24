@@ -74,22 +74,22 @@ export default {
           intersect: true,
         },
         scales: {
-          xAxes: [{
+          x: {
             display: true,
             stacked: true,
-            scaleLabel: {
+            title: {
               display: true,
-              labelString: 'Years',
+              text: 'Years',
             },
-          }],
-          yAxes: [{
+          },
+          y: {
             display: true,
             stacked: true,
-            scaleLabel: {
+            title: {
               display: true,
-              labelString: 'kg_N',
+              text: 'kg_N',
             },
-          }],
+          },
         },
       },
     };

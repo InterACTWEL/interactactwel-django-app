@@ -55,8 +55,8 @@
 
 <script>
 import axios from 'axios';
-import LineChart from "./../charts/lib/LineChart";
-import VerticalBarChart from "./../charts/lib/VerticalBarChart";
+import LineChart from "../charts/lib/LineChart";
+import VerticalBarChart from "../charts/lib/VerticalBarChart";
 
 export default {
   name: "PopupContentGaugeStations",
@@ -100,22 +100,22 @@ export default {
           intersect: true,
         },
         scales: {
-          xAxes: [{
+          x: {
             display: true,
             stacked: false,
-            scaleLabel: {
+            title: {
               display: true,
-              labelString: 'Months',
+              text: 'Months',
             },
-          }],
-          yAxes: [{
+          },
+          y: {
             display: true,
             stacked: false,
-            scaleLabel: {
+            title: {
               display: true,
-              labelString: 'Streamflow (cfs)',
+              text: 'Streamflow (cfs)',
             },
-          }],
+          },
         },
       },
     };

@@ -117,10 +117,10 @@ import EventBus from './../../../../event-bus';
 import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
 import {faTimesCircle} from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
-import PieChart from "./../charts/lib/PieChart";
-import VerticalBarChart from "./../charts/lib/VerticalBarChart";
-import HorizontalBarChart from "./../charts/lib/HorizontalBarChart";
-import LineChart from "./../charts/lib/LineChart";
+import PieChart from "../charts/lib/PieChart";
+import VerticalBarChart from "../charts/lib/VerticalBarChart";
+import HorizontalBarChart from "../charts/lib/HorizontalBarChart";
+import LineChart from "../charts/lib/LineChart";
 
 export default {
   name: 'RegionalSummary',
@@ -158,11 +158,11 @@ export default {
 
       ],
 
-      datacollectionwr: null,
-      datacollectionirr: null,
-      datacollectionlnd: null,
-      datacollectioncrop: null,
-      datacollectionprism: null,
+      datacollectionwr: {},
+      datacollectionirr: {},
+      datacollectionlnd: {},
+      datacollectioncrop: {},
+      datacollectionprism: {},
 
       optionsprism: {
         responsive: true,
@@ -183,22 +183,22 @@ export default {
           intersect: true,
         },
         scales: {
-          xAxes: [{
+          x: {
             display: true,
             stacked: false,
-            scaleLabel: {
+            title: {
               display: true,
-              labelString: 'Years',
+              text: 'Years',
             },
-          }],
-          yAxes: [{
+          },
+          y: {
             display: true,
             stacked: false,
-            scaleLabel: {
+            title: {
               display: true,
-              labelString: 'Precipitation (mm)',
+              text: 'Precipitation (mm)',
             },
-          }],
+          },
         },
       },
 
@@ -222,12 +222,12 @@ export default {
           intersect: true,
         },
         scales: {
-          xAxes: [{
+          x: {
             display: false,
-          }],
-          yAxes: [{
+          },
+          y: {
             display: false,
-          }],
+          },
         },
 
       },
@@ -251,12 +251,12 @@ export default {
           intersect: true,
         },
         scales: {
-          xAxes: [{
+          x: {
             display: false,
-          }],
-          yAxes: [{
+          },
+          y: {
             display: false,
-          }],
+          },
         },
       },
       optionslnd: {
@@ -282,19 +282,19 @@ export default {
           intersect: true,
         },
         scales: {
-          xAxes: [{
+          x: {
             display: true,
             stacked: false,
-            scaleLabel: {
+            title: {
               display: true,
-              labelString: 'Area (acres)',
+              text: 'Area (acres)',
             },
-          }],
-          yAxes: [{
+          },
+          y: {
             display: true,
             stacked: false,
 
-          }],
+          },
         },
 
       },
@@ -319,23 +319,23 @@ export default {
           intersect: true,
         },
         scales: {
-          xAxes: [{
+          x: {
             display: true,
             //stacked: false,
-            //scaleLabel: {
+            //title: {
             //    display: false,
-            //labelString: 'Area (acres)'
+            //text: 'Area (acres)'
             //}
-          }],
-          yAxes: [{
+          },
+          y: {
             //display: true,
             //stacked: false,
-            scaleLabel: {
+            title: {
               display: true,
-              labelString: 'Area (acres)',
+              text: 'Area (acres)',
             },
 
-          }],
+          },
         },
       },
     };

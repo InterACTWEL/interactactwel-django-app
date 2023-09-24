@@ -52,26 +52,10 @@
                   <b-form-radio
                     v-model="selectedMapType"
                     :aria-describedby="ariaDescribedby"
-                    name="street_map"
-                    value="street_map"
-                  >
-                    Street Map
-                  </b-form-radio>
-                  <b-form-radio
-                    v-model="selectedMapType"
-                    :aria-describedby="ariaDescribedby"
                     name="satellite"
                     value="satellite"
                   >
                     Satellite
-                  </b-form-radio>
-                  <b-form-radio
-                    v-model="selectedMapType"
-                    :aria-describedby="ariaDescribedby"
-                    name="terrain_map"
-                    value="terrain_map"
-                  >
-                    Terrain Map
                   </b-form-radio>
                 </b-form-group>
               </div>
@@ -614,27 +598,13 @@ export default {
 
       tileProviders: [
         {
-          mapType: 'street_map',
-          name: "<font size=2><strong>Street Map</strong></font>",
-          visible: true,
-          attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-          url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-        },
-        {
           mapType: 'satellite',
           name: "<font size=2><strong>Satellite</strong></font>",
           visible: true,
           // eslint-disable-next-line max-len
           attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
           url: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}.png",
-        },
-        {
-          mapType: 'terrain_map',
-          name: "<font size=2><strong>Terrain Map",
-          visible: true,
-          attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-          url: "https://stamen-tiles-{s}.a.ssl.fastly.net/terrain/{z}/{x}/{y}{r}.png",
-        },
+        }
       ],
 
       customPopup: "<div class=\"region_summary_popup\">" +

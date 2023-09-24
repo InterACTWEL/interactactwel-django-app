@@ -53,9 +53,11 @@ export default {
       ],
       options: {
         responsive: false,
-        title: {
-          display: true,
-          text: 'Amount of N fertilizer applied automatically in watershed',
+        plugins: {
+          title: {
+            display: true,
+            text: 'Amount of N fertilizer applied automatically in watershed',
+          },
         },
         legend: {
           display: true,
@@ -75,22 +77,22 @@ export default {
           intersect: false,
         },
         scales: {
-          xAxes: [{
+          x: {
             display: true,
             stacked: true,
-            scaleLabel: {
+            title: {
               display: true,
-              labelString: 'Years',
+              text: 'Years',
             },
-          }],
-          yAxes: [{
+          },
+          y: {
             display: true,
             stacked: true,
-            scaleLabel: {
+            title: {
               display: true,
-              labelString: 'kg_N',
+              text: 'kg_N',
             },
-          }],
+          },
         },
       },
     };

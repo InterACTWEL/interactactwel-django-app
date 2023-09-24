@@ -12,7 +12,7 @@ import axios from 'axios';
 import VerticalBarChart from "../lib/VerticalBarChart";
 
 export default {
-  name: 'syldSubGraph',
+  name: 'SyldSubGraph',
   components: {
     VerticalBarChart,
   },
@@ -46,25 +46,30 @@ export default {
           intersect: true,
         },
         scales: {
-          xAxes: [{
+          x: {
             display: true,
             stacked: false,
-            scaleLabel: {
+            title: {
               display: true,
-              labelString: 'Years',
+              text: 'Years',
             },
-          }],
-          yAxes: [{
+          },
+          y: {
             display: true,
             stacked: false,
-            scaleLabel: {
+            title: {
               display: true,
-              labelString: 'metric tons/ha',
+              text: 'metric tons/ha',
             },
-          }],
+          },
         },
       },
     };
+  },
+  watch: {
+    selectedBasinId: function() {
+      this.buildDataCollection(this.JSONData, this.planId);
+    },
   },
 
   mounted() {
@@ -117,11 +122,6 @@ export default {
       let color;
       color = this.graphColors[i];
       return color;
-    },
-  },
-  watch: {
-    selectedBasinId: function() {
-      this.buildDataCollection(this.JSONData, this.planId);
     },
   },
 };

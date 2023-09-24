@@ -36,9 +36,11 @@ export default {
       ],
       options: {
         responsive: false,
-        title: {
-          display: true,
-          text: 'Irrigation - Yearly totals per water source',
+        plugins: {
+          title: {
+            display: true,
+            text: 'Irrigation - Yearly totals per water source',
+          },
         },
         tooltips: {
           mode: 'point',
@@ -49,22 +51,22 @@ export default {
           intersect: true,
         },
         scales: {
-          xAxes: [{
+          x: {
             display: true,
             stacked: false,
-            scaleLabel: {
+            title: {
               display: true,
-              labelString: 'Years',
+              text: 'Years',
             },
-          }],
-          yAxes: [{
+          },
+          y: {
             display: true,
             stacked: false,
-            scaleLabel: {
+            title: {
               display: true,
-              labelString: 'acre-ft',
+              text: 'acre-ft',
             },
-          }],
+          },
         },
       },
     };

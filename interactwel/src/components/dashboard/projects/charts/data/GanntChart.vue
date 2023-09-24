@@ -28,8 +28,8 @@
 </template>
 
 <script>
-import HorizontalBarChart from "./../lib/HorizontalBarChart";
-import LineChart from "./../lib/LineChart";
+import HorizontalBarChart from "../lib/HorizontalBarChart";
+import LineChart from "../lib/LineChart";
 //import chartjsPluginAnnotation from "chartjs-plugin-annotation";
 
 export default {
@@ -139,18 +139,18 @@ export default {
                         position: 'nearest',
                     },*/
         scales: {
-          xAxes: [{
+          x: {
             type: 'category',
             position: 'bottom',
-            scaleLabel: {
+            title: {
               display: false,
-              labelString: 'Time',
+              text: 'Time',
             },
             ticks: {
               display: false,
             },
-          }],
-          yAxes: [{
+          },
+          y: {
             gridLines: {
               display: false,
               color: "#fff",
@@ -158,15 +158,15 @@ export default {
               zeroLineWidth: 0,
             },
             type: 'category',
-            scaleLabel: {
+            title: {
               display: true,
-              labelString: 'Farmers: SW',
+              text: 'Farmers: SW',
             },
             ticks: {
               display: false,
             },
             labels: ["", "Actor 1", "Actor 1.1", "Actor 1.2", "Actor 1.3", "Actor 1.4", "Actor 1.5", "Actor 1.6", ""],
-          }],
+          },
         },
         annotation: {
           drawTime: 'afterDraw',
@@ -270,29 +270,29 @@ export default {
           },
         },
         scales: {
-          xAxes: [{
+          x: {
             type: 'category',
             position: 'bottom',
-            scaleLabel: {
+            title: {
               display: false,
-              labelString: 'Time',
+              text: 'Time',
             },
             ticks: {
               display: false,
             },
-          }],
-          yAxes: [{
+          },
+          y: {
             gridLines: { display: false },
             type: 'category',
-            scaleLabel: {
+            title: {
               display: true,
-              labelString: 'Farmers: GW',
+              text: 'Farmers: GW',
             },
             ticks: {
               display: false,
             },
             labels: ["", "Actor 1", "Actor 1.1", "Actor 1.2", "Actor 1.3", "Actor 1.4", "Actor 1.5", "Actor 1.6", ""],
-          }],
+          },
         },
         annotation: {
           drawTime: 'afterDraw',
@@ -378,26 +378,26 @@ export default {
           },
         },
         scales: {
-          xAxes: [{
+          x: {
             type: 'category',
             position: 'bottom',
-            scaleLabel: {
+            title: {
               display: false,
-              labelString: 'Time',
+              text: 'Time',
             },
-          }],
-          yAxes: [{
+          },
+          y: {
             gridLines: { display: false },
             type: 'category',
-            scaleLabel: {
+            title: {
               display: true,
-              labelString: 'Farmers: CR',
+              text: 'Farmers: CR',
             },
             ticks: {
               display: false,
             },
             labels: ["", "Actor 1", "Actor 1.1", "Actor 1.2", "Actor 1.3", "Actor 1.4", "Actor 1.5", "Actor 1.6", ""],
-          }],
+          },
         },
         annotation: {
           drawTime: 'afterDraw',
@@ -433,21 +433,21 @@ export default {
           animationDuration: 10,
         },
         scales: {
-          xAxes: [{
+          x: {
             label: "Duration",
             ticks: {
               beginAtZero: true,
               fontFamily: "'Open Sans Bold', sans-serif",
               fontSize: 11,
             },
-            scaleLabel: {
+            title: {
               display: false,
             },
             gridLines: {
             },
             stacked: true,
-          }],
-          yAxes: [{
+          },
+          y: {
             gridLines: {
               display: false,
               color: "#fff",
@@ -459,7 +459,7 @@ export default {
               fontSize: 11,
             },
             stacked: true,
-          }],
+          },
         },
         legend: {
           display: false,
@@ -504,33 +504,35 @@ export default {
         animation: {
           duration: 10,
         },
-        title: {
-          display: true,
-          text: 'Actions taken by each actor through time',
+        plugins: {
+          title: {
+            display: true,
+            text: 'Actions taken by each actor through time',
+          },
         },
         tooltips: {
           mode: 'point',
           intersect: false,
         },
         scales: {
-          xAxes: [{
+          x: {
             stacked: true,
             gridLines: {display: false},
-            scaleLabel: {
+            title: {
               display: true,
-              labelString: 'Time',
+              text: 'Time',
             },
             labels: ["2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010"],
-          }],
-          yAxes: [{
+          },
+          y: {
             type: 'category',
             stacked: false,
-            scaleLabel: {
+            title: {
               display: true,
-              labelString: 'Actors',
+              text: 'Actors',
             },
             labels: ["Farmer with Columbia river water rights", "Farmer with other surface water rights", "Farmer with groundwater rights"],
-          }],
+          },
         }, // scales
         legend: {display: true},
         annotation: {
@@ -598,21 +600,21 @@ export default {
           animationDuration: 10,
         },
         scales: {
-          xAxes: [{
+          x: {
             ticks: {
               userCallback: function(v) {
                 return "hello";
               },
               beginAtZero: false,
             },
-            scaleLabel: {
+            title: {
               display: false,
             },
             gridLines: {},
             stacked: true,
             labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
-          }],
-          yAxes: [{
+          },
+          y: {
             gridLines: {
               display: false,
               color: "#fff",
@@ -620,7 +622,7 @@ export default {
               zeroLineWidth: 0,
             },
             stacked: true,
-          }],
+          },
         },
         tooltips: {
           custom: function(tooltipModel) {
