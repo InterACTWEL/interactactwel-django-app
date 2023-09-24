@@ -179,7 +179,6 @@
     </div>
   </div>
 </template>
-
 <script>
 
 import GwqGraph from "@/components/dashboard/projects/charts/data/gwqGraph";
