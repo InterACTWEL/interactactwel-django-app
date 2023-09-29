@@ -1,0 +1,8 @@
+recursive-include interactwel/static *
+recursive-include interactwel/templates *
+recursive-include interactwel/data *
+recursive-include interactwel/src *
+include interactwel/package.json
+include interactwel/yarn.lock
+include interactwel/babel.config.js
+include interactwel/vue.config.js

@@ -1,46 +1,59 @@
 import distutils
+import logging
 import os
 import subprocess
 
 import setuptools
-from setuptools.command.develop import develop
-from setuptools.command.install import install
+
 
 def build_js():
-    subprocess.check_call(["npm", "install"], cwd=os.path.join(os.getcwd(), "interactwel"))
-    subprocess.check_call(["npm", "run", "build"], cwd=os.path.join(os.getcwd(), "interactwel"))
+    subprocess.check_call(["yarn"],
+                          cwd=os.path.join(os.getcwd(), "interactwel"))
+    subprocess.check_call(["yarn", "run", "build"],
+                          cwd=os.path.join(os.getcwd(), "interactwel"))
 
-# Build JS code when this package is installed in virtual env
-# https://stackoverflow.com/a/36902139
-class BuildJSDevelopCommand(develop):
-    def run(self):
-        self.announce("Building JS code", level=distutils.log.INFO)
-        build_js()
-        super().run()
 
-class BuildJSInstallCommand(install):
-    def run(self):
-        self.announce("Building JS code", level=distutils.log.INFO)
-        build_js()
-        super().run()
+try:
+    from setuptools.command.build import build as _build
+    from setuptools.command.editable_wheel import \
+        editable_wheel as _editable_wheel
 
-setuptools.setup(
-    name="interactwel-django-app",
-    version="0.0.1",
-    description="InterACTWEL plugin to Airavata Django Portal",
-    packages=setuptools.find_packages(),
-    install_requires=[
-        'django>=1.11.16',
-        'django-filter>=2.1.0, <3.0',
-        'markdown',
-        'jsonfield',
-    ],
-    entry_points="""
-[airavata.djangoapp]
-interactwel = interactwel.apps:InteractwelAppConfig
-""",
-    cmdclass={
-        'develop': BuildJSDevelopCommand,
-        'install': BuildJSInstallCommand,
-    }
-)
+    class build(_build):
+        def run(self) -> None:
+            self.announce("Building JS code", level=logging.INFO)
+            build_js()
+            super().run()
+
+    class editable_wheel(_editable_wheel):
+        def run(self) -> None:
+            self.announce("Building JS code", level=logging.INFO)
+            build_js()
+            super().run()
+
+    cmdclass = dict(build=build, editable_wheel=editable_wheel)
+
+except ImportError:
+
+    # For older versions of setuptools (Python 3.6)
+    from setuptools.command.develop import develop as _develop
+    from setuptools.command.install import install as _install
+
+    # Build JS code when this package is installed in virtual env
+    # https://stackoverflow.com/a/36902139
+
+    class develop(_develop):
+        def run(self):
+            self.announce("Building JS code", level=distutils.log.INFO)
+            build_js()
+            super().run()
+
+    class install(_install):
+        def run(self):
+            self.announce("Building JS code", level=distutils.log.INFO)
+            build_js()
+            super().run()
+
+    cmdclass = dict(develop=develop, install=install)
+
+
+setuptools.setup(cmdclass=cmdclass)
