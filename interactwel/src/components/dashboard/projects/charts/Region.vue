@@ -32,7 +32,7 @@
             </b-row>
           </div>
         </b-tab>-->
-        <!-- <b-tab title="Crop yield">
+        <b-tab title="Crop yield">
           <div class="card-body no-padding">
             <b-row>
               <b-col
@@ -314,7 +314,7 @@
               </b-row>
             </div>
           </div>
-        </b-tab> -->
+        </b-tab>
         <b-tab title="Stream Temperature(Line)">
           <div class="card-body">
             <div class="card-body">
@@ -419,32 +419,6 @@
             </div>
           </div>
         </b-tab>
-        <!-- <b-tab title="Error Bars Temp">
-          <div class="card-body">
-            <div class="card-body">
-              <b-row>
-                <b-col
-                    lg="6"
-                    class="p-3"
-                >
-                  <h6 class="baseline-graph-title text-center">
-                    Action Plan {{ $route.params.planId }}
-                  </h6>
-                  <sgratzl-error-bars v-bind:base-graph="false"/>
-                </b-col>
-                <b-col
-                    lg="6"
-                    class="p-3"
-                >
-                  <h6 class="baseline-graph-title text-center">
-                    Business as Usual
-                  </h6>
-                  <sgratzl-error-bars v-bind:base-graph="true"/>
-                </b-col>
-              </b-row>
-            </div>
-          </div>
-        </b-tab> -->
       </b-tabs>
     </div>
   </div>
