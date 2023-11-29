@@ -8,6 +8,9 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@canvasjs/stockcharts": "^1.7.5",
+    "@canvasjs/vue-charts": "^1.0.1",
+    "@canvasjs/vue-stockcharts": "^1.0.2",
     "@fortawesome/fontawesome-svg-core": "^1.2.18",
     "@fortawesome/free-solid-svg-icons": "^5.8.2",
     "@fortawesome/vue-fontawesome": "^0.1.6",
