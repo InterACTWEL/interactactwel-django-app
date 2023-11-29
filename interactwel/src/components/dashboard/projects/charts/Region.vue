@@ -344,7 +344,36 @@
                   <h6 class="baseline-graph-title text-center">
                     Error Bars Example
                   </h6>
+                  <h6 class="baseline-graph-title text-center">
+                    Business as Usual
+                  </h6>
                   <error-bars-example />
+                </b-col>
+              </b-row>
+            </div>
+          </div>
+        </b-tab>
+        <b-tab title="Max-Min Stream Temp">
+          <div class="card-body">
+            <div class="card-body">
+              <b-row>
+                <b-col
+                    lg="6"
+                    class="p-3"
+                >
+                  <h6 class="baseline-graph-title text-center">
+                    Action Plan {{ $route.params.planId }}
+                  </h6>
+                  <range-area-and-line-chart v-bind:base-graph="false"/>
+                </b-col>
+                <b-col
+                    lg="6"
+                    class="p-3"
+                >
+                  <h6 class="baseline-graph-title text-center">
+                    Business as Usual
+                  </h6>
+                  <range-area-and-line-chart v-bind:base-graph="true"/>
                 </b-col>
               </b-row>
             </div>
@@ -376,6 +405,7 @@ import WaterYieldGraph from "@/components/dashboard/projects/charts/data/waterYi
 import no3SurqGraph from "@/components/dashboard/projects/charts/data/no3SurqGraph";
 import AppexBoxplotExample from "@/components/dashboard/projects/charts/data/ApexBoxplotExample";
 import ErrorBarsExample from "@/components/dashboard/projects/charts/data/ErrorBarsExample";
+import RangeAreaAndLineChart from './data/RangeAreaAndLineChart.vue';
 // import TempBoxplotGraph from "@/components/dashboard/projects/charts/data/TempBoxplotGraph";
 //import TempLineGraph from "@/components/dashboard/projects/charts/data/TempLineGraph";
 
@@ -383,6 +413,7 @@ export default {
   name: 'Region',
 
   components: {
+    RangeAreaAndLineChart,
     ErrorBarsExample,
     AppexBoxplotExample,
     No3CropGraph,
